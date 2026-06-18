@@ -1,4 +1,4 @@
-// Persists per-store counters for formal document numbering.
+// Persists per-store counters for product and document numbering.
 import mongoose, { Schema } from "mongoose"
 
 const NumberSequenceSchema = new Schema(
@@ -6,7 +6,7 @@ const NumberSequenceSchema = new Schema(
     storeId: { type: String, required: true },
     type: {
       type: String,
-      enum: ["invoice", "proforma"],
+      enum: ["invoice", "proforma", "productSku"],
       required: true,
     },
     year: { type: Number, required: true },

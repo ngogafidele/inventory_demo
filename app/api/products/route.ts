@@ -1,10 +1,11 @@
 // Lists and creates products within an authorized store context.
 import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/db/connection"
+import { NumberSequence } from "@/lib/db/models/NumberSequence"
 import { Product } from "@/lib/db/models/Product"
 import { ProductReceipt } from "@/lib/db/models/ProductReceipt"
 import { requireAdmin, requireAuth } from "@/lib/auth/middleware"
-import { resolveStoreFromRequest } from "@/lib/auth/session"
+import { resolveStoreFromRequest, type StoreKey } from "@/lib/auth/session"
 import { CreateProductSchema } from "@/lib/db/validators/product"
 import { syncLowStockAlert } from "@/lib/db/alerts"
 import { ZodError } from "zod"
@@ -27,17 +28,73 @@ function getSkuBase(name: string) {
   return (normalized.slice(0, 6) || "PRD").padEnd(3, "X")
 }
 
-async function generateProductSku(store: string, name: string) {
+function formatSkuSequence(sequence: number) {
+  return String(sequence).padStart(4, "0")
+}
+
+function getNumericSkuSuffix(sku: string | undefined) {
+  const match = sku?.match(/(\d{4})$/)
+  return match ? Number(match[1]) : 0
+}
+
+async function getMaxExistingSkuSequence(store: StoreKey) {
+  const products = await Product.find({ store })
+    .select("sku")
+    .lean<Array<{ sku?: string }>>()
+
+  return products.reduce(
+    (max, product) => Math.max(max, getNumericSkuSuffix(product.sku)),
+    0
+  )
+}
+
+async function getNextProductSkuSequence(store: StoreKey) {
+  const filter = {
+    storeId: store,
+    type: "productSku" as const,
+    year: 0,
+    month: 0,
+  }
+
+  const existingSequence = await NumberSequence.exists(filter)
+  if (!existingSequence) {
+    const existingMax = await getMaxExistingSkuSequence(store)
+    try {
+      await NumberSequence.create({ ...filter, sequence: existingMax })
+    } catch {
+      // Another request may have initialized the SKU counter first.
+    }
+  }
+
+  const sequence = await NumberSequence.findOneAndUpdate(
+    filter,
+    { $inc: { sequence: 1 } },
+    {
+      new: true,
+      returnDocument: "after",
+      setDefaultsOnInsert: true,
+      upsert: true,
+    }
+  )
+
+  if (!sequence) {
+    throw new Error("Failed to generate product SKU")
+  }
+
+  return sequence.sequence
+}
+
+async function generateProductSku(store: StoreKey, name: string) {
   const base = getSkuBase(name)
 
-  for (let attempt = 0; attempt < 20; attempt += 1) {
-    const suffix = Math.random().toString(36).slice(2, 6).toUpperCase()
-    const sku = `${base}-${suffix}`
+  for (let attempt = 0; attempt < 100; attempt += 1) {
+    const sequence = await getNextProductSkuSequence(store)
+    const sku = `${base}-${formatSkuSequence(sequence)}`
     const existing = await Product.exists({ store, sku })
     if (!existing) return sku
   }
 
-  return `${base}-${Date.now().toString(36).toUpperCase()}`
+  throw new Error("Failed to generate a unique product SKU")
 }
 
 export async function GET(request: NextRequest) {
