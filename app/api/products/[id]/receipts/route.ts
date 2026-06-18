@@ -7,7 +7,7 @@ import { requireAdmin } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
 import { syncLowStockAlert } from "@/lib/db/alerts"
 import { CreateProductReceiptSchema } from "@/lib/db/validators/product-receipt"
-import { parseKigaliDateInput } from "@/lib/utils/time"
+import { parseBusinessDateInput } from "@/lib/utils/time"
 import { ZodError } from "zod"
 
 export async function POST(
@@ -33,7 +33,7 @@ export async function POST(
 
     const { id } = await context.params
     const payload = CreateProductReceiptSchema.parse(await request.json())
-    const receivedAt = parseKigaliDateInput(payload.receivedAt)
+    const receivedAt = parseBusinessDateInput(payload.receivedAt)
     if (!receivedAt) {
       return NextResponse.json(
         { success: false, error: "Invalid received date." },

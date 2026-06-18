@@ -5,7 +5,7 @@ import { ProductReceipt } from "@/lib/db/models/ProductReceipt"
 import { Sale } from "@/lib/db/models/Sale"
 import { getCurrentStore, requireServerSession } from "@/lib/auth/server"
 import { CustomersSuppliersManager } from "@/components/customers-suppliers/customers-suppliers-manager"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type CustomerSaleItem = {
   name?: string
@@ -55,7 +55,7 @@ function normalizeKey(name: string, phone: string) {
 
 function formatDate(date: Date | undefined) {
   return date
-    ? formatInKigali(date, {
+    ? formatInBusinessTime(date, {
         year: "numeric",
         month: "short",
         day: "2-digit",

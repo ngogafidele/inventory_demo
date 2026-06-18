@@ -6,7 +6,7 @@ import { Expense } from "@/lib/db/models/Expense"
 import { requireAuth } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
 import { CreateExpenseSchema } from "@/lib/db/validators/expense"
-import { parseKigaliDateInput } from "@/lib/utils/time"
+import { parseBusinessDateInput } from "@/lib/utils/time"
 
 export async function GET(request: NextRequest) {
   try {
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     const payload = CreateExpenseSchema.parse(await request.json())
-    const date = parseKigaliDateInput(payload.date)
+    const date = parseBusinessDateInput(payload.date)
     if (!date) {
       return NextResponse.json(
         { success: false, error: "Invalid expense date." },

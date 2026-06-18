@@ -12,7 +12,7 @@ export type ReturnItem = {
 
 export type Return = {
   id: string
-  store: "store1" | "store2"
+  store: "store1"
   returnItems: ReturnItem[]
   totalReturnAmount: number
   notes?: string

@@ -1,16 +1,14 @@
-// Defines stable store identifiers and their human-facing branch identity.
-export const STORE_KEYS = ["store1", "store2"] as const
+// Defines the stable store identifier and its human-facing identity.
+export const STORE_KEYS = ["store1"] as const
 
 export type StoreKey = (typeof STORE_KEYS)[number]
 
-// Store identity is shared by navigation, reports, and generated documents.
+// Store identity is shared by reports and generated documents.
 export const STORE_LABELS: Record<StoreKey, string> = {
-  store1: "Gisozi",
-  store2: "Kinyinya",
+  store1: "Demo Store",
 }
 
-// Customer-facing PDFs must identify the branch that owns the transaction.
+// Customer-facing PDFs identify the demo store.
 export const STORE_ADDRESSES: Record<StoreKey, string> = {
-  store1: "Kigali, Gisozi",
-  store2: "Kigali, Kinyinya",
+  store1: "Demo Address",
 }

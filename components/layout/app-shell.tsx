@@ -4,7 +4,6 @@ import Image from "next/image"
 import type { AuthSession } from "@/lib/auth/session"
 import { Sidebar } from "@/components/layout/sidebar"
 import { LoanNotifications } from "@/components/layout/loan-notifications"
-import { StoreSwitcher } from "@/components/store-switcher"
 import { LogoutButton } from "@/components/auth/logout-button"
 import { UserRound } from "lucide-react"
 
@@ -17,7 +16,6 @@ export function AppShell({
   userName?: string
   children: ReactNode
 }) {
-  const currentStore = session.currentStore ?? session.stores[0]
   const displayName = userName ?? session.name ?? session.email
 
   return (
@@ -28,7 +26,7 @@ export function AppShell({
             <div className="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-white shadow-sm">
               <Image
                 src="/images/logo.png"
-                alt="B Ikaze Inventory logo"
+                alt="Demo Inventory logo"
                 width={48}
                 height={48}
                 priority
@@ -37,7 +35,7 @@ export function AppShell({
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                B Ikaze Inventory
+                Demo Inventory
               </p>
               <h1 className="text-xl font-semibold sm:text-2xl">
                 Operations Hub
@@ -59,13 +57,6 @@ export function AppShell({
                 </p>
               </div>
             </div>
-            {session.isAdmin ? (
-              <StoreSwitcher
-                currentStore={currentStore}
-                availableStores={session.stores}
-                isAdmin={session.isAdmin}
-              />
-            ) : null}
             <LogoutButton />
           </div>
         </div>

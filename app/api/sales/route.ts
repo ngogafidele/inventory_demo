@@ -7,7 +7,7 @@ import { requireAuth } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
 import { CreateSaleSchema } from "@/lib/db/validators/sale"
 import { syncLowStockAlert } from "@/lib/db/alerts"
-import { parseKigaliDateInput } from "@/lib/utils/time"
+import { parseBusinessDateInput } from "@/lib/utils/time"
 
 export async function GET(request: NextRequest) {
   try {
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
     } | null = null
 
     if (paymentStatus === "unpaid") {
-      const paymentDate = parseKigaliDateInput(payload.outstanding?.paymentDate)
+      const paymentDate = parseBusinessDateInput(payload.outstanding?.paymentDate)
       if (!paymentDate) {
         return NextResponse.json(
           { success: false, error: "Invalid payment date." },

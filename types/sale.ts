@@ -10,7 +10,7 @@ export type SaleItem = {
 
 export type Sale = {
   id: string
-  store: "store1" | "store2"
+  store: "store1"
   items: SaleItem[]
   totalAmount: number
   paymentStatus?: "paid" | "unpaid"

@@ -4,7 +4,7 @@ import path from "node:path"
 import type * as Fs from "node:fs"
 import { STORE_LABELS, type StoreKey } from "@/lib/utils/constants"
 import { formatCurrency } from "@/lib/utils/format"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 const require = createRequire(import.meta.url)
 const {
@@ -118,7 +118,7 @@ function formatNumber(value: number) {
 
 function formatDateTime(date: Date | string | undefined) {
   if (!date) return "-"
-  return formatInKigali(date, {
+  return formatInBusinessTime(date, {
     month: "short",
     day: "2-digit",
     year: "numeric",
@@ -200,7 +200,7 @@ function drawLogo(doc: ReportPdfDocument) {
       .font("Helvetica-Bold")
       .fontSize(16)
       .fillColor(PRINT_HEADER_TEXT)
-      .text("B Ikaze Hardware", 48, 72, { width: 150 })
+      .text("Demo", 48, 72, { width: 150 })
   }
 }
 

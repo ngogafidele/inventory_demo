@@ -4,7 +4,7 @@ import { Product } from "@/lib/db/models/Product"
 import { ProductReceipt } from "@/lib/db/models/ProductReceipt"
 import { getCurrentStore, requireServerSession } from "@/lib/auth/server"
 import { ProductsManager } from "@/components/products/products-manager"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type ProductsPageProduct = {
   _id: { toString(): string }
@@ -51,7 +51,7 @@ export default async function ProductsPage() {
       lowStockThreshold: product.lowStockThreshold ?? 0,
       lastRestock: latestReceipt?.receivedAt.toISOString(),
       lastRestockLabel: latestReceipt
-        ? formatInKigali(latestReceipt.receivedAt, {
+        ? formatInBusinessTime(latestReceipt.receivedAt, {
             year: "numeric",
             month: "short",
             day: "2-digit",

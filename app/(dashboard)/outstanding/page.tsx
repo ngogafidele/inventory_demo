@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/db/connection"
 import { Sale } from "@/lib/db/models/Sale"
 import { OutstandingManager } from "@/components/outstanding/outstanding-manager"
 import { getCurrentStore, requireServerSession } from "@/lib/auth/server"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type PopulatedSaleUser = {
   _id: { toString(): string }
@@ -84,7 +84,7 @@ export default async function OutstandingPage() {
     _id: sale._id.toString(),
     createdAt: sale.createdAt?.toISOString(),
     createdAtLabel: sale.createdAt
-      ? formatInKigali(sale.createdAt, {
+      ? formatInBusinessTime(sale.createdAt, {
           year: "numeric",
           month: "short",
           day: "2-digit",

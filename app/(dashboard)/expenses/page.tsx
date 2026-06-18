@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/db/connection"
 import { Expense } from "@/lib/db/models/Expense"
 import { ExpensesManager } from "@/components/expenses/expenses-manager"
 import { getCurrentStore, requireServerSession } from "@/lib/auth/server"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type PopulatedExpenseUser = {
   _id: { toString(): string }
@@ -53,7 +53,7 @@ export default async function ExpensesPage() {
       ? expense.createdBy.name ?? expense.createdBy.email ?? "Unknown User"
       : "Unknown User",
     dateLabel: expense.date
-      ? formatInKigali(expense.date, {
+      ? formatInBusinessTime(expense.date, {
           year: "numeric",
           month: "short",
           day: "2-digit",

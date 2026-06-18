@@ -5,9 +5,9 @@ import { Sale } from "@/lib/db/models/Sale"
 import { requireAuth } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
 import {
-  formatInKigali,
-  formatKigaliDateInput,
-  parseKigaliDateInput,
+  formatInBusinessTime,
+  formatBusinessDateInput,
+  parseBusinessDateInput,
 } from "@/lib/utils/time"
 import type { LoanNotification } from "@/types/loan-notification"
 
@@ -40,8 +40,8 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const todayInput = formatKigaliDateInput(new Date())
-    const todayStart = parseKigaliDateInput(todayInput) ?? new Date()
+    const todayInput = formatBusinessDateInput(new Date())
+    const todayStart = parseBusinessDateInput(todayInput) ?? new Date()
     const tomorrowStart = new Date(todayStart.getTime() + 24 * 60 * 60 * 1000)
 
     await connectToDatabase()
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
             sale.outstanding?.customerName?.trim() || "Unknown customer",
           customerPhone: sale.outstanding?.customerPhone,
           amount: sale.remainingBalance ?? sale.totalAmount,
-          paymentDateLabel: formatInKigali(paymentDate, {
+          paymentDateLabel: formatInBusinessTime(paymentDate, {
             year: "numeric",
             month: "short",
             day: "2-digit",

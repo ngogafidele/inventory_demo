@@ -75,7 +75,7 @@ export async function GET(
         totalAmount: invoice.totalAmount,
         items,
       },
-      { name: "B Ikaze Hardware", address: STORE_ADDRESSES[store] }
+      { name: "Demo", address: STORE_ADDRESSES[store] }
     )
 
     return new NextResponse(new Uint8Array(pdf), {

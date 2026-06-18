@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/db/connection"
 import { Product } from "@/lib/db/models/Product"
 import { requireAuth } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
-import { getKigaliDateParts } from "@/lib/utils/time"
+import { getBusinessDateParts } from "@/lib/utils/time"
 import { STORE_ADDRESSES } from "@/lib/utils/constants"
 import { generateProductCatalogPDF } from "@/lib/pdf/product-catalog-generator"
 
@@ -25,7 +25,7 @@ function pad2(value: number) {
 }
 
 function buildCatalogFilename(date = new Date()) {
-  const parts = getKigaliDateParts(date)
+  const parts = getBusinessDateParts(date)
   return `products-catalog-${parts.year}${pad2(parts.month)}${pad2(
     parts.day
   )}.pdf`
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
           price: product.price,
         })),
       },
-      { name: "B Ikaze Hardware", address: STORE_ADDRESSES[store] }
+      { name: "Demo", address: STORE_ADDRESSES[store] }
     )
 
     return new NextResponse(new Uint8Array(pdf), {

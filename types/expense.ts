@@ -1,7 +1,7 @@
 // Describes expense data exchanged between UI and branch APIs.
 export type Expense = {
   id: string
-  store: "store1" | "store2"
+  store: "store1"
   description: string
   amount: number
   category: string

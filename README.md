@@ -1,14 +1,14 @@
-# B Ikaze Inventory
+# Demo Inventory
 
-B Ikaze Inventory is a two-branch inventory, sales, and receivables
-management application for **Gisozi** and **Kinyinya**. It supports the daily
+Demo Inventory is a single-store inventory, sales, and receivables
+management application for **Demo Store**. It supports the daily
 operation of a physical-goods business: stock control, direct and credit
-sales, returns, invoicing, expenses, alerts, and branch-level performance
+sales, returns, invoicing, expenses, alerts, and store-level performance
 reporting.
 
 ## Business Capabilities
 
-- Manage branch-specific products, costs, selling prices, quantities, and low
+- Manage store-specific products, costs, selling prices, quantities, and low
   stock thresholds.
 - Record paid sales through cash, bank, or mobile money.
 - Record unpaid sales as customer loans with an expected payment date and
@@ -16,23 +16,21 @@ reporting.
 - Process returns and restore returned items to stock.
 - Produce sales invoices, proforma invoices, product catalogs, outstanding
   statements, and management reports in PDF format.
-- Record operating expenses and calculate net branch performance.
+- Record operating expenses and calculate store performance.
 - Notify users of loans that are due today or overdue.
 - Give administrators control of users, stock adjustments, analytics, and
-  branch switching.
+  reports.
 
 ## Stores
 
 Application data is isolated by store:
 
-| Internal Key | Branch | Document Address |
+| Internal Key | Store | Document Address |
 | --- | --- | --- |
-| `store1` | Gisozi | Kigali, Gisozi |
-| `store2` | Kinyinya | Kigali, Kinyinya |
+| `store1` | Demo Store | Demo Address |
 
 Products, sales, returns, invoices, expenses, receivables, alerts, and report
-calculations are scoped to the selected branch. Administrators can switch
-branches; other users operate in their assigned store.
+calculations are scoped to the demo store.
 
 ## Technology
 
@@ -62,9 +60,9 @@ The application follows the App Router server/client boundary:
   PDF downloads.
 - `lib/db/models` defines persisted business records.
 - `lib/db/validators` validates API payloads.
-- `lib/auth` manages sessions, access checks, and store resolution.
+- `lib/auth` manages sessions, access checks, and single-store resolution.
 - `lib/pdf` renders printable business documents.
-- `lib/utils` contains branch identity, numbering, formatting, and Kigali time
+- `lib/utils` contains store identity, numbering, formatting, and business time
   handling.
 
 For a detailed functional and technical reference, see [DOCUMENT.md](./DOCUMENT.md).
@@ -74,7 +72,7 @@ For a detailed functional and technical reference, see [DOCUMENT.md](./DOCUMENT.
 ### Sales And Stock
 
 A sale snapshots item name, SKU, unit, cost/base price, selling price, and line
-total. Creating a sale decreases branch stock. Editing or deleting a sale
+total. Creating a sale decreases store stock. Editing or deleting a sale
 reconciles stock so inventory continues to reflect the recorded transactions.
 
 ### Customer Loans
@@ -87,21 +85,22 @@ and restores its stock.
 
 ### Returns
 
-Returns add items back into branch stock and reduce revenue and gross profit in
+Returns add items back into store stock and reduce revenue and gross profit in
 reporting.
 
 ### Reporting
 
 Reports combine sales, returns, inventory valuation, expenses, unpaid amounts,
-and product movement. Financial dates are interpreted in Kigali time.
+and product movement. Financial dates are interpreted in the configured
+business time zone.
 
 ## Roles And Access
 
 | Role | Typical Access |
 | --- | --- |
-| Admin | All operational screens, users, stock adjustments, analytics, reports, branch switching, correction/deletion actions |
-| Manager | Assigned-store daily operations and permitted invoice management |
-| Staff | Assigned-store operational recording and viewing workflows |
+| Admin | All operational screens, users, stock adjustments, analytics, reports, correction/deletion actions |
+| Manager | Store daily operations and permitted invoice management |
+| Staff | Store operational recording and viewing workflows |
 
 All API requests resolve a permitted store from the authenticated session
 before accessing operational data.
@@ -148,7 +147,7 @@ lib/
   auth/              Session and permission utilities
   db/                Models, validation, alerts, and database connection
   pdf/               Document generators
-  utils/             Shared formatting and branch/time utilities
+  utils/             Shared formatting and store/time utilities
 types/               Shared TypeScript contracts
 public/              Static assets and branding
 ```
@@ -163,4 +162,4 @@ public/              Static assets and branding
   were issued.
 - Deleting a sale that is linked to an invoice is blocked until the invoice is
   addressed.
-- Customer-facing PDFs must use the identity of the active branch.
+- Customer-facing PDFs must use the demo store identity.

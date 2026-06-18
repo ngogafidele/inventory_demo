@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/table"
 import type { StoreKey } from "@/lib/auth/session"
 import { formatCurrency } from "@/lib/utils/format"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type InvoiceStatus = "unpaid" | "paid"
 
@@ -71,7 +71,7 @@ const emptyForm: FormState = {
 
 function formatDate(date: string | undefined) {
   if (!date) return "-"
-  return formatInKigali(date, {
+  return formatInBusinessTime(date, {
     year: "numeric",
     month: "short",
     day: "2-digit",

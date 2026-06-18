@@ -5,7 +5,7 @@ import { ReturnModel } from "@/lib/db/models/Return"
 import { Product } from "@/lib/db/models/Product"
 import { ReturnsManager } from "@/components/returns/returns-manager"
 import { getCurrentStore, requireServerSession } from "@/lib/auth/server"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type PopulatedUser = {
   _id: { toString(): string }
@@ -76,7 +76,7 @@ export default async function ReturnsPage() {
       : "Unknown User",
     createdAt: entry.createdAt?.toISOString(),
     createdAtLabel: entry.createdAt
-      ? formatInKigali(entry.createdAt, {
+      ? formatInBusinessTime(entry.createdAt, {
           year: "numeric",
           month: "short",
           day: "2-digit",

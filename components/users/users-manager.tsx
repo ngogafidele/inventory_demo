@@ -27,10 +27,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { STORE_LABELS } from "@/lib/utils/constants"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
-type StoreKey = "store1" | "store2"
 type UserRole = "admin" | "manager" | "staff"
 
 type UserClient = {
@@ -38,7 +36,6 @@ type UserClient = {
   name: string
   email: string
   role: UserRole
-  stores: StoreKey[]
   isActive: boolean
   isAdmin: boolean
   createdAt?: string
@@ -66,7 +63,6 @@ type FormState = {
   email: string
   password: string
   role: "manager" | "staff"
-  store: StoreKey
   isActive: boolean
 }
 
@@ -75,14 +71,13 @@ const emptyForm: FormState = {
   email: "",
   password: "",
   role: "staff",
-  store: "store1",
   isActive: true,
 }
 
 function formatActivityDate(date: string | Date | undefined) {
   if (!date) return "Never"
 
-  return formatInKigali(date, {
+  return formatInBusinessTime(date, {
     year: "numeric",
     month: "short",
     day: "2-digit",
@@ -128,7 +123,6 @@ export function UsersManager({
       email: formState.email.trim(),
       password: formState.password,
       role: formState.role,
-      stores: formState.store,
       isActive: formState.isActive,
     }
 
@@ -150,7 +144,6 @@ export function UsersManager({
         name: string
         email: string
         role: "manager" | "staff"
-        stores: StoreKey[]
         isActive: boolean
         isAdmin?: boolean
       }
@@ -161,7 +154,6 @@ export function UsersManager({
           name: created.name,
           email: created.email,
           role: created.role,
-          stores: created.stores,
           isActive: created.isActive,
           isAdmin: created.isAdmin ?? false,
         },
@@ -281,26 +273,6 @@ export function UsersManager({
                   </SelectContent>
                 </Select>
               </label>
-              <label className="grid gap-1 text-sm">
-                Store
-                <Select
-                  value={formState.store}
-                  onValueChange={(value) =>
-                    setFormState((prev) => ({
-                      ...prev,
-                      store: value as StoreKey,
-                    }))
-                  }
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select store" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="store1">{STORE_LABELS.store1}</SelectItem>
-                    <SelectItem value="store2">{STORE_LABELS.store2}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </label>
               <label className="flex items-center gap-2 text-sm">
                 <input
                   type="checkbox"
@@ -334,7 +306,6 @@ export function UsersManager({
             <TableHead>Name</TableHead>
             <TableHead>Email or username</TableHead>
             <TableHead>Role</TableHead>
-            <TableHead>Stores</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -352,9 +323,6 @@ export function UsersManager({
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell className="capitalize">{user.role}</TableCell>
-              <TableCell>
-                {user.stores.map((store) => STORE_LABELS[store]).join(", ")}
-              </TableCell>
               <TableCell>{user.isActive ? "Active" : "Inactive"}</TableCell>
               <TableCell className="text-right">
                 <div className="flex flex-wrap justify-end gap-2">

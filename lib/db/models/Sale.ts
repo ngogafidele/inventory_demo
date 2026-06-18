@@ -52,7 +52,7 @@ const SaleSchema = new Schema(
   {
     store: {
       type: String,
-      enum: ["store1", "store2"],
+      enum: ["store1"],
       required: true,
     },
     items: { type: [SaleItemSchema], required: true },

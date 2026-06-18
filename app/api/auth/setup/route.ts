@@ -1,4 +1,4 @@
-// Creates the initial administrator and two-store session context.
+// Creates the initial administrator and single-store session context.
 import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/db/connection"
 import { User } from "@/lib/db/models/User"
@@ -10,6 +10,7 @@ import { SetupAdminSchema } from "@/lib/db/validators/user"
 import { hashPassword } from "@/lib/auth/hash"
 import {
   AUTH_COOKIE,
+  DEFAULT_STORE,
   createToken,
   getAuthCookieOptions,
   type AuthSession,
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
       password: hashedPassword,
       isAdmin: true,
       role: "admin",
-      stores: ["store1", "store2"],
+      stores: [DEFAULT_STORE],
       isActive: true,
       lastLogin: loginAt,
     })
@@ -58,8 +59,8 @@ export async function POST(request: NextRequest) {
       email: admin.email,
       isAdmin: true,
       role: "admin",
-      stores: ["store1", "store2"],
-      currentStore: "store1",
+      stores: [DEFAULT_STORE],
+      currentStore: DEFAULT_STORE,
       loginLogId: loginLog._id.toString(),
       lastActivityAt: Date.now(),
     }

@@ -59,7 +59,7 @@ export default function Home() {
             <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/80 bg-white shadow-sm">
               <Image
                 src="/images/logo.png"
-                alt="B Ikaze Hardware logo"
+                alt="Demo logo"
                 width={80}
                 height={80}
                 priority
@@ -68,7 +68,7 @@ export default function Home() {
             </div>
             <div>
               <p className="text-sm font-semibold uppercase text-[var(--brand-orange-text)]">
-                B Ikaze Hardware
+                Demo
               </p>
               <h1 className="text-3xl font-semibold text-[var(--brand-navy)] sm:text-4xl">
                 Inventory control for every counter.
@@ -78,7 +78,7 @@ export default function Home() {
 
           <div className="grid gap-3 sm:grid-cols-3">
             {[
-              "Track stock across stores",
+              "Track stock in one store",
               "Manage products and sales",
               "Review invoices and alerts",
             ].map((item) => (

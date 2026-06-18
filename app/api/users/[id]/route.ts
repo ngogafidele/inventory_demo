@@ -5,6 +5,7 @@ import { User } from "@/lib/db/models/User"
 import { requireAdmin } from "@/lib/auth/middleware"
 import { UpdateUserSchema } from "@/lib/db/validators/user"
 import { hashPassword } from "@/lib/auth/hash"
+import { DEFAULT_STORE } from "@/lib/auth/session"
 
 export async function GET(
   request: NextRequest,
@@ -73,10 +74,7 @@ export async function PUT(
       body.email = body.email.toLowerCase()
     }
 
-    const updateData = {
-      ...body,
-      ...(body.stores ? { stores: [body.stores] } : {}),
-    }
+    const updateData = { ...body, stores: [DEFAULT_STORE] }
 
     const user = await User.findByIdAndUpdate(id, updateData, {
       returnDocument: "after",

@@ -10,6 +10,7 @@ import { LoginSchema } from "@/lib/db/validators/user"
 import { comparePassword } from "@/lib/auth/hash"
 import {
   AUTH_COOKIE,
+  DEFAULT_STORE,
   createToken,
   getAuthCookieOptions,
   type AuthSession,
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
     })
     await pruneOldLoginLogs()
 
-    const stores = user.stores as AuthSession["stores"]
+    const stores: AuthSession["stores"] = [DEFAULT_STORE]
     const session: AuthSession = {
       userId: user._id.toString(),
       name: user.name,
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
       isAdmin: user.isAdmin,
       role: user.role,
       stores,
-      currentStore: stores[0],
+      currentStore: DEFAULT_STORE,
       loginLogId: loginLog._id.toString(),
       lastActivityAt: Date.now(),
     }
@@ -74,7 +75,7 @@ export async function POST(request: NextRequest) {
         role: user.role,
         isAdmin: user.isAdmin,
         stores,
-        currentStore: session.currentStore,
+        currentStore: DEFAULT_STORE,
       },
     })
 

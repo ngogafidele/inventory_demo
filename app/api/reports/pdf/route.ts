@@ -10,10 +10,10 @@ import { ReturnModel } from "@/lib/db/models/Return"
 import { Sale } from "@/lib/db/models/Sale"
 import { StockAdjustment } from "@/lib/db/models/StockAdjustment"
 import {
-  formatInKigali,
-  formatKigaliDateInput,
-  getKigaliDateParts,
-  parseKigaliDateInput,
+  formatInBusinessTime,
+  formatBusinessDateInput,
+  getBusinessDateParts,
+  parseBusinessDateInput,
 } from "@/lib/utils/time"
 import {
   generateReportPDF,
@@ -97,7 +97,7 @@ function addDays(date: Date, days: number) {
 }
 
 function formatDateOnly(date: Date) {
-  return formatInKigali(date, {
+  return formatInBusinessTime(date, {
     month: "short",
     day: "2-digit",
     year: "numeric",
@@ -106,7 +106,7 @@ function formatDateOnly(date: Date) {
 
 function getReportRange(request: NextRequest) {
   const now = new Date()
-  const nowParts = getKigaliDateParts(now)
+  const nowParts = getBusinessDateParts(now)
   const todayInput = `${nowParts.year}-${String(nowParts.month).padStart(
     2,
     "0"
@@ -115,13 +115,13 @@ function getReportRange(request: NextRequest) {
     2,
     "0"
   )}-01`
-  const today = parseKigaliDateInput(todayInput) ?? now
-  const monthStart = parseKigaliDateInput(monthStartInput) ?? today
+  const today = parseBusinessDateInput(todayInput) ?? now
+  const monthStart = parseBusinessDateInput(monthStartInput) ?? today
 
-  const parsedFrom = parseKigaliDateInput(
+  const parsedFrom = parseBusinessDateInput(
     getSingleParam(request.nextUrl.searchParams.get("from"))
   )
-  const parsedTo = parseKigaliDateInput(
+  const parsedTo = parseBusinessDateInput(
     getSingleParam(request.nextUrl.searchParams.get("to"))
   )
 
@@ -138,8 +138,8 @@ function getReportRange(request: NextRequest) {
     from,
     to,
     endExclusive: addDays(to, 1),
-    fromInput: formatKigaliDateInput(from),
-    toInput: formatKigaliDateInput(to),
+    fromInput: formatBusinessDateInput(from),
+    toInput: formatBusinessDateInput(to),
     fromLabel: formatDateOnly(from),
     toLabel: formatDateOnly(to),
   }

@@ -3,7 +3,7 @@ import { connectToDatabase } from "@/lib/db/connection"
 import { Sale } from "@/lib/db/models/Sale"
 import { getCurrentStore, requireServerSession } from "@/lib/auth/server"
 import { InvoicesPageClient } from "@/components/invoices/invoices-page-client"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type InvoicePageSale = {
   _id: { toString(): string }
@@ -24,7 +24,7 @@ export default async function InvoicesPage() {
   const serializedSales = sales.map((sale) => ({
     _id: sale._id.toString(),
     label: sale.createdAt
-      ? formatInKigali(sale.createdAt, {
+      ? formatInBusinessTime(sale.createdAt, {
           month: "short",
           day: "2-digit",
           year: "numeric",

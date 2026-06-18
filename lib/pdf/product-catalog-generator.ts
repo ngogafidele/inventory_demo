@@ -263,7 +263,7 @@ export function generateProductCatalogPDF(
     .strokeColor("#f08010")
     .stroke()
 
-  boldText(doc).fontSize(11).text(storeInfo.name ?? "Multi-Store Inventory", 48, 210)
+  boldText(doc).fontSize(11).text(storeInfo.name ?? "Demo Inventory", 48, 210)
   mutedText(doc)
     .fontSize(9)
     .text(storeInfo.address ?? "", 48, 228)

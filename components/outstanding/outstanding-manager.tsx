@@ -31,7 +31,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { formatCurrency } from "@/lib/utils/format"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 type OutstandingItem = {
   name: string
@@ -352,7 +352,7 @@ export function OutstandingManager({
             filteredSales.map((sale, saleIndex) => {
               const paymentDate = sale.outstanding?.paymentDate
               const paymentDateLabel = paymentDate
-                ? formatInKigali(paymentDate, {
+                ? formatInBusinessTime(paymentDate, {
                     year: "numeric",
                     month: "short",
                     day: "2-digit",
@@ -439,7 +439,7 @@ export function OutstandingManager({
                         {payments
                           .map((payment) => {
                             const paidAt = payment.paidAt
-                              ? formatInKigali(payment.paidAt, {
+                              ? formatInBusinessTime(payment.paidAt, {
                                   year: "numeric",
                                   month: "short",
                                   day: "2-digit",

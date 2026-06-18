@@ -5,7 +5,7 @@ import { Sale } from "@/lib/db/models/Sale"
 import "@/lib/db/models/User"
 import { requireAuth } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
-import { getKigaliDateParts } from "@/lib/utils/time"
+import { getBusinessDateParts } from "@/lib/utils/time"
 import { STORE_ADDRESSES } from "@/lib/utils/constants"
 import { generateOutstandingCustomerPDF } from "@/lib/pdf/outstanding-generator"
 
@@ -56,7 +56,7 @@ function pad2(value: number) {
 }
 
 function buildStatementNumber(date = new Date()) {
-  const parts = getKigaliDateParts(date)
+  const parts = getBusinessDateParts(date)
   const dateStamp = `${parts.year}${pad2(parts.month)}${pad2(parts.day)}`
   const random = String(Math.floor(Math.random() * 1_000_000)).padStart(6, "0")
   return `LOAN-${dateStamp}-${random}`
@@ -223,7 +223,7 @@ export async function GET(request: NextRequest) {
         totalPaid,
         totalOutstanding,
       },
-      { name: "B Ikaze Hardware", address: STORE_ADDRESSES[store] }
+      { name: "Demo", address: STORE_ADDRESSES[store] }
     )
 
     const slug = slugifyCustomerName(customerName) || "customer"

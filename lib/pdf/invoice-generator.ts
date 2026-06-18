@@ -91,11 +91,11 @@ const stampBox = {
 }
 
 const businessFooterLines = [
-  "Equity Bank Account: 4005201187639",
-  "Tin: 111049695",
-  "Tel No: 0788399098",
+  "Bank Account: DEMO-ACCOUNT",
+  "TIN: DEMO-TIN",
+  "Tel No: DEMO-PHONE",
   "",
-  "B Ikaze Hardware",
+  "Demo",
 ]
 
 const PRINT_TEXT = "#111827"
@@ -270,7 +270,7 @@ function writeInvoicePdf(
 
   boldText(doc)
     .fontSize(11)
-    .text(storeInfo.name ?? "Multi-Store Inventory", 48, 230)
+    .text(storeInfo.name ?? "Demo Inventory", 48, 230)
   mutedText(doc)
     .fontSize(9)
     .text(storeInfo.address ?? "", 48, 248)
@@ -412,6 +412,6 @@ export function generateProformaPDF(
     storeInfo,
     "Proforma To",
     businessFooterLines,
-    "Thank You For Doing Business With B Ikaze Hardware"
+    "Thank You For Doing Business With Demo"
   )
 }

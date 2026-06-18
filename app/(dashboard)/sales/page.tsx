@@ -6,7 +6,7 @@ import { Invoice } from "@/lib/db/models/Invoice"
 import "@/lib/db/models/User"
 import { getCurrentStore, requireServerSession } from "@/lib/auth/server"
 import { SalesManager } from "@/components/sales/sales-manager"
-import { formatInKigali, formatKigaliDateInput } from "@/lib/utils/time"
+import { formatInBusinessTime, formatBusinessDateInput } from "@/lib/utils/time"
 
 type PopulatedSaleUser = {
   _id: { toString(): string }
@@ -99,7 +99,7 @@ export default async function SalesPage({
     _id: sale._id.toString(),
     createdAt: sale.createdAt?.toISOString(),
     createdAtLabel: sale.createdAt
-      ? formatInKigali(sale.createdAt, {
+      ? formatInBusinessTime(sale.createdAt, {
           year: "numeric",
           month: "short",
           day: "2-digit",
@@ -126,7 +126,7 @@ export default async function SalesPage({
       ? {
           customerName: sale.outstanding.customerName ?? "",
           customerPhone: sale.outstanding.customerPhone ?? "",
-          paymentDate: formatKigaliDateInput(sale.outstanding.paymentDate),
+          paymentDate: formatBusinessDateInput(sale.outstanding.paymentDate),
         }
       : undefined,
     items: sale.items.map((item) => ({

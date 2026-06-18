@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton"
 import { formatCurrency } from "@/lib/utils/format"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 import { cn } from "@/lib/utils"
 import {
   Table,
@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/table"
 
 type DashboardStatsProps = {
-  store: "store1" | "store2"
+  store: "store1"
 }
 
 type StatsResponse = {
@@ -212,7 +212,7 @@ export function DashboardStats({ store }: DashboardStatsProps) {
                     }
                   >
                     <TableCell>
-                      {formatInKigali(sale.createdAt, {
+                      {formatInBusinessTime(sale.createdAt, {
                         year: "numeric",
                         month: "2-digit",
                         day: "2-digit",

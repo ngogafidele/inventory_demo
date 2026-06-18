@@ -3,7 +3,7 @@
 // Manages product records, catalog actions, and branch inventory display.
 import { useMemo, useState } from "react"
 import { formatCurrency } from "@/lib/utils/format"
-import { formatKigaliDateInput } from "@/lib/utils/time"
+import { formatBusinessDateInput } from "@/lib/utils/time"
 import { FileText, PackagePlus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -83,7 +83,7 @@ function getEmptyReceiveForm(): ReceiveFormState {
     supplierPhone: "",
     quantity: "",
     unitCost: "",
-    receivedAt: formatKigaliDateInput(new Date()),
+    receivedAt: formatBusinessDateInput(new Date()),
   }
 }
 

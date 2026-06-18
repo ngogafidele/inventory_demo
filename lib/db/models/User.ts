@@ -16,7 +16,7 @@ const UserSchema = new Schema(
     stores: [
       {
         type: String,
-        enum: ["store1", "store2"],
+        enum: ["store1"],
         required: true,
       },
     ],

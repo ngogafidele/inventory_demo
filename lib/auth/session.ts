@@ -1,9 +1,10 @@
-// Defines signed session state, idle expiry, and authorized store resolution.
+// Defines signed session state, idle expiry, and single-store resolution.
 import jwt from "jsonwebtoken"
 import type { NextRequest } from "next/server"
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 
-export const STORE_KEYS = ["store1", "store2"] as const
+export const DEFAULT_STORE = "store1" as const
+export const STORE_KEYS = [DEFAULT_STORE] as const
 export type StoreKey = (typeof STORE_KEYS)[number]
 
 export const AUTH_COOKIE = "auth"
@@ -110,35 +111,30 @@ export function isStoreKey(value: string | null | undefined): value is StoreKey 
   return STORE_KEYS.includes(value as StoreKey)
 }
 
-// Never accept a requested store unless it is included in the user's session.
+// The demo runs as a single-store app. Ignore requested store switches.
 export function resolveStoreFromRequest(
-  request: NextRequest,
-  session: AuthSession
+  _request: NextRequest,
+  _session: AuthSession
 ): StoreKey | null {
-  const storeParam = request.nextUrl.searchParams.get("store")
-  const candidate = storeParam ?? session.currentStore ?? session.stores[0]
-  if (!isStoreKey(candidate)) return null
-  if (!session.stores.includes(candidate)) return null
-  return candidate
+  void _request
+  void _session
+  return DEFAULT_STORE
 }
 
-// Server-rendered pages use the same store authorization rule as route handlers.
+// Server-rendered pages use the same single-store rule as route handlers.
 export function resolveStoreFromValue(
-  store: string | null | undefined,
-  session: AuthSession
+  _store: string | null | undefined,
+  _session: AuthSession
 ): StoreKey | null {
-  const candidate = store ?? session.currentStore ?? session.stores[0]
-  if (!isStoreKey(candidate)) return null
-  if (!session.stores.includes(candidate)) return null
-  return candidate
+  void _store
+  void _session
+  return DEFAULT_STORE
 }
 
 export function updateCurrentStore(
   session: AuthSession,
-  store: StoreKey
+  _store: StoreKey
 ): AuthSession {
-  if (!session.stores.includes(store)) {
-    throw new Error("User does not have access to this store")
-  }
-  return { ...session, currentStore: store }
+  void _store
+  return { ...session, stores: [DEFAULT_STORE], currentStore: DEFAULT_STORE }
 }

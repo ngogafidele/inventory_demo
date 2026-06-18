@@ -1,7 +1,7 @@
-// Handles business date parsing and display consistently in Kigali time.
-export const KIGALI_TIME_ZONE = "Africa/Kigali"
-const KIGALI_OFFSET_MINUTES = 120
-const KIGALI_OFFSET_MS = KIGALI_OFFSET_MINUTES * 60 * 1000
+// Handles business date parsing and display consistently in business time.
+export const BUSINESS_TIME_ZONE = "UTC"
+const BUSINESS_OFFSET_MINUTES = 0
+const BUSINESS_OFFSET_MS = BUSINESS_OFFSET_MINUTES * 60 * 1000
 
 type DateParts = {
   year: number
@@ -16,9 +16,9 @@ function pad2(value: number) {
   return String(value).padStart(2, "0")
 }
 
-export function getKigaliDateParts(date: Date) {
+export function getBusinessDateParts(date: Date) {
   const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: KIGALI_TIME_ZONE,
+    timeZone: BUSINESS_TIME_ZONE,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -46,7 +46,7 @@ export function getKigaliDateParts(date: Date) {
   return parts
 }
 
-export function formatInKigali(
+export function formatInBusinessTime(
   dateInput: Date | string | undefined,
   options: Intl.DateTimeFormatOptions
 ) {
@@ -55,19 +55,19 @@ export function formatInKigali(
   const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput
   return new Intl.DateTimeFormat("en-US", {
     ...options,
-    timeZone: KIGALI_TIME_ZONE,
+    timeZone: BUSINESS_TIME_ZONE,
   }).format(date)
 }
 
-export function formatKigaliDateInput(dateInput: Date | string | undefined) {
+export function formatBusinessDateInput(dateInput: Date | string | undefined) {
   if (!dateInput) return ""
 
   const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput
-  const parts = getKigaliDateParts(date)
+  const parts = getBusinessDateParts(date)
   return `${parts.year}-${pad2(parts.month)}-${pad2(parts.day)}`
 }
 
-export function parseKigaliDateInput(value: string | undefined) {
+export function parseBusinessDateInput(value: string | undefined) {
   if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     return null
   }
@@ -90,6 +90,6 @@ export function parseKigaliDateInput(value: string | undefined) {
   }
 
   const utcMidnight = Date.UTC(year, month - 1, day, 0, 0, 0, 0)
-  // Kigali stays on CAT (UTC+2) year-round, so a fixed offset is safe here.
-  return new Date(utcMidnight - KIGALI_OFFSET_MS)
+  // The demo business time zone uses UTC, so a fixed offset is safe here.
+  return new Date(utcMidnight - BUSINESS_OFFSET_MS)
 }

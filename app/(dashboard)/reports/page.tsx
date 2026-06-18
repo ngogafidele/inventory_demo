@@ -12,10 +12,10 @@ import { Expense } from "@/lib/db/models/Expense"
 import { STORE_LABELS } from "@/lib/utils/constants"
 import { formatCurrency } from "@/lib/utils/format"
 import {
-  formatInKigali,
-  formatKigaliDateInput,
-  getKigaliDateParts,
-  parseKigaliDateInput,
+  formatInBusinessTime,
+  formatBusinessDateInput,
+  getBusinessDateParts,
+  parseBusinessDateInput,
 } from "@/lib/utils/time"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -29,7 +29,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-type StoreKey = "store1" | "store2"
+type StoreKey = "store1"
 
 type StoreReport = {
   store: StoreKey
@@ -133,7 +133,7 @@ function formatNumber(value: number) {
 function formatDateTime(date: Date | undefined) {
   if (!date) return "-"
 
-  return formatInKigali(date, {
+  return formatInBusinessTime(date, {
     month: "short",
     day: "2-digit",
     year: "numeric",
@@ -147,11 +147,11 @@ function getSingleParam(value: string | string[] | undefined) {
 }
 
 function formatDateInput(date: Date) {
-  return formatKigaliDateInput(date)
+  return formatBusinessDateInput(date)
 }
 
 function parseDateInput(value: string | undefined) {
-  return parseKigaliDateInput(value)
+  return parseBusinessDateInput(value)
 }
 
 function addDays(date: Date, days: number) {
@@ -162,13 +162,13 @@ function addDays(date: Date, days: number) {
 
 function getReportRange(params: Awaited<SearchParams>) {
   const now = new Date()
-  const nowParts = getKigaliDateParts(now)
+  const nowParts = getBusinessDateParts(now)
   const todayInput = `${nowParts.year}-${String(nowParts.month).padStart(2, "0")}-${String(
     nowParts.day
   ).padStart(2, "0")}`
   const monthStartInput = `${nowParts.year}-${String(nowParts.month).padStart(2, "0")}-01`
-  const today = parseKigaliDateInput(todayInput) ?? now
-  const monthStart = parseKigaliDateInput(monthStartInput) ?? today
+  const today = parseBusinessDateInput(todayInput) ?? now
+  const monthStart = parseBusinessDateInput(monthStartInput) ?? today
 
   const rawFrom = getSingleParam(params.from)
   const rawTo = getSingleParam(params.to)
@@ -194,7 +194,7 @@ function getReportRange(params: Awaited<SearchParams>) {
 }
 
 function formatDateOnly(date: Date) {
-  return formatInKigali(date, {
+  return formatInBusinessTime(date, {
     month: "short",
     day: "2-digit",
     year: "numeric",

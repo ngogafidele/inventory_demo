@@ -1,4 +1,4 @@
-// Presents administrator user and store-assignment management.
+// Presents administrator user management.
 import { connectToDatabase } from "@/lib/db/connection"
 import { User } from "@/lib/db/models/User"
 import { UserLoginLog } from "@/lib/db/models/UserLoginLog"
@@ -11,7 +11,6 @@ type UsersPageUser = {
   name: string
   email: string
   role: "admin" | "manager" | "staff"
-  stores: Array<"store1" | "store2">
   isActive: boolean
   isAdmin: boolean
   createdAt?: Date
@@ -47,7 +46,6 @@ export default async function UsersPage() {
     name: user.name,
     email: user.email,
     role: user.role,
-    stores: user.stores,
     isActive: user.isActive,
     isAdmin: user.isAdmin,
     createdAt: user.createdAt?.toISOString(),

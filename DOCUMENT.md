@@ -1,9 +1,9 @@
-# B Ikaze Inventory - System Reference
+# Demo Inventory - System Reference
 
 ## 1. Purpose
 
-B Ikaze Inventory supports the operation of two physical retail branches:
-**Gisozi** and **Kinyinya**. The system records stock movement, sales revenue,
+Demo Inventory supports the operation of one physical retail store:
+**Demo Store**. The system records stock movement, sales revenue,
 credit exposure, expenses, and printable customer or management documents.
 
 This document describes implemented behavior. It is intended for product
@@ -24,33 +24,32 @@ Operating profit = gross profit - recorded expenses
 Receivables = unpaid loan sales awaiting collection
 ```
 
-## 3. Branch Model
+## 3. Store Model
 
-| Key | Branch | PDF Address |
+| Key | Store | PDF Address |
 | --- | --- | --- |
-| `store1` | Gisozi | Kigali, Gisozi |
-| `store2` | Kinyinya | Kigali, Kinyinya |
+| `store1` | Demo Store | Demo Address |
 
-Branch separation is a core control:
+Store scoping is a core control:
 
-- Products and on-hand quantities are branch-specific.
+- Products and on-hand quantities are store-specific.
 - Sales, returns, invoices, expenses, alerts, and adjustments belong to one
-  branch.
+  store.
 - Dashboards, reports, notification queries, and PDFs operate on the active
-  permitted branch.
-- Invoice and proforma sequences are generated per branch and calendar period.
+  store.
+- Invoice and proforma sequences are generated per store and calendar period.
 
 ## 4. User Roles
 
 ### Administrator
 
-The administrator can operate across both stores and access restricted
-management functionality, including the dashboard, reports, user management,
-stock adjustments, product administration, and corrective sale deletion.
+The administrator can access restricted management functionality, including
+the dashboard, reports, user management, stock adjustments, product
+administration, and corrective sale deletion.
 
 ### Manager And Staff
 
-Non-admin users operate against their assigned store. They have access to
+Non-admin users operate against the demo store. They have access to
 daily business workflows exposed by the interface, such as products, sales,
 returns, billing, expenses, loans, and alerts. Specific management actions are
 limited by authorization checks in the route handlers and UI.
@@ -58,7 +57,7 @@ limited by authorization checks in the route handlers and UI.
 ### Sessions
 
 - Authentication is stored in an HTTP-only JWT cookie.
-- The session records the user, role, permitted stores, and selected store.
+- The session records the user, role, and demo store context.
 - Admin idle timeout is one hour; staff idle timeout is six hours.
 - Requests refresh active sessions and reject expired or inactive users.
 
@@ -66,9 +65,9 @@ limited by authorization checks in the route handlers and UI.
 
 ### Products And Stock
 
-A product records branch ownership, SKU, unit, quantity, low-stock threshold,
+A product records store ownership, SKU, unit, quantity, low-stock threshold,
 cost price, and selling price. Product names and SKUs are unique within each
-branch.
+store.
 
 Inventory changes occur through:
 
@@ -131,7 +130,7 @@ Sales invoices formalize a recorded sale for a customer. Proformas represent
 pre-sale or quotation documents and can be created from sale data or entered
 items.
 
-Documents are numbered by branch and month:
+Documents are numbered by store and month:
 
 ```text
 INV-YYYYMM-NNNN
@@ -140,7 +139,7 @@ PF-YYYYMM-NNNN
 
 ### Expenses
 
-Expenses record branch-level operating costs with description, date, optional
+Expenses record store-level operating costs with description, date, optional
 category and notes, and payment method. Reports deduct expenses from gross
 profit.
 
@@ -162,15 +161,16 @@ form.
 
 The application produces these customer-facing or management PDFs:
 
-| Document | Route Area | Branch Identity |
+| Document | Route Area | Store Identity |
 | --- | --- | --- |
-| Sales invoice | `app/api/sales-invoices/[id]/pdf` | Active branch address |
-| Proforma invoice | `app/api/proformas/[id]/pdf` | Active branch address |
-| Product catalog | `app/api/products/catalog/pdf` | Active branch address |
-| Outstanding statement | `app/api/outstanding/pdf` | Active branch address |
-| Management report | `app/api/reports/pdf` | Active branch label |
+| Sales invoice | `app/api/sales-invoices/[id]/pdf` | Demo store address |
+| Proforma invoice | `app/api/proformas/[id]/pdf` | Demo store address |
+| Product catalog | `app/api/products/catalog/pdf` | Demo store address |
+| Outstanding statement | `app/api/outstanding/pdf` | Demo store address |
+| Management report | `app/api/reports/pdf` | Demo store label |
 
-All business date formatting and date-range boundaries use Kigali time.
+All business date formatting and date-range boundaries use the configured
+business time zone.
 
 ## 7. Technical Architecture
 
@@ -224,8 +224,8 @@ MongoDB collections represented by Mongoose models include:
 - Preserve stock reconciliation when changing sale or return behavior.
 - Keep financial calculation changes consistent between screen reports and PDF
   reports.
-- Keep document branch identity aligned with the selected store.
-- Use Kigali time utilities for business dates, due dates, and reporting
+- Keep document store identity aligned with the demo store.
+- Use business time utilities for business dates, due dates, and reporting
   boundaries.
 - Review the installed Next.js documentation in `node_modules/next/dist/docs/`
   before changing framework-facing patterns.

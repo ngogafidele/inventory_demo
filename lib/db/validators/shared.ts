@@ -1,7 +1,7 @@
 // Supplies common store and identifier schemas used across endpoints.
 import { z } from "zod"
 
-export const storeSchema = z.enum(["store1", "store2"])
+export const storeSchema = z.enum(["store1"])
 export const storeArraySchema = z.array(storeSchema).min(1)
 export const objectIdSchema = z
   .string()

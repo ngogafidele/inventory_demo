@@ -5,7 +5,7 @@ const ExpenseSchema = new Schema(
   {
     store: {
       type: String,
-      enum: ["store1", "store2"],
+      enum: ["store1"],
       required: true,
     },
     description: { type: String, required: true, trim: true },

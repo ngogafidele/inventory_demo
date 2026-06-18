@@ -8,5 +8,5 @@ export type Product = {
   lowStockThreshold: number
   costPrice: number
   price: number
-  store: "store1" | "store2"
+  store: "store1"
 }

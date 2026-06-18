@@ -7,7 +7,7 @@ const CategorySchema = new Schema(
     description: { type: String, default: "" },
     store: {
       type: String,
-      enum: ["store1", "store2"],
+      enum: ["store1"],
       required: true,
     },
   },

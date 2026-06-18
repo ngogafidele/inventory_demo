@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { Pencil, Plus, Trash2 } from "lucide-react"
 import { formatCurrency } from "@/lib/utils/format"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ProductSearchSelect } from "@/components/products/product-search-select"
@@ -262,7 +262,7 @@ export function ReturnsManager({
       const createdAt = saved.createdAt ? new Date(saved.createdAt) : new Date()
       const normalized = {
         ...saved,
-        createdAtLabel: formatInKigali(createdAt, {
+        createdAtLabel: formatInBusinessTime(createdAt, {
           year: "numeric",
           month: "short",
           day: "2-digit",

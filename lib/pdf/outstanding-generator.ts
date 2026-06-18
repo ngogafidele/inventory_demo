@@ -110,11 +110,11 @@ const stampBox = {
 }
 
 const paymentMethodsLines = [
-  "Equity Bank Account: 4005201187639",
-  "Tin: 111049695",
-  "Tel No: 0788399098",
+  "Bank Account: DEMO-ACCOUNT",
+  "TIN: DEMO-TIN",
+  "Tel No: DEMO-PHONE",
   "",
-  "B Ikaze Hardware",
+  "Demo",
 ]
 
 const PRINT_TEXT = "#111827"
@@ -301,7 +301,7 @@ export function generateOutstandingCustomerPDF(
 
   const contentStart = separatorY + 20
 
-  boldText(doc).fontSize(11).text(storeInfo.name ?? "Multi-Store Inventory", 48, contentStart)
+  boldText(doc).fontSize(11).text(storeInfo.name ?? "Demo Inventory", 48, contentStart)
   mutedText(doc)
     .fontSize(9)
     .text(storeInfo.address ?? "", 48, contentStart + 18)

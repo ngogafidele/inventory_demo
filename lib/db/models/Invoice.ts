@@ -17,7 +17,7 @@ const InvoiceSchema = new Schema(
   {
     store: {
       type: String,
-      enum: ["store1", "store2"],
+      enum: ["store1"],
       required: true,
     },
     saleId: { type: Schema.Types.ObjectId, ref: "Sale" },

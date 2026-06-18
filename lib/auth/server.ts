@@ -1,7 +1,8 @@
-// Resolves authenticated sessions and active stores in Server Components.
+// Resolves authenticated sessions and the single active store in Server Components.
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import {
+  DEFAULT_STORE,
   getSessionFromCookies,
   type AuthSession,
   type StoreKey,
@@ -24,5 +25,6 @@ export async function requireServerSession(): Promise<AuthSession> {
 }
 
 export function getCurrentStore(session: AuthSession): StoreKey {
-  return session.currentStore ?? session.stores[0]
+  void session
+  return DEFAULT_STORE
 }

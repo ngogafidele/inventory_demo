@@ -3,9 +3,8 @@ import { connectToDatabase } from "@/lib/db/connection"
 import { User } from "@/lib/db/models/User"
 import mongoose from "mongoose"
 import {
-  isStoreKey,
+  DEFAULT_STORE,
   type AuthSession,
-  type StoreKey,
 } from "@/lib/auth/session"
 
 type SessionUser = {
@@ -16,11 +15,6 @@ type SessionUser = {
   isActive?: boolean
   role?: "admin" | "manager" | "staff"
   stores?: string[]
-}
-
-function getValidStores(stores: string[] | undefined): StoreKey[] {
-  if (!Array.isArray(stores)) return []
-  return stores.filter(isStoreKey)
 }
 
 export async function getCurrentUserSession(
@@ -40,16 +34,6 @@ export async function getCurrentUserSession(
     return null
   }
 
-  const stores = getValidStores(user.stores)
-  if (stores.length === 0) {
-    return null
-  }
-
-  const currentStore =
-    session.currentStore && stores.includes(session.currentStore)
-      ? session.currentStore
-      : stores[0]
-
   return {
     ...session,
     userId: user._id.toString(),
@@ -57,7 +41,7 @@ export async function getCurrentUserSession(
     email: user.email,
     isAdmin: user.isAdmin === true,
     role: user.role ?? "staff",
-    stores,
-    currentStore,
+    stores: [DEFAULT_STORE],
+    currentStore: DEFAULT_STORE,
   }
 }

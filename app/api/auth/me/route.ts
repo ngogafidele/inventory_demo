@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/db/connection"
 import { requireAuth } from "@/lib/auth/middleware"
+import { DEFAULT_STORE } from "@/lib/auth/session"
 import { User } from "@/lib/db/models/User"
 
 export async function GET(request: NextRequest) {
@@ -28,7 +29,8 @@ export async function GET(request: NextRequest) {
       success: true,
       data: {
         ...user.toObject(),
-        currentStore: session.currentStore ?? session.stores[0],
+        stores: [DEFAULT_STORE],
+        currentStore: DEFAULT_STORE,
       },
     })
   } catch (error) {

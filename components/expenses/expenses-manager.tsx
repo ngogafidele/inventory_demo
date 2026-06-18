@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/table"
 import { StatsCard } from "@/components/dashboard/stats-card"
 import { formatCurrency } from "@/lib/utils/format"
-import { formatInKigali } from "@/lib/utils/time"
+import { formatInBusinessTime } from "@/lib/utils/time"
 
 const PAYMENT_METHODS: Array<{ value: "cash" | "mobile-money" | "bank"; label: string }> = [
   { value: "cash", label: "Cash" },
@@ -182,7 +182,7 @@ export function ExpensesManager({
 
       const saved = body.data as ExpenseClient
       const dateLabel = saved.date
-        ? formatInKigali(saved.date, {
+        ? formatInBusinessTime(saved.date, {
             year: "numeric",
             month: "short",
             day: "2-digit",
@@ -426,7 +426,7 @@ export function ExpensesManager({
                 <TableCell>
                   {expense.dateLabel ??
                     (expense.date
-                      ? formatInKigali(expense.date, {
+                      ? formatInBusinessTime(expense.date, {
                           year: "numeric",
                           month: "short",
                           day: "2-digit",

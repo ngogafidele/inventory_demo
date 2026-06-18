@@ -16,7 +16,7 @@ const ProformaSchema = new Schema(
   {
     storeId: {
       type: String,
-      enum: ["store1", "store2"],
+      enum: ["store1"],
       required: true,
     },
     saleId: { type: Schema.Types.ObjectId, ref: "Sale" },

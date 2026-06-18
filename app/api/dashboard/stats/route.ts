@@ -8,7 +8,7 @@ import { ReturnModel } from "@/lib/db/models/Return"
 import { Sale } from "@/lib/db/models/Sale"
 import { Invoice } from "@/lib/db/models/Invoice"
 import { Expense } from "@/lib/db/models/Expense"
-import { formatKigaliDateInput, parseKigaliDateInput } from "@/lib/utils/time"
+import { formatBusinessDateInput, parseBusinessDateInput } from "@/lib/utils/time"
 
 type DashboardSaleItem = {
   quantity: number
@@ -68,9 +68,9 @@ type DashboardTopReturnedProduct = {
   returnedValue: number
 }
 
-function getKigaliTodayRange() {
-  const todayKigali = formatKigaliDateInput(new Date())
-  const start = parseKigaliDateInput(todayKigali)
+function getBusinessTodayRange() {
+  const todayBusiness = formatBusinessDateInput(new Date())
+  const start = parseBusinessDateInput(todayBusiness)
 
   if (!start) {
     const fallback = new Date()
@@ -103,7 +103,7 @@ export async function GET(request: NextRequest) {
 
     await connectToDatabase()
 
-    const today = getKigaliTodayRange()
+    const today = getBusinessTodayRange()
     const todayFilter = {
       store,
       createdAt: { $gte: today.start, $lt: today.end },

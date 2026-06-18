@@ -9,7 +9,7 @@ import { requireAdmin, requireAuth } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
 import { syncLowStockAlert } from "@/lib/db/alerts"
 import { UpdateSaleSchema } from "@/lib/db/validators/sale"
-import { parseKigaliDateInput } from "@/lib/utils/time"
+import { parseBusinessDateInput } from "@/lib/utils/time"
 
 type SaleItemForRestock = {
   productId: { toString(): string }
@@ -374,7 +374,7 @@ export async function PUT(
     }
     const paymentDate =
       paymentStatus === "unpaid"
-        ? parseKigaliDateInput(payload.outstanding?.paymentDate)
+        ? parseBusinessDateInput(payload.outstanding?.paymentDate)
         : null
 
     if (paymentStatus === "unpaid" && !paymentDate) {
