@@ -1,7 +1,7 @@
 "use client"
 
 // Provides a searchable branch-product selection control.
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { Input } from "@/components/ui/input"
 
 export type ProductSearchOption = {
@@ -34,6 +34,8 @@ export function ProductSearchSelect({
     () => products.find((product) => product._id === value) ?? null,
     [products, value]
   )
+  const selectedLabel = selectedProduct ? formatProductLabel(selectedProduct) : ""
+  const inputValue = open ? search : selectedLabel
 
   const filteredProducts = useMemo(() => {
     const query = search.trim().toLowerCase()
@@ -49,18 +51,13 @@ export function ProductSearchSelect({
       .slice(0, 20)
   }, [products, search])
 
-  useEffect(() => {
-    if (!open) {
-      setSearch(selectedProduct ? formatProductLabel(selectedProduct) : "")
-    }
-  }, [open, selectedProduct])
-
   return (
     <div className="relative">
       <Input
-        value={search}
+        value={inputValue}
         placeholder={placeholder}
         onFocus={(event) => {
+          setSearch(selectedLabel)
           setOpen(true)
           event.currentTarget.select()
         }}
@@ -70,10 +67,7 @@ export function ProductSearchSelect({
         onChange={(event) => {
           setSearch(event.target.value)
           setOpen(true)
-          if (
-            selectedProduct &&
-            event.target.value !== formatProductLabel(selectedProduct)
-          ) {
+          if (selectedProduct && event.target.value !== selectedLabel) {
             onValueChange("")
           }
         }}

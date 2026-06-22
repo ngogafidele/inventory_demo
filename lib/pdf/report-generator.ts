@@ -2,7 +2,11 @@
 import { createRequire } from "module"
 import path from "node:path"
 import type * as Fs from "node:fs"
-import { STORE_LABELS, type StoreKey } from "@/lib/utils/constants"
+import {
+  STORE_DOCUMENT_DETAILS,
+  STORE_LABELS,
+  type StoreKey,
+} from "@/lib/utils/constants"
 import { formatCurrency } from "@/lib/utils/format"
 import { formatInBusinessTime } from "@/lib/utils/time"
 
@@ -200,7 +204,7 @@ function drawLogo(doc: ReportPdfDocument) {
       .font("Helvetica-Bold")
       .fontSize(16)
       .fillColor(PRINT_HEADER_TEXT)
-      .text("Demo", 48, 72, { width: 150 })
+      .text("BIRW INVESTMENT GROUP Ltd", 48, 72, { width: 150 })
   }
 }
 
@@ -379,6 +383,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
   drawLogo(doc)
 
   const storeName = STORE_LABELS[payload.store]
+  const storeInfo = STORE_DOCUMENT_DETAILS[payload.store]
   const totals = sumReports(payload.reports)
 
   doc
@@ -397,6 +402,19 @@ export function generateReportPDF(payload: ReportPdfPayload) {
       align: "right",
       width: 330,
     })
+
+  doc
+    .font("Helvetica")
+    .fontSize(8)
+    .fillColor(PRINT_MUTED_TEXT)
+    .text(storeInfo.address, 48, 132, { width: 250 })
+    .text(`TIN: ${storeInfo.tin}`, 48, 144, { width: 250 })
+    .text(`Tel: ${storeInfo.phone}`, 48, 156, { width: 250 })
+    .text(`Email: ${storeInfo.email}`, 300, 132, { width: 220 })
+    .text(`BPR Bank Accounts: ${storeInfo.bprBankAccounts}`, 300, 144, {
+      width: 260,
+    })
+    .text(`MoMo: ${storeInfo.momo}`, 300, 156, { width: 220 })
 
   doc
     .moveTo(PAGE_LEFT, 170)

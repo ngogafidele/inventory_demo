@@ -26,7 +26,7 @@ export function AppShell({
             <div className="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-white shadow-sm">
               <Image
                 src="/images/logo.png"
-                alt="Demo Inventory logo"
+                alt="BIRW Inventory logo"
                 width={48}
                 height={48}
                 priority
@@ -35,7 +35,7 @@ export function AppShell({
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Demo Inventory
+                BIRW Inventory
               </p>
               <h1 className="text-xl font-semibold sm:text-2xl">
                 Operations Hub

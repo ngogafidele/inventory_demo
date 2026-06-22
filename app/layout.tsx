@@ -1,21 +1,10 @@
-// Defines root metadata and document structure for the demo application.
+// Defines root metadata and document structure for the inventory application.
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Demo Inventory",
-  description: "Demo inventory management for one store",
+  title: "BIRW Inventory",
+  description: "BIRW inventory management for one store",
 };
 
 export default function RootLayout({
@@ -26,7 +15,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

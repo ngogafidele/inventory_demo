@@ -111,7 +111,7 @@ export function isStoreKey(value: string | null | undefined): value is StoreKey 
   return STORE_KEYS.includes(value as StoreKey)
 }
 
-// The demo runs as a single-store app. Ignore requested store switches.
+// The app runs as a single-store system. Ignore requested store switches.
 export function resolveStoreFromRequest(
   _request: NextRequest,
   _session: AuthSession

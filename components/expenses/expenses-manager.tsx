@@ -69,6 +69,7 @@ const emptyForm: FormState = {
 }
 
 const RECENT_DAYS = 30
+const RECENT_CUTOFF = Date.now() - RECENT_DAYS * 24 * 60 * 60 * 1000
 
 export function ExpensesManager({
   initialExpenses,
@@ -100,10 +101,9 @@ export function ExpensesManager({
   }, [filteredExpenses])
 
   const recentCount = useMemo(() => {
-    const cutoff = Date.now() - RECENT_DAYS * 24 * 60 * 60 * 1000
     return filteredExpenses.filter((expense) => {
       if (!expense.date) return false
-      return new Date(expense.date).getTime() >= cutoff
+      return new Date(expense.date).getTime() >= RECENT_CUTOFF
     }).length
   }, [filteredExpenses])
 

@@ -90,6 +90,6 @@ export function parseBusinessDateInput(value: string | undefined) {
   }
 
   const utcMidnight = Date.UTC(year, month - 1, day, 0, 0, 0, 0)
-  // The demo business time zone uses UTC, so a fixed offset is safe here.
+  // The business time zone uses UTC, so a fixed offset is safe here.
   return new Date(utcMidnight - BUSINESS_OFFSET_MS)
 }

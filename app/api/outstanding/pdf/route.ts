@@ -6,7 +6,7 @@ import "@/lib/db/models/User"
 import { requireAuth } from "@/lib/auth/middleware"
 import { resolveStoreFromRequest } from "@/lib/auth/session"
 import { getBusinessDateParts } from "@/lib/utils/time"
-import { STORE_ADDRESSES } from "@/lib/utils/constants"
+import { STORE_DOCUMENT_DETAILS } from "@/lib/utils/constants"
 import { generateOutstandingCustomerPDF } from "@/lib/pdf/outstanding-generator"
 
 export const runtime = "nodejs"
@@ -223,7 +223,7 @@ export async function GET(request: NextRequest) {
         totalPaid,
         totalOutstanding,
       },
-      { name: "Demo", address: STORE_ADDRESSES[store] }
+      STORE_DOCUMENT_DETAILS[store]
     )
 
     const slug = slugifyCustomerName(customerName) || "customer"

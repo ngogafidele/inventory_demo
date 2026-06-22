@@ -1,9 +1,9 @@
-# Demo Inventory - System Reference
+# BIRW Inventory - System Reference
 
 ## 1. Purpose
 
-Demo Inventory supports the operation of one physical retail store:
-**Demo Store**. The system records stock movement, sales revenue,
+BIRW Inventory supports the operation of one physical retail store:
+**BIRW INVESTMENT GROUP Ltd**. The system records stock movement, sales revenue,
 credit exposure, expenses, and printable customer or management documents.
 
 This document describes implemented behavior. It is intended for product
@@ -28,7 +28,17 @@ Receivables = unpaid loan sales awaiting collection
 
 | Key | Store | PDF Address |
 | --- | --- | --- |
-| `store1` | Demo Store | Demo Address |
+| `store1` | BIRW INVESTMENT GROUP Ltd | KIGALI/GASABO/GISOZI/GAKIRIRO |
+
+Company details used on customer-facing documents:
+
+| Field | Value |
+| --- | --- |
+| TIN | `129103643` |
+| Telephone | `0788229874 / 0788737188` |
+| Email | `birwgroup2023@gmail.com` |
+| BPR Bank Accounts | `4493574895 (Rwf) / 4493947209 (USD)` |
+| MoMo | `0784637231` |
 
 Store scoping is a core control:
 
@@ -49,7 +59,7 @@ administration, and corrective sale deletion.
 
 ### Manager And Staff
 
-Non-admin users operate against the demo store. They have access to
+Non-admin users operate against BIRW INVESTMENT GROUP Ltd. They have access to
 daily business workflows exposed by the interface, such as products, sales,
 returns, billing, expenses, loans, and alerts. Specific management actions are
 limited by authorization checks in the route handlers and UI.
@@ -57,7 +67,7 @@ limited by authorization checks in the route handlers and UI.
 ### Sessions
 
 - Authentication is stored in an HTTP-only JWT cookie.
-- The session records the user, role, and demo store context.
+- The session records the user, role, and BIRW store context.
 - Admin idle timeout is one hour; staff idle timeout is six hours.
 - Requests refresh active sessions and reject expired or inactive users.
 
@@ -163,11 +173,11 @@ The application produces these customer-facing or management PDFs:
 
 | Document | Route Area | Store Identity |
 | --- | --- | --- |
-| Sales invoice | `app/api/sales-invoices/[id]/pdf` | Demo store address |
-| Proforma invoice | `app/api/proformas/[id]/pdf` | Demo store address |
-| Product catalog | `app/api/products/catalog/pdf` | Demo store address |
-| Outstanding statement | `app/api/outstanding/pdf` | Demo store address |
-| Management report | `app/api/reports/pdf` | Demo store label |
+| Sales invoice | `app/api/sales-invoices/[id]/pdf` | BIRW company details |
+| Proforma invoice | `app/api/proformas/[id]/pdf` | BIRW company details |
+| Product catalog | `app/api/products/catalog/pdf` | BIRW company details |
+| Outstanding statement | `app/api/outstanding/pdf` | BIRW company details |
+| Management report | `app/api/reports/pdf` | BIRW company label |
 
 All business date formatting and date-range boundaries use the configured
 business time zone.
@@ -224,7 +234,7 @@ MongoDB collections represented by Mongoose models include:
 - Preserve stock reconciliation when changing sale or return behavior.
 - Keep financial calculation changes consistent between screen reports and PDF
   reports.
-- Keep document store identity aligned with the demo store.
+- Keep document store identity aligned with BIRW INVESTMENT GROUP Ltd.
 - Use business time utilities for business dates, due dates, and reporting
   boundaries.
 - Review the installed Next.js documentation in `node_modules/next/dist/docs/`

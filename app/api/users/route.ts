@@ -1,4 +1,4 @@
-// Lists and provisions users for the demo store.
+// Lists and provisions users for the BIRW store.
 import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/db/connection"
 import { User } from "@/lib/db/models/User"

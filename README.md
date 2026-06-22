@@ -1,7 +1,7 @@
-# Demo Inventory
+# BIRW Inventory
 
-Demo Inventory is a single-store inventory, sales, and receivables
-management application for **Demo Store**. It supports the daily
+BIRW Inventory is a single-store inventory, sales, and receivables
+management application for **BIRW INVESTMENT GROUP Ltd**. It supports the daily
 operation of a physical-goods business: stock control, direct and credit
 sales, returns, invoicing, expenses, alerts, and store-level performance
 reporting.
@@ -27,10 +27,20 @@ Application data is isolated by store:
 
 | Internal Key | Store | Document Address |
 | --- | --- | --- |
-| `store1` | Demo Store | Demo Address |
+| `store1` | BIRW INVESTMENT GROUP Ltd | KIGALI/GASABO/GISOZI/GAKIRIRO |
 
 Products, sales, returns, invoices, expenses, receivables, alerts, and report
-calculations are scoped to the demo store.
+calculations are scoped to BIRW INVESTMENT GROUP Ltd.
+
+## Company Details
+
+| Field | Value |
+| --- | --- |
+| TIN | `129103643` |
+| Telephone | `0788229874 / 0788737188` |
+| Email | `birwgroup2023@gmail.com` |
+| BPR Bank Accounts | `4493574895 (Rwf) / 4493947209 (USD)` |
+| MoMo | `0784637231` |
 
 ## Technology
 
@@ -162,4 +172,4 @@ public/              Static assets and branding
   were issued.
 - Deleting a sale that is linked to an invoice is blocked until the invoice is
   addressed.
-- Customer-facing PDFs must use the demo store identity.
+- Customer-facing PDFs must use BIRW INVESTMENT GROUP Ltd identity.

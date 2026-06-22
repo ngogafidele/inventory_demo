@@ -54,8 +54,11 @@ type OutstandingPdfPayload = {
 type StoreInfo = {
   name?: string
   address?: string
+  tin?: string
   phone?: string
   email?: string
+  bprBankAccounts?: string
+  momo?: string
 }
 
 type OutstandingPdfDocument = {
@@ -108,14 +111,6 @@ const stampBox = {
   height: 78,
   fit: [78, 78] as [number, number],
 }
-
-const paymentMethodsLines = [
-  "Bank Account: DEMO-ACCOUNT",
-  "TIN: DEMO-TIN",
-  "Tel No: DEMO-PHONE",
-  "",
-  "Demo",
-]
 
 const PRINT_TEXT = "#111827"
 const PRINT_MUTED_TEXT = "#1f2937"
@@ -245,6 +240,18 @@ function truncateToWidth(
   return `${text.slice(0, start).trimEnd()}${suffix}`
 }
 
+function getPaymentDetailsLines(storeInfo: StoreInfo) {
+  return [
+    `BPR Bank Accounts: ${storeInfo.bprBankAccounts ?? "-"}`,
+    `TIN: ${storeInfo.tin ?? "-"}`,
+    `Tel: ${storeInfo.phone ?? "-"}`,
+    `MoMo: ${storeInfo.momo ?? "-"}`,
+    storeInfo.email ? `Email: ${storeInfo.email}` : "",
+    "",
+    storeInfo.name ?? "BIRW INVESTMENT GROUP Ltd",
+  ].filter((line) => line.length > 0)
+}
+
 export function generateOutstandingCustomerPDF(
   payload: OutstandingPdfPayload,
   storeInfo: StoreInfo
@@ -301,7 +308,9 @@ export function generateOutstandingCustomerPDF(
 
   const contentStart = separatorY + 20
 
-  boldText(doc).fontSize(11).text(storeInfo.name ?? "Demo Inventory", 48, contentStart)
+  boldText(doc)
+    .fontSize(11)
+    .text(storeInfo.name ?? "BIRW INVESTMENT GROUP Ltd", 48, contentStart)
   mutedText(doc)
     .fontSize(9)
     .text(storeInfo.address ?? "", 48, contentStart + 18)
@@ -466,7 +475,7 @@ export function generateOutstandingCustomerPDF(
     .font("Helvetica-Bold")
     .fontSize(9)
     .fillColor(PRINT_TEXT)
-    .text(paymentMethodsLines.join("\n"), 48, paymentBlockY, {
+    .text(getPaymentDetailsLines(storeInfo).join("\n"), 48, paymentBlockY, {
       width: 220,
     })
 

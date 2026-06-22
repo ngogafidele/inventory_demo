@@ -6,7 +6,7 @@ import { resolveStoreFromRequest } from "@/lib/auth/session"
 import { Invoice } from "@/lib/db/models/Invoice"
 import { Sale } from "@/lib/db/models/Sale"
 import { generateSalesInvoicePDF } from "@/lib/pdf/invoice-generator"
-import { STORE_ADDRESSES } from "@/lib/utils/constants"
+import { STORE_DOCUMENT_DETAILS } from "@/lib/utils/constants"
 
 export const runtime = "nodejs"
 
@@ -75,7 +75,7 @@ export async function GET(
         totalAmount: invoice.totalAmount,
         items,
       },
-      { name: "Demo", address: STORE_ADDRESSES[store] }
+      STORE_DOCUMENT_DETAILS[store]
     )
 
     return new NextResponse(new Uint8Array(pdf), {

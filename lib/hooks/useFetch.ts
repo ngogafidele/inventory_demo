@@ -10,7 +10,6 @@ export function useFetch<T>(url: string) {
 
   useEffect(() => {
     let active = true
-    setLoading(true)
     fetch(url)
       .then((response) => response.json())
       .then((payload) => {

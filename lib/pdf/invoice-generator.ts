@@ -46,8 +46,11 @@ type PdfDocumentData = {
 type StoreInfo = {
   name?: string
   address?: string
+  tin?: string
   phone?: string
   email?: string
+  bprBankAccounts?: string
+  momo?: string
 }
 
 type InvoicePdfDocument = {
@@ -89,14 +92,6 @@ const stampBox = {
   height: 78,
   fit: [78, 78] as [number, number],
 }
-
-const businessFooterLines = [
-  "Bank Account: DEMO-ACCOUNT",
-  "TIN: DEMO-TIN",
-  "Tel No: DEMO-PHONE",
-  "",
-  "Demo",
-]
 
 const PRINT_TEXT = "#111827"
 const PRINT_MUTED_TEXT = "#1f2937"
@@ -270,7 +265,7 @@ function writeInvoicePdf(
 
   boldText(doc)
     .fontSize(11)
-    .text(storeInfo.name ?? "Demo Inventory", 48, 230)
+    .text(storeInfo.name ?? "BIRW INVESTMENT GROUP Ltd", 48, 230)
   mutedText(doc)
     .fontSize(9)
     .text(storeInfo.address ?? "", 48, 248)
@@ -389,6 +384,18 @@ function writeInvoicePdf(
   return done
 }
 
+function getBusinessFooterLines(storeInfo: StoreInfo) {
+  return [
+    `BPR Bank Accounts: ${storeInfo.bprBankAccounts ?? "-"}`,
+    `TIN: ${storeInfo.tin ?? "-"}`,
+    `Tel: ${storeInfo.phone ?? "-"}`,
+    `MoMo: ${storeInfo.momo ?? "-"}`,
+    storeInfo.email ? `Email: ${storeInfo.email}` : "",
+    "",
+    storeInfo.name ?? "BIRW INVESTMENT GROUP Ltd",
+  ].filter((line) => line.length > 0)
+}
+
 export function generateSalesInvoicePDF(
   invoice: PdfDocumentData,
   storeInfo: StoreInfo
@@ -398,7 +405,7 @@ export function generateSalesInvoicePDF(
     invoice,
     storeInfo,
     "Bill To",
-    businessFooterLines
+    getBusinessFooterLines(storeInfo)
   )
 }
 
@@ -411,7 +418,7 @@ export function generateProformaPDF(
     proforma,
     storeInfo,
     "Proforma To",
-    businessFooterLines,
-    "Thank You For Doing Business With Demo"
+    getBusinessFooterLines(storeInfo),
+    "Thank You For Doing Business With BIRW INVESTMENT GROUP Ltd"
   )
 }

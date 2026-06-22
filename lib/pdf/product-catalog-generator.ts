@@ -41,8 +41,11 @@ type ProductCatalogPayload = {
 type StoreInfo = {
   name?: string
   address?: string
+  tin?: string
   phone?: string
   email?: string
+  bprBankAccounts?: string
+  momo?: string
 }
 
 type ProductCatalogPdfDocument = {
@@ -263,12 +266,26 @@ export function generateProductCatalogPDF(
     .strokeColor("#f08010")
     .stroke()
 
-  boldText(doc).fontSize(11).text(storeInfo.name ?? "Demo Inventory", 48, 210)
+  boldText(doc)
+    .fontSize(11)
+    .text(storeInfo.name ?? "BIRW INVESTMENT GROUP Ltd", 48, 210)
   mutedText(doc)
     .fontSize(9)
     .text(storeInfo.address ?? "", 48, 228)
     .text(storeInfo.phone ?? "", 48, 242)
     .text(storeInfo.email ?? "", 48, 256)
+    .text(storeInfo.tin ? `TIN: ${storeInfo.tin}` : "", 48, 270)
+    .text(
+      storeInfo.bprBankAccounts
+        ? `BPR Bank Accounts: ${storeInfo.bprBankAccounts}`
+        : "",
+      250,
+      228,
+      { width: 260 }
+    )
+    .text(storeInfo.momo ? `MoMo: ${storeInfo.momo}` : "", 250, 242, {
+      width: 260,
+    })
 
   const columns = getColumns()
   const tableTop = 296

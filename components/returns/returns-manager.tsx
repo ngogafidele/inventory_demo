@@ -1,7 +1,7 @@
 "use client"
 
 // Manages return transactions and the associated stock-restoration UI.
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { Pencil, Plus, Trash2 } from "lucide-react"
 import { formatCurrency } from "@/lib/utils/format"
 import { formatInBusinessTime } from "@/lib/utils/time"
@@ -110,12 +110,6 @@ export function ReturnsManager({
   const paginatedReturns = returns.slice(pageStart, pageStart + RETURNS_PER_PAGE)
   const visibleStart = returns.length === 0 ? 0 : pageStart + 1
   const visibleEnd = Math.min(pageStart + RETURNS_PER_PAGE, returns.length)
-
-  useEffect(() => {
-    if (currentPage > pageCount) {
-      setCurrentPage(pageCount)
-    }
-  }, [currentPage, pageCount])
 
   const setDraftItem = (
     index: number,
