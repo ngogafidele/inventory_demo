@@ -7,7 +7,7 @@ Update this file after meaningful feature work. It should let the next agent see
 ## Current Status
 
 **Phase:** Production maintenance and feature iteration  
-**Last documented:** BIRW branding and company identity update  
+**Last documented:** UI theme and auth screens recolored to match the BIRW logo palette  
 **Next:** Keep context files updated after future feature changes
 
 ---
@@ -29,6 +29,7 @@ Update this file after meaningful feature work. It should let the next agent see
 - [x] Dashboard and admin reports
 - [x] User management and role controls
 - [x] Context documentation mirroring `job_pilot/context`
+- [x] Shared UI tokens plus login and setup-admin screens use the BIRW logo-derived green, blue, and gold palette
 
 ---
 

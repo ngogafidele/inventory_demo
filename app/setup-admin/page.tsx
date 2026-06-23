@@ -67,7 +67,7 @@ export default function SetupAdminPage() {
           <Button
             asChild
             variant="outline"
-            className="mb-6 h-11 border-[var(--brand-navy)] text-[var(--brand-navy)] hover:bg-[var(--brand-navy)] hover:text-white"
+            className="mb-6 h-11 border-[var(--brand-green)] text-[var(--brand-green-deep)] hover:bg-[var(--brand-green)] hover:text-white"
           >
             <Link href="/">
               <ArrowLeft className="size-4" />
@@ -76,10 +76,10 @@ export default function SetupAdminPage() {
           </Button>
 
           <div className="mb-6">
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-[var(--brand-orange)] text-[var(--brand-navy)]">
+            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-[var(--brand-gold)] text-[var(--brand-green-deep)]">
               <ShieldCheck className="size-5" />
             </div>
-            <h1 className="text-2xl font-semibold text-[var(--brand-navy)]">
+            <h1 className="text-2xl font-semibold text-[var(--brand-green-deep)]">
               Create admin account
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -191,7 +191,7 @@ export default function SetupAdminPage() {
             </label>
 
             <Button
-              className="h-11 w-full bg-[var(--brand-orange)] font-semibold text-[var(--brand-navy)] hover:bg-[var(--brand-orange)]/90"
+              className="h-11 w-full bg-[var(--brand-green)] font-semibold text-white hover:bg-[var(--brand-green-deep)]"
               disabled={isPending}
             >
               {isPending ? "Creating admin..." : "Create admin"}
@@ -201,7 +201,7 @@ export default function SetupAdminPage() {
           <Button
             asChild
             variant="outline"
-            className="mt-4 h-11 w-full border-[var(--brand-navy)] text-[var(--brand-navy)] hover:bg-[var(--brand-navy)] hover:text-white"
+            className="mt-4 h-11 w-full border-[var(--brand-green)] text-[var(--brand-green-deep)] hover:bg-[var(--brand-green)] hover:text-white"
           >
             <Link href="/">
               <ArrowLeft className="size-4" />
@@ -212,7 +212,7 @@ export default function SetupAdminPage() {
 
         <section className="space-y-6">
           <div className="flex items-center gap-4">
-            <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/80 bg-white shadow-sm">
+            <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm">
               <Image
                 src="/images/logo.png"
                 alt="BIRW logo"
@@ -223,10 +223,10 @@ export default function SetupAdminPage() {
               />
             </div>
             <div>
-              <p className="text-sm font-semibold uppercase text-[var(--brand-orange-text)]">
+              <p className="text-sm font-semibold uppercase text-[var(--brand-blue-deep)]">
                 Initial system setup
               </p>
-              <h2 className="text-3xl font-semibold text-[var(--brand-navy)] sm:text-4xl">
+              <h2 className="text-3xl font-semibold text-[var(--brand-green-deep)] sm:text-4xl">
                 One admin opens the whole workspace.
               </h2>
             </div>
@@ -240,9 +240,9 @@ export default function SetupAdminPage() {
             ].map((item) => (
               <div
                 key={item}
-                className="flex items-start gap-3 rounded-lg border border-border/80 bg-white/70 p-4 text-sm text-muted-foreground shadow-sm"
+                className="flex items-start gap-3 rounded-lg border border-[var(--brand-green)]/20 bg-white/75 p-4 text-sm text-muted-foreground shadow-sm"
               >
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[var(--brand-orange-text)]" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[var(--brand-blue)]" />
                 <span>{item}</span>
               </div>
             ))}

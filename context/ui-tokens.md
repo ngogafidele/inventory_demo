@@ -10,28 +10,28 @@ All core colors and radii are CSS variables in `:root` and mapped into Tailwind 
 
 ```css
 :root {
-  --background: #f7f9fc;
-  --foreground: #111827;
+  --background: #f6faf6;
+  --foreground: #102017;
   --card: #ffffff;
-  --card-foreground: #111827;
+  --card-foreground: #102017;
   --popover: #ffffff;
-  --popover-foreground: #111827;
-  --primary: #002050;
+  --popover-foreground: #102017;
+  --primary: #126a35;
   --primary-foreground: #ffffff;
-  --secondary: #edf2f8;
-  --secondary-foreground: #00183d;
-  --muted: #eef3f8;
-  --muted-foreground: #5f6673;
-  --accent: #f08010;
-  --accent-foreground: #ffffff;
-  --border: #d8dee8;
-  --input: #cbd7e6;
-  --ring: #f08010;
-  --chart-1: #002050;
-  --chart-2: #f08010;
-  --chart-3: #3a5578;
-  --chart-4: #505050;
-  --chart-5: #f4a340;
+  --secondary: #eaf4ef;
+  --secondary-foreground: #075b78;
+  --muted: #eef6ef;
+  --muted-foreground: #55665b;
+  --accent: #c99a18;
+  --accent-foreground: #102017;
+  --border: #d3e3d7;
+  --input: #bfd5c6;
+  --ring: #0b7da6;
+  --chart-1: #126a35;
+  --chart-2: #c99a18;
+  --chart-3: #0b7da6;
+  --chart-4: #56665d;
+  --chart-5: #78a22f;
   --radius: 0.8rem;
 }
 ```
@@ -52,16 +52,17 @@ Tailwind token classes include:
 
 | Purpose | Token | Value |
 | --- | --- | --- |
-| Page background | `--background` | `#f7f9fc` |
-| Text | `--foreground` | `#111827` |
+| Page background | `--background` | `#f6faf6` |
+| Text | `--foreground` | `#102017` |
 | Main surface | `--card` | `#ffffff` |
-| Primary/navy | `--primary` | `#002050` |
-| Orange accent | `--accent` | `#f08010` |
-| Muted surface | `--muted` | `#eef3f8` |
-| Muted text | `--muted-foreground` | `#5f6673` |
-| Border | `--border` | `#d8dee8` |
+| Primary green | `--primary` | `#126a35` |
+| Blue accent/ring | `--ring` | `#0b7da6` |
+| Gold accent | `--accent` | `#c99a18` |
+| Muted surface | `--muted` | `#eef6ef` |
+| Muted text | `--muted-foreground` | `#55665b` |
+| Border | `--border` | `#d3e3d7` |
 
-The public login screen uses `.brand-auth-surface`, which defines the same brand in a scoped, light-only treatment with `--brand-navy`, `--brand-orange`, and `--brand-charcoal`.
+The public login and setup screens use `.brand-auth-surface`, a scoped light-only treatment derived from the BIRW logo. Auth-specific variables include `--brand-green`, `--brand-green-deep`, `--brand-blue`, `--brand-blue-deep`, `--brand-gold`, and `--brand-charcoal`. The tuned palette uses forest green for identity and primary actions, teal-blue for secondary operational accents, antique gold for restrained highlights, and soft green-tinted neutrals for modern surfaces.
 
 ---
 

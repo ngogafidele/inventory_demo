@@ -56,7 +56,7 @@ export default function Home() {
       <main className="mx-auto grid min-h-screen max-w-6xl items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
         <section className="order-2 space-y-8 lg:order-1">
           <div className="flex items-center gap-4">
-            <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/80 bg-white shadow-sm">
+            <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm">
               <Image
                 src="/images/logo.png"
                 alt="BIRW logo"
@@ -67,10 +67,10 @@ export default function Home() {
               />
             </div>
             <div>
-              <p className="text-sm font-semibold uppercase text-[var(--brand-orange-text)]">
+              <p className="text-sm font-semibold uppercase text-[var(--brand-blue-deep)]">
                 BIRW Inventory
               </p>
-              <h1 className="text-3xl font-semibold text-[var(--brand-navy)] sm:text-4xl">
+              <h1 className="text-3xl font-semibold text-[var(--brand-green-deep)] sm:text-4xl">
                 Inventory control for every counter.
               </h1>
             </div>
@@ -84,9 +84,9 @@ export default function Home() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-lg border border-border/80 bg-white/70 p-4 text-sm font-medium text-[var(--brand-navy)] shadow-sm"
+                className="rounded-lg border border-[var(--brand-green)]/20 bg-white/75 p-4 text-sm font-medium text-[var(--brand-green-deep)] shadow-sm"
               >
-                <PackageCheck className="mb-3 size-5 text-[var(--brand-orange-text)]" />
+                <PackageCheck className="mb-3 size-5 text-[var(--brand-blue)]" />
                 {item}
               </div>
             ))}
@@ -95,10 +95,10 @@ export default function Home() {
 
         <section className="order-1 rounded-xl border border-border/80 bg-card p-5 shadow-xl sm:p-7 lg:order-2">
           <div className="mb-6">
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-[var(--brand-navy)] text-white">
+            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-[var(--brand-green)] text-white">
               <KeyRound className="size-5" />
             </div>
-            <h2 className="text-2xl font-semibold text-[var(--brand-navy)]">
+            <h2 className="text-2xl font-semibold text-[var(--brand-green-deep)]">
               Sign in
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -163,7 +163,7 @@ export default function Home() {
             </label>
 
             <Button
-              className="h-11 w-full bg-[var(--brand-navy)] text-white hover:bg-[var(--brand-navy)]/90"
+              className="h-11 w-full bg-[var(--brand-green)] text-white hover:bg-[var(--brand-green-deep)]"
               disabled={isPending}
             >
               {isPending ? "Signing in..." : "Sign in"}
@@ -177,7 +177,7 @@ export default function Home() {
             <Button
               asChild
               variant="secondary"
-              className="mt-3 h-11 w-full border border-[var(--brand-orange)] bg-[var(--brand-orange)] font-semibold text-[var(--brand-navy)] hover:bg-[var(--brand-orange)]/90"
+              className="mt-3 h-11 w-full border border-[var(--brand-gold)] bg-[var(--brand-gold)] font-semibold text-[var(--brand-green-deep)] hover:bg-[var(--brand-gold)]/90"
             >
               <Link href="/setup-admin">
                 Get Started
