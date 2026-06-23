@@ -7,11 +7,14 @@ import { useRouter } from "next/navigation"
 import {
   ArrowLeft,
   CheckCircle2,
+  ClipboardList,
   Eye,
   EyeOff,
   LockKeyhole,
   Mail,
+  PackageCheck,
   ShieldCheck,
+  Store,
   UserRound,
 } from "lucide-react"
 import { type FormEvent, useState, useTransition } from "react"
@@ -60,31 +63,48 @@ export default function SetupAdminPage() {
     })
   }
 
+  const setupSteps = [
+    "Create one trusted administrator account.",
+    "Sign in automatically when setup is complete.",
+    "Invite or manage staff from the authenticated workspace.",
+  ]
+
   return (
     <div className="brand-auth-surface min-h-screen">
-      <main className="mx-auto grid min-h-screen max-w-6xl items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-10">
-        <section className="rounded-xl border border-border/80 bg-card p-5 shadow-xl sm:p-7">
-          <Button
-            asChild
-            variant="outline"
-            className="mb-6 h-11 border-[var(--brand-green)] text-[var(--brand-green-deep)] hover:bg-[var(--brand-green)] hover:text-white"
-          >
-            <Link href="/">
-              <ArrowLeft className="size-4" />
-              Go to Login Page
-            </Link>
-          </Button>
-
-          <div className="mb-6">
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-[var(--brand-gold)] text-[var(--brand-green-deep)]">
-              <ShieldCheck className="size-5" />
+      <main className="mx-auto grid min-h-screen max-w-6xl items-center gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[0.96fr_1.04fr] lg:gap-10 lg:px-10">
+        <section className="rounded-xl border border-border/80 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-7">
+          <div className="mb-6 flex items-start justify-between gap-4">
+            <div>
+              <div className="mb-3 flex size-11 items-center justify-center rounded-lg bg-[var(--brand-gold)] text-[var(--brand-green-deep)] shadow-sm">
+                <ShieldCheck className="size-5" />
+              </div>
+              <h1 className="text-2xl font-semibold text-[var(--brand-green-deep)]">
+                Create admin account
+              </h1>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                This creates the first administrator and signs you in when
+                setup is complete.
+              </p>
             </div>
-            <h1 className="text-2xl font-semibold text-[var(--brand-green-deep)]">
-              Create admin account
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
-              This creates the first administrator and signs you in when setup is complete.
-            </p>
+            <Button
+              asChild
+              variant="outline"
+              className="h-10 shrink-0 border-[var(--brand-green)]/25 bg-[var(--brand-green)]/10 font-semibold text-[var(--brand-green-deep)] hover:bg-[var(--brand-green)] hover:text-white"
+            >
+              <Link href="/">
+                <ArrowLeft className="size-4" />
+                Login
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mb-6 grid gap-2 rounded-xl border border-[var(--brand-green)]/20 bg-[var(--brand-green-soft)]/70 p-4">
+            {setupSteps.map((item) => (
+              <div key={item} className="flex items-center gap-2 text-sm">
+                <CheckCircle2 className="size-4 shrink-0 text-[var(--brand-blue)]" />
+                <span className="text-muted-foreground">{item}</span>
+              </div>
+            ))}
           </div>
 
           {message ? (
@@ -197,39 +217,55 @@ export default function SetupAdminPage() {
               {isPending ? "Creating admin..." : "Create admin"}
             </Button>
           </form>
-
-          <Button
-            asChild
-            variant="outline"
-            className="mt-4 h-11 w-full border-[var(--brand-green)] text-[var(--brand-green-deep)] hover:bg-[var(--brand-green)] hover:text-white"
-          >
-            <Link href="/">
-              <ArrowLeft className="size-4" />
-              Go to Login Page
-            </Link>
-          </Button>
         </section>
 
         <section className="space-y-6">
-          <div className="flex items-center gap-4">
-            <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm">
-              <Image
-                src="/images/logo.png"
-                alt="BIRW logo"
-                width={96}
-                height={96}
-                priority
-                className="h-full w-full object-contain p-2"
-              />
+          <div className="max-w-2xl">
+            <div className="mb-5 flex items-center gap-4">
+              <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm">
+                <Image
+                  src="/images/logo.png"
+                  alt="BIRW logo"
+                  width={96}
+                  height={96}
+                  priority
+                  className="h-full w-full object-contain p-2"
+                />
+              </div>
+              <div>
+                <p className="text-sm font-semibold uppercase text-[var(--brand-blue-deep)]">
+                  Initial system setup
+                </p>
+                <p className="mt-1 text-sm font-medium text-[var(--brand-charcoal)]">
+                  BIRW INVESTMENT GROUP Ltd
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-sm font-semibold uppercase text-[var(--brand-blue-deep)]">
-                Initial system setup
-              </p>
-              <h2 className="text-3xl font-semibold text-[var(--brand-green-deep)] sm:text-4xl">
-                One admin opens the whole workspace.
-              </h2>
-            </div>
+            <h2 className="text-3xl font-semibold leading-tight text-[var(--brand-green-deep)] sm:text-5xl">
+              One admin opens the whole workspace.
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">
+              The first account controls users, stock corrections, reporting,
+              and the operating setup for the BIRW store.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            {[
+              { label: "Store", icon: Store },
+              { label: "Inventory", icon: PackageCheck },
+              { label: "Reports", icon: ClipboardList },
+            ].map(({ label, icon: Icon }) => (
+              <div
+                key={label}
+                className="rounded-xl border border-[var(--brand-green)]/20 bg-white/80 p-4 text-sm shadow-sm"
+              >
+                <Icon className="mb-3 size-5 text-[var(--brand-blue)]" />
+                <p className="font-semibold text-[var(--brand-green-deep)]">
+                  {label}
+                </p>
+              </div>
+            ))}
           </div>
 
           <div className="space-y-3">
@@ -240,7 +276,7 @@ export default function SetupAdminPage() {
             ].map((item) => (
               <div
                 key={item}
-                className="flex items-start gap-3 rounded-lg border border-[var(--brand-green)]/20 bg-white/75 p-4 text-sm text-muted-foreground shadow-sm"
+                className="flex items-start gap-3 rounded-xl border border-[var(--brand-green)]/20 bg-white/75 p-4 text-sm text-muted-foreground shadow-sm"
               >
                 <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[var(--brand-blue)]" />
                 <span>{item}</span>

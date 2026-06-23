@@ -6,12 +6,16 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
   ArrowRight,
+  BellRing,
+  ChartNoAxesCombined,
   Eye,
   EyeOff,
   KeyRound,
   LockKeyhole,
   Mail,
   PackageCheck,
+  ReceiptText,
+  ShieldCheck,
 } from "lucide-react"
 import { type FormEvent, useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
@@ -51,59 +55,126 @@ export default function Home() {
     })
   }
 
+  const workflowHighlights = [
+    {
+      label: "Stock",
+      text: "Track quantities, low-stock alerts, and receiving from one workspace.",
+      icon: PackageCheck,
+    },
+    {
+      label: "Sales",
+      text: "Record paid sales, customer loans, invoices, and returns.",
+      icon: ReceiptText,
+    },
+    {
+      label: "Reports",
+      text: "Review daily movement, receivables, and store performance.",
+      icon: ChartNoAxesCombined,
+    },
+  ]
+
   return (
     <div className="brand-auth-surface min-h-screen">
-      <main className="mx-auto grid min-h-screen max-w-6xl items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
-        <section className="order-2 space-y-8 lg:order-1">
-          <div className="flex items-center gap-4">
-            <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm">
+      <main className="mx-auto grid min-h-screen max-w-6xl items-center gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[1.04fr_0.96fr] lg:gap-10 lg:px-10">
+        <section className="order-2 space-y-6 lg:order-1">
+          <div className="max-w-2xl">
+            <div className="mb-5 flex items-center gap-4">
+              <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm">
+                <Image
+                  src="/images/logo.png"
+                  alt="BIRW logo"
+                  width={80}
+                  height={80}
+                  priority
+                  className="h-full w-full object-contain p-2"
+                />
+              </div>
+              <div>
+                <p className="text-sm font-semibold uppercase text-[var(--brand-blue-deep)]">
+                  BIRW Inventory
+                </p>
+                <p className="mt-1 text-sm font-medium text-[var(--brand-charcoal)]">
+                  BIRW INVESTMENT GROUP Ltd
+                </p>
+              </div>
+            </div>
+            <h1 className="text-3xl font-semibold leading-tight text-[var(--brand-green-deep)] sm:text-5xl">
+              Store operations, ready from the first sign in.
+            </h1>
+            <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">
+              Manage stock, sales, receivables, invoices, and reports for the
+              BIRW store without switching contexts.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            {workflowHighlights.map(({ label, text, icon: Icon }) => (
+              <div
+                key={label}
+                className="rounded-xl border border-[var(--brand-green)]/20 bg-white/80 p-4 text-sm shadow-sm"
+              >
+                <Icon className="mb-3 size-5 text-[var(--brand-blue)]" />
+                <p className="font-semibold text-[var(--brand-green-deep)]">
+                  {label}
+                </p>
+                <p className="mt-2 leading-5 text-muted-foreground">{text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid gap-3 rounded-xl border border-[var(--brand-green)]/20 bg-white/70 p-4 shadow-sm sm:grid-cols-2">
+            <div className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-green)]/10 text-[var(--brand-green-deep)]">
+                <ShieldCheck className="size-5" />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-[var(--brand-green-deep)]">
+                  Secure staff access
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Admin, manager, and staff sessions stay role-aware.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-gold)]/15 text-[var(--brand-gold-text)]">
+                <BellRing className="size-5" />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-[var(--brand-green-deep)]">
+                  Daily alerts
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Low stock and customer loan follow-ups stay visible.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="order-1 rounded-xl border border-border/80 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-7 lg:order-2">
+          <div className="mb-6 flex items-start justify-between gap-4">
+            <div>
+              <div className="mb-3 flex size-11 items-center justify-center rounded-lg bg-[var(--brand-green)] text-white shadow-sm">
+                <KeyRound className="size-5" />
+              </div>
+              <h2 className="text-2xl font-semibold text-[var(--brand-green-deep)]">
+                Sign in
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                Use your staff or admin account to continue to the dashboard.
+              </p>
+            </div>
+            <div className="hidden size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm sm:flex">
               <Image
                 src="/images/logo.png"
                 alt="BIRW logo"
-                width={80}
-                height={80}
+                width={64}
+                height={64}
                 priority
                 className="h-full w-full object-contain p-2"
               />
             </div>
-            <div>
-              <p className="text-sm font-semibold uppercase text-[var(--brand-blue-deep)]">
-                BIRW Inventory
-              </p>
-              <h1 className="text-3xl font-semibold text-[var(--brand-green-deep)] sm:text-4xl">
-                Inventory control for every counter.
-              </h1>
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              "Track stock in one store",
-              "Manage products and sales",
-              "Review invoices and alerts",
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-lg border border-[var(--brand-green)]/20 bg-white/75 p-4 text-sm font-medium text-[var(--brand-green-deep)] shadow-sm"
-              >
-                <PackageCheck className="mb-3 size-5 text-[var(--brand-blue)]" />
-                {item}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="order-1 rounded-xl border border-border/80 bg-card p-5 shadow-xl sm:p-7 lg:order-2">
-          <div className="mb-6">
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-[var(--brand-green)] text-white">
-              <KeyRound className="size-5" />
-            </div>
-            <h2 className="text-2xl font-semibold text-[var(--brand-green-deep)]">
-              Sign in
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Use your staff or admin account to continue to the dashboard.
-            </p>
           </div>
 
           {message ? (
@@ -163,16 +234,19 @@ export default function Home() {
             </label>
 
             <Button
-              className="h-11 w-full bg-[var(--brand-green)] text-white hover:bg-[var(--brand-green-deep)]"
+              className="h-11 w-full bg-[var(--brand-green)] font-semibold text-white hover:bg-[var(--brand-green-deep)]"
               disabled={isPending}
             >
               {isPending ? "Signing in..." : "Sign in"}
             </Button>
           </form>
 
-          <div className="mt-6 border-t border-border pt-5">
-            <p className="text-sm text-muted-foreground">
-              Setting up the system for the first time?
+          <div className="mt-6 rounded-xl border border-[var(--brand-green)]/20 bg-[var(--brand-green-soft)]/70 p-4">
+            <p className="text-sm font-semibold text-[var(--brand-green-deep)]">
+              First time opening BIRW Inventory?
+            </p>
+            <p className="mt-1 text-sm leading-5 text-muted-foreground">
+              Create the initial administrator account before staff sign in.
             </p>
             <Button
               asChild

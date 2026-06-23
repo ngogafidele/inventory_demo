@@ -49,18 +49,19 @@ Last updated: 2026-06-23
 | Surface | `.brand-auth-surface min-h-screen` |
 | Surface palette | `--brand-green: #126a35`, `--brand-blue: #0b7da6`, `--brand-gold: #c99a18` |
 | Surface background | Soft layered gradients using 5-9% green/blue/gold mixes and `#edf6ef` base tint |
-| Layout | `grid min-h-screen max-w-6xl ... lg:grid-cols-*` |
-| Form card | `rounded-xl border border-border/80 bg-card p-5 shadow-xl sm:p-7` |
+| Layout | `grid min-h-screen max-w-6xl items-center gap-6 ... lg:grid-cols-* lg:gap-10` |
+| Form card | `rounded-xl border border-border/80 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-7` |
 | Logo frame | `rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm` |
 | Input height | `h-11` |
 | Primary button | `bg-[var(--brand-green)] text-white hover:bg-[var(--brand-green-deep)]` |
 | Setup button | `border-[var(--brand-gold)] bg-[var(--brand-gold)] text-[var(--brand-green-deep)]` |
-| Back/login outline button | `border-[var(--brand-green)] text-[var(--brand-green-deep)] hover:bg-[var(--brand-green)] hover:text-white` |
+| Back/login secondary button | `border-[var(--brand-green)]/25 bg-[var(--brand-green)]/10 text-[var(--brand-green-deep)] hover:bg-[var(--brand-green)] hover:text-white` |
 | Eyebrow/accent text | `text-[var(--brand-blue-deep)]` |
 | Feature icon accent | `text-[var(--brand-blue)]` |
-| Supporting cards | `border-[var(--brand-green)]/20 bg-white/75 p-4 shadow-sm` |
+| Supporting cards | `rounded-xl border border-[var(--brand-green)]/20 bg-white/75 p-4 shadow-sm` or `bg-white/80` |
+| Setup step strip | `rounded-xl border border-[var(--brand-green)]/20 bg-[var(--brand-green-soft)]/70 p-4` |
 
-Pattern notes: Login and setup-admin are the only screen group that uses the richer branded auth background. Match the tuned BIRW logo palette: forest green for identity and primary actions, teal-blue for operational icon/eyebrow accents, antique gold only for setup or highlight actions, and soft green-tinted neutrals for modern surfaces.
+Pattern notes: Login and setup-admin are the only screen group that uses the richer branded auth background. Keep the form card first on mobile and balanced against concise operational context on desktop. Login uses workflow highlight cards and a first-admin setup callout; setup-admin uses a single compact login escape action in the form header with a visible soft-green background, a setup-step strip, and context cards explaining admin scope. Match the tuned BIRW logo palette: forest green for identity and primary actions, teal-blue for operational icon/eyebrow accents, antique gold only for setup or highlight actions, and soft green-tinted neutrals for modern surfaces.
 
 ---
 
