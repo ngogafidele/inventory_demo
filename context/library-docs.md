@@ -15,6 +15,7 @@ Rules:
 - `proxy.ts` refreshes app JWT sessions and clears expired sessions.
 - Server pages under `app/(dashboard)` should authenticate and fetch data on the server.
 - Route handlers under `app/api` are the mutation/query boundary.
+- `next.config.ts` sets `images.qualities: [55, 75]` so the auth background can use `quality={55}` while preserving the default 75 quality option.
 
 ---
 

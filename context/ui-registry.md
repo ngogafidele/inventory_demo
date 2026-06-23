@@ -48,7 +48,7 @@ Last updated: 2026-06-23
 | --- | --- |
 | Surface | `.brand-auth-surface min-h-screen` |
 | Surface palette | `--brand-green: #126a35`, `--brand-blue: #0b7da6`, `--brand-gold: #c99a18` |
-| Surface background | Soft layered gradients using 5-9% green/blue/gold mixes and `#edf6ef` base tint |
+| Surface background | Local `next/image` layer using `/images/auth-background.webp`, `fill`, `priority`, `quality={55}`, `sizes="100vw"`, `opacity-52`, plus light green/blue gradient overlays around 22-54% opacity |
 | Layout | `grid min-h-screen max-w-6xl items-center gap-6 ... lg:grid-cols-* lg:gap-10` |
 | Form card | `rounded-xl border border-border/80 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-7` |
 | Logo frame | `rounded-xl border border-[var(--brand-green)]/20 bg-white shadow-sm` |
@@ -61,7 +61,7 @@ Last updated: 2026-06-23
 | Supporting cards | `rounded-xl border border-[var(--brand-green)]/20 bg-white/75 p-4 shadow-sm` or `bg-white/80` |
 | Setup step strip | `rounded-xl border border-[var(--brand-green)]/20 bg-[var(--brand-green-soft)]/70 p-4` |
 
-Pattern notes: Login and setup-admin are the only screen group that uses the richer branded auth background. Keep the form card first on mobile and balanced against concise operational context on desktop. Login uses workflow highlight cards and a first-admin setup callout; setup-admin uses a single compact login escape action in the form header with a visible soft-green background, a setup-step strip, and context cards explaining admin scope. Match the tuned BIRW logo palette: forest green for identity and primary actions, teal-blue for operational icon/eyebrow accents, antique gold only for setup or highlight actions, and soft green-tinted neutrals for modern surfaces.
+Pattern notes: Login and setup-admin are the only screen group that uses the richer branded auth background. The image background is a local generated inventory/warehouse WebP asset, rendered through `next/image` so the runtime serves optimized viewport-sized output instead of a remote request or raw CSS bitmap. Keep the form card first on mobile and balanced against concise operational context on desktop. Login uses workflow highlight cards and a first-admin setup callout; setup-admin uses a single compact login escape action in the form header with a visible soft-green background, a setup-step strip, and context cards explaining admin scope. Match the tuned BIRW logo palette: forest green for identity and primary actions, teal-blue for operational icon/eyebrow accents, antique gold only for setup or highlight actions, and soft green-tinted neutrals for modern surfaces.
 
 ---
 

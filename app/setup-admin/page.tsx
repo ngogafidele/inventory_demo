@@ -71,6 +71,23 @@ export default function SetupAdminPage() {
 
   return (
     <div className="brand-auth-surface min-h-screen">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+        style={{ zIndex: 0 }}
+      >
+        <Image
+          src="/images/auth-background.webp"
+          alt=""
+          fill
+          priority
+          quality={55}
+          sizes="100vw"
+          className="object-cover opacity-52"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(246,250,246,0.54)_0%,rgba(246,250,246,0.34)_48%,rgba(246,250,246,0.22)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--brand-green)_6%,transparent),transparent_50%,color-mix(in_srgb,var(--brand-blue)_4%,transparent))]" />
+      </div>
       <main className="mx-auto grid min-h-screen max-w-6xl items-center gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[0.96fr_1.04fr] lg:gap-10 lg:px-10">
         <section className="rounded-xl border border-border/80 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-7">
           <div className="mb-6 flex items-start justify-between gap-4">
