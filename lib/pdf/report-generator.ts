@@ -227,7 +227,7 @@ function drawHeaderRow(
   doc.rect(PAGE_LEFT, y, PAGE_RIGHT - PAGE_LEFT, TABLE_ROW_HEIGHT).fillColor(PDF_COLORS.tableHeader).fill()
   doc.font("Helvetica-Bold").fontSize(8).fillColor(PDF_COLORS.sectionText)
   columns.forEach((column) => {
-    doc.text(column.label, column.x, y + 8, { width: column.width })
+    doc.text(column.label.toUpperCase(), column.x, y + 8, { width: column.width })
   })
   return y + TABLE_ROW_HEIGHT + 2
 }
@@ -243,7 +243,7 @@ function drawDataRow(
     .rect(PAGE_LEFT, y - 7, PAGE_RIGHT - PAGE_LEFT, TABLE_ROW_HEIGHT)
     .fill()
     .font("Helvetica")
-    .fontSize(8)
+    .fontSize(7)
     .fillColor(PDF_COLORS.text)
 
   columns.forEach((column) => {
@@ -401,7 +401,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
 
   doc
     .font("Helvetica")
-    .fontSize(8)
+    .fontSize(7)
     .fillColor(PDF_COLORS.mutedText)
     .text(storeInfo.address, 48, 132, { width: 250 })
     .text(`TIN: ${storeInfo.tin}`, 48, 144, { width: 250 })
@@ -423,13 +423,14 @@ export function generateReportPDF(payload: ReportPdfPayload) {
 
   y = drawSectionTitle(doc, "Store Summary", y)
   const summaryColumns = [
-    { label: "Store", x: 54, width: 120 },
-    { label: "Revenue", x: 190, width: 96 },
-    { label: "Expenses", x: 300, width: 96 },
-    { label: "Profit", x: 410, width: 96 },
-    { label: "Sales", x: 520, width: 70 },
-    { label: "Products", x: 604, width: 70 },
-    { label: "Loans", x: 688, width: 92 },
+    { label: "No", x: 54, width: 24 },
+    { label: "Store", x: 84, width: 92 },
+    { label: "Revenue", x: 190, width: 88 },
+    { label: "Expenses", x: 290, width: 88 },
+    { label: "Profit", x: 390, width: 88 },
+    { label: "Sales", x: 494, width: 60 },
+    { label: "Products", x: 570, width: 70 },
+    { label: "Loans", x: 660, width: 92 },
   ]
   y = drawHeaderRow(doc, y, summaryColumns)
   if (payload.reports.length === 0) {
@@ -441,13 +442,14 @@ export function generateReportPDF(payload: ReportPdfPayload) {
       doc,
       y,
       [
-        { text: STORE_LABELS[report.store], x: 54, width: 120 },
-        { text: formatCurrency(report.revenue), x: 190, width: 96 },
-        { text: formatCurrency(report.expenses), x: 300, width: 96 },
-        { text: formatCurrency(report.profit), x: 410, width: 96 },
-        { text: formatNumber(report.sales), x: 520, width: 70 },
-        { text: formatNumber(report.products), x: 604, width: 70 },
-        { text: formatCurrency(report.outstanding), x: 688, width: 92 },
+        { text: String(index + 1), x: 54, width: 24 },
+        { text: STORE_LABELS[report.store], x: 84, width: 92 },
+        { text: formatCurrency(report.revenue), x: 190, width: 88 },
+        { text: formatCurrency(report.expenses), x: 290, width: 88 },
+        { text: formatCurrency(report.profit), x: 390, width: 88 },
+        { text: formatNumber(report.sales), x: 494, width: 60 },
+        { text: formatNumber(report.products), x: 570, width: 70 },
+        { text: formatCurrency(report.outstanding), x: 660, width: 92 },
       ],
       index
     )
@@ -456,7 +458,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
   y = ensureSpace(doc, y + 16, 110)
   y = drawSectionTitle(doc, "Top Moving Products", y)
   const productColumns = [
-    { label: "#", x: 54, width: 24 },
+    { label: "No", x: 54, width: 24 },
     { label: "Product", x: 84, width: 250 },
     { label: "Sold", x: 360, width: 86 },
     { label: "Revenue", x: 486, width: 102 },
@@ -489,8 +491,9 @@ export function generateReportPDF(payload: ReportPdfPayload) {
   y = ensureSpace(doc, y + 16, 110)
   y = drawSectionTitle(doc, "Recent Sales", y)
   const saleColumns = [
-    { label: "Time", x: 54, width: 124 },
-    { label: "Store", x: 194, width: 86 },
+    { label: "No", x: 54, width: 24 },
+    { label: "Time", x: 84, width: 104 },
+    { label: "Store", x: 204, width: 82 },
     { label: "Items", x: 304, width: 330 },
     { label: "Total", x: 670, width: 92 },
   ]
@@ -509,8 +512,9 @@ export function generateReportPDF(payload: ReportPdfPayload) {
       doc,
       y,
       [
-        { text: formatDateTime(sale.createdAt), x: 54, width: 124 },
-        { text: STORE_LABELS[sale.store], x: 194, width: 86 },
+        { text: String(index + 1), x: 54, width: 24 },
+        { text: formatDateTime(sale.createdAt), x: 84, width: 104 },
+        { text: STORE_LABELS[sale.store], x: 204, width: 82 },
         { text: items || "-", x: 304, width: 330 },
         { text: formatCurrency(sale.totalAmount), x: 670, width: 92 },
       ],

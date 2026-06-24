@@ -323,12 +323,13 @@ export function generateOutstandingCustomerPDF(
 
   const tableTop = contentStart + 90
   const columns = {
-    saleDate: 54,
-    paymentDate: 122,
-    items: 176,
-    recordedBy: 326,
-    pricePerUnit: 404,
-    amount: 478,
+    no: 54,
+    saleDate: 82,
+    paymentDate: 144,
+    items: 202,
+    recordedBy: 318,
+    pricePerUnit: 394,
+    amount: 476,
   }
 
   doc
@@ -338,12 +339,13 @@ export function generateOutstandingCustomerPDF(
     .font("Helvetica-Bold")
     .fillColor(PDF_COLORS.sectionText)
     .fontSize(9)
-    .text("Sale Date", columns.saleDate, tableTop + 8)
-    .text("Payment", columns.paymentDate, tableTop + 8)
-    .text("Items", columns.items, tableTop + 8)
-    .text("Recorded", columns.recordedBy, tableTop + 8)
-    .text("Price / unit", columns.pricePerUnit, tableTop + 8)
-    .text("Amount", columns.amount, tableTop + 8)
+    .text("NO", columns.no, tableTop + 8, { width: 24 })
+    .text("SALE DATE", columns.saleDate, tableTop + 8, { width: 58 })
+    .text("PAYMENT", columns.paymentDate, tableTop + 8, { width: 58 })
+    .text("ITEM DESCRIPTION", columns.items, tableTop + 8, { width: 112 })
+    .text("RECORDED", columns.recordedBy, tableTop + 8, { width: 70 })
+    .text("PRICE / UNIT", columns.pricePerUnit, tableTop + 8, { width: 68 })
+    .text("AMOUNT", columns.amount, tableTop + 8, { width: 60 })
 
   let y = tableTop + 32
 
@@ -355,12 +357,12 @@ export function generateOutstandingCustomerPDF(
       y = 56
     }
 
-    doc.font("Helvetica").fontSize(9)
-    const saleDate = truncateToWidth(doc, formatDate(row.saleDate), 70)
-    const paymentDate = truncateToWidth(doc, formatDate(row.paymentDate), 70)
-    const items = truncateToWidth(doc, row.items, 122)
+    doc.font("Helvetica").fontSize(8)
+    const saleDate = truncateToWidth(doc, formatDate(row.saleDate), 58)
+    const paymentDate = truncateToWidth(doc, formatDate(row.paymentDate), 58)
+    const items = truncateToWidth(doc, row.items, 112)
     const recordedBy = truncateToWidth(doc, row.recordedBy, 70)
-    const pricePerUnit = truncateToWidth(doc, costText, 70)
+    const pricePerUnit = truncateToWidth(doc, costText, 68)
     const amount = truncateToWidth(doc, formatCurrency(row.amount), 60)
 
     doc
@@ -369,12 +371,13 @@ export function generateOutstandingCustomerPDF(
       .fill()
       .font("Helvetica")
       .fillColor(PDF_COLORS.text)
-      .fontSize(9)
-      .text(saleDate, columns.saleDate, y, { width: 70 })
-      .text(paymentDate, columns.paymentDate, y, { width: 70 })
-      .text(items, columns.items, y, { width: 122 })
+      .fontSize(8)
+      .text(String(index + 1), columns.no, y, { width: 24 })
+      .text(saleDate, columns.saleDate, y, { width: 58 })
+      .text(paymentDate, columns.paymentDate, y, { width: 58 })
+      .text(items, columns.items, y, { width: 112 })
       .text(recordedBy, columns.recordedBy, y, { width: 70 })
-      .text(pricePerUnit, columns.pricePerUnit, y, { width: 70 })
+      .text(pricePerUnit, columns.pricePerUnit, y, { width: 68 })
       .text(amount, columns.amount, y, { width: 60 })
 
     y += TABLE_ROW_HEIGHT + 2
@@ -397,10 +400,11 @@ export function generateOutstandingCustomerPDF(
       .font("Helvetica-Bold")
       .fillColor(PDF_COLORS.sectionText)
       .fontSize(9)
-      .text("Date", 54, y + 8)
-      .text("Method", 150, y + 8)
-      .text("Notes", 266, y + 8)
-      .text("Amount", 478, y + 8)
+      .text("NO", 54, y + 8, { width: 24 })
+      .text("DATE", 84, y + 8, { width: 76 })
+      .text("METHOD", 166, y + 8, { width: 100 })
+      .text("NOTES", 268, y + 8, { width: 188 })
+      .text("AMOUNT", 478, y + 8, { width: 60 })
 
     y += 32
 
@@ -416,18 +420,19 @@ export function generateOutstandingCustomerPDF(
         .fill()
         .font("Helvetica")
         .fillColor(PDF_COLORS.text)
-        .fontSize(9)
-        .text(truncateToWidth(doc, formatDate(payment.paidAt), 86), 54, y, {
-          width: 86,
+        .fontSize(8)
+        .text(String(index + 1), 54, y, { width: 24 })
+        .text(truncateToWidth(doc, formatDate(payment.paidAt), 76), 84, y, {
+          width: 76,
         })
         .text(
           truncateToWidth(doc, formatPaymentMethod(payment.paymentMethod), 100),
-          150,
+          166,
           y,
           { width: 100 }
         )
-        .text(truncateToWidth(doc, payment.notes, 190), 266, y, {
-          width: 190,
+        .text(truncateToWidth(doc, payment.notes, 188), 268, y, {
+          width: 188,
         })
         .text(
           truncateToWidth(doc, formatCurrency(payment.amount), 60),

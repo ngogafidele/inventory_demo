@@ -281,8 +281,9 @@ function writeInvoicePdf(
 
   const tableTop = 320
   const columns = {
-    item: 54,
-    quantity: 286,
+    no: 54,
+    item: 88,
+    quantity: 292,
     price: 355,
     total: 448,
   }
@@ -294,10 +295,11 @@ function writeInvoicePdf(
     .font("Helvetica-Bold")
     .fillColor(PDF_COLORS.sectionText)
     .fontSize(9)
-    .text("Item", columns.item, tableTop + 8)
-    .text("Qty", columns.quantity, tableTop + 8)
-    .text("Price", columns.price, tableTop + 8)
-    .text("Total", columns.total, tableTop + 8)
+    .text("NO", columns.no, tableTop + 8, { width: 24 })
+    .text("ITEM DESCRIPTION", columns.item, tableTop + 8, { width: 190 })
+    .text("QTY", columns.quantity, tableTop + 8, { width: 54 })
+    .text("PRICE", columns.price, tableTop + 8, { width: 82 })
+    .text("TOTAL", columns.total, tableTop + 8, { width: 92 })
 
   let y = tableTop + 32
   data.items.forEach((item, index) => {
@@ -306,10 +308,10 @@ function writeInvoicePdf(
       y = 56
     }
 
-    doc.font("Helvetica").fontSize(9)
-    const description = truncateToWidth(doc, item.description, 210)
     doc.font("Helvetica").fontSize(8)
-    const sku = item.sku ? truncateToWidth(doc, item.sku, 210) : ""
+    const description = truncateToWidth(doc, item.description, 190)
+    doc.font("Helvetica").fontSize(7)
+    const sku = item.sku ? truncateToWidth(doc, item.sku, 190) : ""
 
     doc
       .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
@@ -317,14 +319,15 @@ function writeInvoicePdf(
       .fill()
       .font("Helvetica")
       .fillColor(PDF_COLORS.text)
-      .fontSize(9)
-      .text(description, columns.item, y, { width: 210 })
-      .fillColor(PDF_COLORS.mutedText)
       .fontSize(8)
-      .text(sku, columns.item, y + 10, { width: 210 })
+      .text(String(index + 1), columns.no, y, { width: 24 })
+      .text(description, columns.item, y, { width: 190 })
+      .fillColor(PDF_COLORS.mutedText)
+      .fontSize(7)
+      .text(sku, columns.item, y + 10, { width: 190 })
       .font("Helvetica")
       .fillColor(PDF_COLORS.text)
-      .fontSize(9)
+      .fontSize(8)
       .text(`${item.quantity} ${item.unit ?? "pcs"}`, columns.quantity, y)
       .text(formatCurrency(item.unitPrice), columns.price, y, { width: 82 })
       .text(formatCurrency(item.lineTotal), columns.total, y, { width: 92 })

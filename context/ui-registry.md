@@ -214,7 +214,8 @@ Last updated: 2026-06-24
 | Section/table label text | BIRW teal-blue `#075b78` |
 | Accent rule | BIRW gold `#c99a18` |
 | Table header fill | Soft green `#eaf5ec` |
-| Alternating rows | White alternating with light green-tinted `#f6faf6` |
+| Table headers | Uppercase labels with `NO` numbering columns where row/transaction tables are listed |
+| Table body rows | Smaller regular text than headers; white alternating with light green-tinted `#f6faf6` |
 | Borders/rules | Token border green `#d3e3d7` |
 
-Pattern notes: Customer-facing and management PDFs should use `PDF_COLORS` instead of local hardcoded print palettes. Keep invoice, proforma, product catalog, outstanding statement, and management report colors aligned with the website palette while preserving print-safe contrast and the existing document layouts.
+Pattern notes: Customer-facing and management PDFs should use `PDF_COLORS` instead of local hardcoded print palettes. Keep invoice, proforma, product catalog, outstanding statement, and management report colors aligned with the website palette while preserving print-safe contrast. Table title rows use uppercase labels, row/transaction tables include a `NO` column, and body rows stay visually lighter and smaller than headers.
