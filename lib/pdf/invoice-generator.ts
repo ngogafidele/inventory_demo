@@ -80,11 +80,11 @@ const stampPath = path.join(process.cwd(), "public", "images", "stamp.jpg")
 const logoBox = {
   x: 42,
   y: 24,
-  width: 174,
-  height: 174,
+  width: 120,
+  height: 120,
   imageX: 48,
   imageY: 30,
-  imageFit: [162, 162] as [number, number],
+  imageFit: [108, 108] as [number, number],
 }
 
 const stampBox = {

@@ -194,7 +194,7 @@ function drawLogo(doc: ReportPdfDocument) {
   const logoBuffer = getLogoBuffer()
   try {
     if (!logoBuffer) throw new Error("Logo not found")
-    doc.image(logoBuffer, 48, 30, { fit: [118, 118] })
+    doc.image(logoBuffer, 48, 30, { fit: [86, 86] })
   } catch {
     doc
       .font("Helvetica-Bold")

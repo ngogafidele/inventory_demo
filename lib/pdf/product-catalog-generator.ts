@@ -85,11 +85,11 @@ const logoPath = path.join(process.cwd(), "public", "images", "logo.png")
 const logoBox = {
   x: 42,
   y: 24,
-  width: 150,
-  height: 150,
+  width: 104,
+  height: 104,
   imageX: 48,
   imageY: 30,
-  imageFit: [138, 138] as [number, number],
+  imageFit: [92, 92] as [number, number],
 }
 
 const TABLE_ROW_HEIGHT = 24
