@@ -95,7 +95,7 @@ const logoBox = {
 const TABLE_ROW_HEIGHT = 24
 
 function mutedText(doc: ProductCatalogPdfDocument) {
-  return doc.font("Helvetica").fillColor(PDF_COLORS.mutedText)
+  return doc.font("Helvetica-Bold").fillColor(PDF_COLORS.mutedText)
 }
 
 function boldText(doc: ProductCatalogPdfDocument) {
@@ -310,9 +310,9 @@ export function generateProductCatalogPDF(
 
     doc.font("Helvetica-Bold").fontSize(7)
     const name = truncateToWidth(doc, product.name, 178)
-    doc.font("Helvetica").fontSize(6)
+    doc.font("Helvetica-Bold").fontSize(6)
     const sku = truncateToWidth(doc, product.sku, 178)
-    doc.font("Helvetica").fontSize(7)
+    doc.font("Helvetica-Bold").fontSize(7)
     const quantityText = truncateToWidth(doc, quantity, 62)
     const lowStockText = truncateToWidth(doc, String(lowStockThreshold), 62)
     const costPrice = truncateToWidth(doc, formatCurrency(product.costPrice ?? 0), 82)
@@ -322,13 +322,13 @@ export function generateProductCatalogPDF(
       .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
       .rect(48, y - 7, 745, TABLE_ROW_HEIGHT)
       .fill()
-      .font("Helvetica")
+      .font("Helvetica-Bold")
       .fillColor(PDF_COLORS.text)
       .fontSize(7)
       .text(String(index + 1), columns.index, y, { width: 24 })
       .font("Helvetica-Bold")
       .text(name, columns.product, y, { width: 178 })
-      .font("Helvetica")
+      .font("Helvetica-Bold")
       .fillColor(PDF_COLORS.mutedText)
       .fontSize(6)
       .text(sku, columns.product, y + 10, { width: 178 })

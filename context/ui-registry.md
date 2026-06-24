@@ -209,13 +209,13 @@ Last updated: 2026-06-24
 | --- | --- |
 | Palette source | Shared `PDF_COLORS` constants derived from the light website/auth palette |
 | Primary text | `#102017` |
-| Muted text | `#55665b` |
+| Muted text | Print-dark muted green `#33443a` |
 | Header text | Deep BIRW green `#063f20` |
 | Section/table label text | BIRW teal-blue `#075b78` |
 | Accent rule | BIRW gold `#c99a18` |
 | Table header fill | Soft green `#eaf5ec` |
 | Table headers | Uppercase labels with `NO` numbering columns where row/transaction tables are listed |
-| Table body rows | Smaller regular text than headers; white alternating with light green-tinted `#f6faf6` |
+| Table body rows | Smaller bold text than headers for print clarity; white alternating with light green-tinted `#f6faf6` |
 | Borders/rules | Token border green `#d3e3d7` |
 
-Pattern notes: Customer-facing and management PDFs should use `PDF_COLORS` instead of local hardcoded print palettes. Keep invoice, proforma, product catalog, outstanding statement, and management report colors aligned with the website palette while preserving print-safe contrast. Table title rows use uppercase labels, row/transaction tables include a `NO` column, and body rows stay visually lighter and smaller than headers.
+Pattern notes: Customer-facing and management PDFs should use `PDF_COLORS` instead of local hardcoded print palettes. Keep invoice, proforma, product catalog, outstanding statement, and management report colors aligned with the website palette while preserving print-safe contrast. Table title rows use uppercase labels, row/transaction tables include a `NO` column, and PDF text uses bold built-in fonts with darker muted text so printed documents remain legible.

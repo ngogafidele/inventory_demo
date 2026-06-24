@@ -3,7 +3,7 @@ export const PDF_COLORS = {
   background: "#f6faf6",
   surface: "#ffffff",
   text: "#102017",
-  mutedText: "#55665b",
+  mutedText: "#33443a",
   headerText: "#063f20",
   sectionText: "#075b78",
   primary: "#126a35",

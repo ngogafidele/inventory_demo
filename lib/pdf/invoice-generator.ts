@@ -97,7 +97,7 @@ const stampBox = {
 const TABLE_ROW_HEIGHT = 24
 
 function mutedText(doc: InvoicePdfDocument) {
-  return doc.font("Helvetica").fillColor(PDF_COLORS.mutedText)
+  return doc.font("Helvetica-Bold").fillColor(PDF_COLORS.mutedText)
 }
 
 function boldText(doc: InvoicePdfDocument) {
@@ -308,16 +308,16 @@ function writeInvoicePdf(
       y = 56
     }
 
-    doc.font("Helvetica").fontSize(8)
+    doc.font("Helvetica-Bold").fontSize(8)
     const description = truncateToWidth(doc, item.description, 190)
-    doc.font("Helvetica").fontSize(7)
+    doc.font("Helvetica-Bold").fontSize(7)
     const sku = item.sku ? truncateToWidth(doc, item.sku, 190) : ""
 
     doc
       .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
       .rect(48, y - 7, 499, TABLE_ROW_HEIGHT)
       .fill()
-      .font("Helvetica")
+      .font("Helvetica-Bold")
       .fillColor(PDF_COLORS.text)
       .fontSize(8)
       .text(String(index + 1), columns.no, y, { width: 24 })
@@ -325,7 +325,7 @@ function writeInvoicePdf(
       .fillColor(PDF_COLORS.mutedText)
       .fontSize(7)
       .text(sku, columns.item, y + 10, { width: 190 })
-      .font("Helvetica")
+      .font("Helvetica-Bold")
       .fillColor(PDF_COLORS.text)
       .fontSize(8)
       .text(`${item.quantity} ${item.unit ?? "pcs"}`, columns.quantity, y)

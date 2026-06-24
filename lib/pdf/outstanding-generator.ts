@@ -116,7 +116,7 @@ const stampBox = {
 const TABLE_ROW_HEIGHT = 24
 
 function mutedText(doc: OutstandingPdfDocument) {
-  return doc.font("Helvetica").fillColor(PDF_COLORS.mutedText)
+  return doc.font("Helvetica-Bold").fillColor(PDF_COLORS.mutedText)
 }
 
 function boldText(doc: OutstandingPdfDocument) {
@@ -357,7 +357,7 @@ export function generateOutstandingCustomerPDF(
       y = 56
     }
 
-    doc.font("Helvetica").fontSize(8)
+    doc.font("Helvetica-Bold").fontSize(8)
     const saleDate = truncateToWidth(doc, formatDate(row.saleDate), 58)
     const paymentDate = truncateToWidth(doc, formatDate(row.paymentDate), 58)
     const items = truncateToWidth(doc, row.items, 112)
@@ -369,7 +369,7 @@ export function generateOutstandingCustomerPDF(
       .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
       .rect(48, y - 6, 499, TABLE_ROW_HEIGHT)
       .fill()
-      .font("Helvetica")
+      .font("Helvetica-Bold")
       .fillColor(PDF_COLORS.text)
       .fontSize(8)
       .text(String(index + 1), columns.no, y, { width: 24 })
@@ -418,7 +418,7 @@ export function generateOutstandingCustomerPDF(
         .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
         .rect(48, y - 6, 499, TABLE_ROW_HEIGHT)
         .fill()
-        .font("Helvetica")
+        .font("Helvetica-Bold")
         .fillColor(PDF_COLORS.text)
         .fontSize(8)
         .text(String(index + 1), 54, y, { width: 24 })

@@ -242,7 +242,7 @@ function drawDataRow(
     .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
     .rect(PAGE_LEFT, y - 7, PAGE_RIGHT - PAGE_LEFT, TABLE_ROW_HEIGHT)
     .fill()
-    .font("Helvetica")
+    .font("Helvetica-Bold")
     .fontSize(7)
     .fillColor(PDF_COLORS.text)
 
@@ -257,7 +257,7 @@ function drawDataRow(
 
 function drawEmptyRow(doc: ReportPdfDocument, y: number, text: string) {
   doc
-    .font("Helvetica")
+    .font("Helvetica-Bold")
     .fontSize(8)
     .fillColor(PDF_COLORS.mutedText)
     .text(text, PAGE_LEFT + 6, y, { width: 300 })
@@ -387,7 +387,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
     .fontSize(22)
     .fillColor(PDF_COLORS.text)
     .text(`${storeName} Report`, 460, 58, { align: "right", width: 330 })
-    .font("Helvetica")
+    .font("Helvetica-Bold")
     .fontSize(10)
     .fillColor(PDF_COLORS.mutedText)
     .text(`Period: ${payload.fromLabel} to ${payload.toLabel}`, 460, 88, {
@@ -400,7 +400,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
     })
 
   doc
-    .font("Helvetica")
+    .font("Helvetica-Bold")
     .fontSize(7)
     .fillColor(PDF_COLORS.mutedText)
     .text(storeInfo.address, 48, 132, { width: 250 })
@@ -494,7 +494,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
     { label: "No", x: 54, width: 24 },
     { label: "Time", x: 84, width: 104 },
     { label: "Store", x: 204, width: 82 },
-    { label: "Items", x: 304, width: 330 },
+    { label: "Item Description", x: 304, width: 330 },
     { label: "Total", x: 670, width: 92 },
   ]
   y = drawHeaderRow(doc, y, saleColumns)
@@ -528,7 +528,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
     .lineTo(PAGE_RIGHT, y)
     .strokeColor(PDF_COLORS.border)
     .stroke()
-    .font("Helvetica")
+    .font("Helvetica-Bold")
     .fontSize(8)
     .fillColor(PDF_COLORS.mutedText)
     .text(
