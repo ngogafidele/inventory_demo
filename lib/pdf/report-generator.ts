@@ -7,6 +7,7 @@ import {
   STORE_LABELS,
   type StoreKey,
 } from "@/lib/utils/constants"
+import { PDF_COLORS } from "@/lib/pdf/pdf-theme"
 import { formatCurrency } from "@/lib/utils/format"
 import { formatInBusinessTime } from "@/lib/utils/time"
 
@@ -106,11 +107,6 @@ type ReportPdfDocument = {
 }
 
 const logoPath = path.join(process.cwd(), "public", "images", "logo.png")
-const PRINT_TEXT = "#111827"
-const PRINT_MUTED_TEXT = "#1f2937"
-const PRINT_HEADER_TEXT = "#00183d"
-const HEADER_FILL = "#eef3f8"
-const ROW_FILL = "#fbfcfe"
 const TABLE_ROW_HEIGHT = 24
 const PAGE_LEFT = 48
 const PAGE_RIGHT = 793
@@ -203,7 +199,7 @@ function drawLogo(doc: ReportPdfDocument) {
     doc
       .font("Helvetica-Bold")
       .fontSize(16)
-      .fillColor(PRINT_HEADER_TEXT)
+      .fillColor(PDF_COLORS.headerText)
       .text("BIRW INVESTMENT GROUP Ltd", 48, 72, { width: 150 })
   }
 }
@@ -218,7 +214,7 @@ function drawSectionTitle(doc: ReportPdfDocument, title: string, y: number) {
   doc
     .font("Helvetica-Bold")
     .fontSize(11)
-    .fillColor(PRINT_HEADER_TEXT)
+    .fillColor(PDF_COLORS.headerText)
     .text(title, PAGE_LEFT, y)
   return y + 22
 }
@@ -228,8 +224,8 @@ function drawHeaderRow(
   y: number,
   columns: Array<{ label: string; x: number; width: number }>
 ) {
-  doc.rect(PAGE_LEFT, y, PAGE_RIGHT - PAGE_LEFT, TABLE_ROW_HEIGHT).fillColor(HEADER_FILL).fill()
-  doc.font("Helvetica-Bold").fontSize(8).fillColor(PRINT_HEADER_TEXT)
+  doc.rect(PAGE_LEFT, y, PAGE_RIGHT - PAGE_LEFT, TABLE_ROW_HEIGHT).fillColor(PDF_COLORS.tableHeader).fill()
+  doc.font("Helvetica-Bold").fontSize(8).fillColor(PDF_COLORS.sectionText)
   columns.forEach((column) => {
     doc.text(column.label, column.x, y + 8, { width: column.width })
   })
@@ -243,12 +239,12 @@ function drawDataRow(
   index: number
 ) {
   doc
-    .fillColor(index % 2 === 0 ? "#ffffff" : ROW_FILL)
+    .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
     .rect(PAGE_LEFT, y - 7, PAGE_RIGHT - PAGE_LEFT, TABLE_ROW_HEIGHT)
     .fill()
     .font("Helvetica")
     .fontSize(8)
-    .fillColor(PRINT_TEXT)
+    .fillColor(PDF_COLORS.text)
 
   columns.forEach((column) => {
     doc.text(truncateToWidth(doc, column.text, column.width), column.x, y, {
@@ -263,7 +259,7 @@ function drawEmptyRow(doc: ReportPdfDocument, y: number, text: string) {
   doc
     .font("Helvetica")
     .fontSize(8)
-    .fillColor(PRINT_MUTED_TEXT)
+    .fillColor(PDF_COLORS.mutedText)
     .text(text, PAGE_LEFT + 6, y, { width: 300 })
   return y + TABLE_ROW_HEIGHT + 2
 }
@@ -273,56 +269,56 @@ function drawMetrics(doc: ReportPdfDocument, y: number, totals: ReturnType<typeo
     {
       label: "Total Revenue",
       value: formatCurrency(totals.revenue),
-      fill: "#dff7ea",
-      border: "#7fc99a",
+      fill: PDF_COLORS.successFill,
+      border: PDF_COLORS.successBorder,
     },
     {
       label: "Cost of Sales",
       value: formatCurrency(totals.costOfSales),
-      fill: "#e0f2fe",
-      border: "#7bb7d7",
+      fill: PDF_COLORS.infoFill,
+      border: PDF_COLORS.infoBorder,
     },
     {
       label: "Expenses",
       value: formatCurrency(totals.expenses),
-      fill: "#ffe3e6",
-      border: "#e58a96",
+      fill: PDF_COLORS.dangerFill,
+      border: PDF_COLORS.dangerBorder,
     },
     {
       label: "Profit",
       value: formatCurrency(totals.profit),
-      fill: totals.profit >= 0 ? "#dcf7f0" : "#fff0cc",
-      border: totals.profit >= 0 ? "#72c7ad" : "#d9a43b",
+      fill: totals.profit >= 0 ? PDF_COLORS.successFill : PDF_COLORS.warningFill,
+      border: totals.profit >= 0 ? PDF_COLORS.successBorder : PDF_COLORS.warningBorder,
     },
     {
       label: "Inventory Cost",
       value: formatCurrency(totals.inventoryCost),
-      fill: "#e7ebff",
-      border: "#9ca9e8",
+      fill: PDF_COLORS.neutralFill,
+      border: PDF_COLORS.primary,
     },
     {
       label: "Inventory Retail",
       value: formatCurrency(totals.inventoryRetail),
-      fill: "#ddf6fb",
-      border: "#7bc7d5",
+      fill: PDF_COLORS.infoFill,
+      border: PDF_COLORS.infoBorder,
     },
     {
       label: "Sales Records",
       value: formatNumber(totals.sales),
-      fill: "#f0e7ff",
-      border: "#b79ae6",
+      fill: PDF_COLORS.warningFill,
+      border: PDF_COLORS.accent,
     },
     {
       label: "Products",
       value: formatNumber(totals.products),
-      fill: "#e8f8d7",
-      border: "#a7d36b",
+      fill: PDF_COLORS.successFill,
+      border: PDF_COLORS.primary,
     },
     {
       label: "Loans",
       value: formatCurrency(totals.outstanding),
-      fill: totals.outstanding > 0 ? "#ffe9d6" : "#eef2f7",
-      border: totals.outstanding > 0 ? "#e4a166" : "#b9c3d0",
+      fill: totals.outstanding > 0 ? PDF_COLORS.warningFill : PDF_COLORS.neutralFill,
+      border: totals.outstanding > 0 ? PDF_COLORS.warningBorder : PDF_COLORS.neutralBorder,
     },
   ]
 
@@ -345,10 +341,10 @@ function drawMetrics(doc: ReportPdfDocument, y: number, totals: ReturnType<typeo
       .fill()
       .font("Helvetica-Bold")
       .fontSize(7)
-      .fillColor(PRINT_MUTED_TEXT)
+      .fillColor(PDF_COLORS.mutedText)
       .text(metric.label.toUpperCase(), x + 10, top + 8, { width: 156 })
       .fontSize(11)
-      .fillColor(PRINT_TEXT)
+      .fillColor(PDF_COLORS.text)
       .text(truncateToWidth(doc, metric.value, 156), x + 10, top + 22, {
         width: 156,
       })
@@ -389,11 +385,11 @@ export function generateReportPDF(payload: ReportPdfPayload) {
   doc
     .font("Helvetica-Bold")
     .fontSize(22)
-    .fillColor(PRINT_TEXT)
+    .fillColor(PDF_COLORS.text)
     .text(`${storeName} Report`, 460, 58, { align: "right", width: 330 })
     .font("Helvetica")
     .fontSize(10)
-    .fillColor(PRINT_MUTED_TEXT)
+    .fillColor(PDF_COLORS.mutedText)
     .text(`Period: ${payload.fromLabel} to ${payload.toLabel}`, 460, 88, {
       align: "right",
       width: 330,
@@ -406,7 +402,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
   doc
     .font("Helvetica")
     .fontSize(8)
-    .fillColor(PRINT_MUTED_TEXT)
+    .fillColor(PDF_COLORS.mutedText)
     .text(storeInfo.address, 48, 132, { width: 250 })
     .text(`TIN: ${storeInfo.tin}`, 48, 144, { width: 250 })
     .text(`Tel: ${storeInfo.phone}`, 48, 156, { width: 250 })
@@ -420,7 +416,7 @@ export function generateReportPDF(payload: ReportPdfPayload) {
     .moveTo(PAGE_LEFT, 170)
     .lineTo(PAGE_RIGHT, 170)
     .lineWidth(1.5)
-    .strokeColor("#f08010")
+    .strokeColor(PDF_COLORS.accent)
     .stroke()
 
   let y = drawMetrics(doc, 194, totals)
@@ -526,11 +522,11 @@ export function generateReportPDF(payload: ReportPdfPayload) {
   doc
     .moveTo(PAGE_LEFT, y)
     .lineTo(PAGE_RIGHT, y)
-    .strokeColor("#d8dee8")
+    .strokeColor(PDF_COLORS.border)
     .stroke()
     .font("Helvetica")
     .fontSize(8)
-    .fillColor(PRINT_MUTED_TEXT)
+    .fillColor(PDF_COLORS.mutedText)
     .text(
       "This report is generated from the current inventory database and reflects transactions recorded for the selected date range.",
       PAGE_LEFT,

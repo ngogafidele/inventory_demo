@@ -2,6 +2,7 @@
 import { createRequire } from "module"
 import path from "node:path"
 import type * as Fs from "node:fs"
+import { PDF_COLORS } from "@/lib/pdf/pdf-theme"
 import { formatCurrency } from "@/lib/utils/format"
 
 const require = createRequire(import.meta.url)
@@ -91,17 +92,14 @@ const logoBox = {
   imageFit: [138, 138] as [number, number],
 }
 
-const PRINT_TEXT = "#111827"
-const PRINT_MUTED_TEXT = "#1f2937"
-const PRINT_HEADER_TEXT = "#00183d"
 const TABLE_ROW_HEIGHT = 24
 
 function mutedText(doc: ProductCatalogPdfDocument) {
-  return doc.font("Helvetica").fillColor(PRINT_MUTED_TEXT)
+  return doc.font("Helvetica").fillColor(PDF_COLORS.mutedText)
 }
 
 function boldText(doc: ProductCatalogPdfDocument) {
-  return doc.font("Helvetica-Bold").fillColor(PRINT_TEXT)
+  return doc.font("Helvetica-Bold").fillColor(PDF_COLORS.text)
 }
 
 function getLogoBuffer() {
@@ -112,7 +110,7 @@ function getLogoBuffer() {
 function drawLogo(doc: ProductCatalogPdfDocument, storeInfo: StoreInfo) {
   doc
     .rect(logoBox.x, logoBox.y, logoBox.width, logoBox.height)
-    .fillColor("#ffffff")
+    .fillColor(PDF_COLORS.surface)
     .fill()
 
   const logoBuffer = getLogoBuffer()
@@ -143,7 +141,7 @@ function drawLogo(doc: ProductCatalogPdfDocument, storeInfo: StoreInfo) {
       doc
         .font("Helvetica-Bold")
         .fontSize(16)
-        .fillColor(PRINT_HEADER_TEXT)
+        .fillColor(PDF_COLORS.headerText)
         .text(storeInfo.name ?? "Inventory", 48, 72, { width: 150 })
     }
   }
@@ -190,10 +188,10 @@ function drawTableHeader(doc: ProductCatalogPdfDocument, y: number) {
 
   doc
     .rect(48, y, 745, 24)
-    .fillColor("#eef3f8")
+    .fillColor(PDF_COLORS.tableHeader)
     .fill()
     .font("Helvetica-Bold")
-    .fillColor(PRINT_HEADER_TEXT)
+    .fillColor(PDF_COLORS.sectionText)
     .fontSize(8)
     .text("#", columns.index, y + 8, { width: 24 })
     .text("Product", columns.product, y + 8, { width: 178 })
@@ -263,7 +261,7 @@ export function generateProductCatalogPDF(
     .moveTo(48, 188)
     .lineTo(793, 188)
     .lineWidth(1.5)
-    .strokeColor("#f08010")
+    .strokeColor(PDF_COLORS.accent)
     .stroke()
 
   boldText(doc)
@@ -321,21 +319,21 @@ export function generateProductCatalogPDF(
     const price = truncateToWidth(doc, formatCurrency(product.price), 82)
 
     doc
-      .fillColor(index % 2 === 0 ? "#ffffff" : "#fbfcfe")
+      .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
       .rect(48, y - 7, 745, TABLE_ROW_HEIGHT)
       .fill()
       .font("Helvetica")
-      .fillColor(PRINT_TEXT)
+      .fillColor(PDF_COLORS.text)
       .fontSize(8)
       .text(String(index + 1), columns.index, y, { width: 24 })
       .font("Helvetica-Bold")
       .text(name, columns.product, y, { width: 178 })
       .font("Helvetica")
-      .fillColor(PRINT_MUTED_TEXT)
+      .fillColor(PDF_COLORS.mutedText)
       .fontSize(7)
       .text(sku, columns.product, y + 10, { width: 178 })
       .fontSize(8)
-      .fillColor(PRINT_TEXT)
+      .fillColor(PDF_COLORS.text)
       .text(quantityText, columns.quantity, y, { width: 62 })
       .text(lowStockText, columns.lowStock, y, { width: 62 })
       .text(costPrice, columns.costPrice, y, { width: 82 })
@@ -353,11 +351,11 @@ export function generateProductCatalogPDF(
   doc
     .moveTo(48, y)
     .lineTo(793, y)
-    .strokeColor("#d8dee8")
+    .strokeColor(PDF_COLORS.border)
     .stroke()
     .font("Helvetica-Bold")
     .fontSize(10)
-    .fillColor(PRINT_TEXT)
+    .fillColor(PDF_COLORS.text)
     .text(`Total products: ${payload.products.length}`, 48, y + 16)
 
   doc.end()

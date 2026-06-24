@@ -197,3 +197,24 @@ Last updated: 2026-06-23
 | Accent usage | `bg-primary text-primary-foreground` retry action |
 
 Pattern notes: The global error fallback uses the same tokenized page, card, border, radius, muted text, and primary action treatment as the authenticated app. Keep this screen calm and operational; it replaces the root layout when active, so it must include its own document shell and any global styling import required by Next.js.
+
+---
+
+## PDF Documents
+
+Files: `lib/pdf/*.ts`, `lib/pdf/pdf-theme.ts`
+Last updated: 2026-06-24
+
+| Property | Pattern |
+| --- | --- |
+| Palette source | Shared `PDF_COLORS` constants derived from the light website/auth palette |
+| Primary text | `#102017` |
+| Muted text | `#55665b` |
+| Header text | Deep BIRW green `#063f20` |
+| Section/table label text | BIRW teal-blue `#075b78` |
+| Accent rule | BIRW gold `#c99a18` |
+| Table header fill | Soft green `#eaf5ec` |
+| Alternating rows | White alternating with light green-tinted `#f6faf6` |
+| Borders/rules | Token border green `#d3e3d7` |
+
+Pattern notes: Customer-facing and management PDFs should use `PDF_COLORS` instead of local hardcoded print palettes. Keep invoice, proforma, product catalog, outstanding statement, and management report colors aligned with the website palette while preserving print-safe contrast and the existing document layouts.

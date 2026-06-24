@@ -116,6 +116,7 @@ Version: `pdfkit@0.18.0`
 Usage:
 
 - PDF generation lives in `lib/pdf`.
+- PDF document colors are centralized in `lib/pdf/pdf-theme.ts` and mirror the website's light BIRW palette.
 - `next.config.ts` marks `pdfkit` in `serverExternalPackages`.
 - Generators collect `data` chunks and resolve a `Buffer` on `end`.
 - Routes return PDF responses with appropriate content type and disposition.
@@ -123,6 +124,7 @@ Usage:
 Rules:
 
 - Keep PDF code server-only.
+- Use the shared `PDF_COLORS` palette instead of per-generator hardcoded brand colors.
 - Use Node runtime for PDF route handlers.
 - Use store identity constants and shared formatting helpers.
 - Keep logo/stamp loading tolerant of missing assets.

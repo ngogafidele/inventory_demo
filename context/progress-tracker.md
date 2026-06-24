@@ -7,7 +7,7 @@ Update this file after meaningful feature work. It should let the next agent see
 ## Current Status
 
 **Phase:** Production maintenance and feature iteration  
-**Last documented:** Login and setup-admin layouts now use a local optimized image background
+**Last documented:** PDF generators now use the website-aligned shared print palette
 **Next:** Keep context files updated after future feature changes
 
 ---
@@ -32,6 +32,7 @@ Update this file after meaningful feature work. It should let the next agent see
 - [x] Shared UI tokens plus login and setup-admin screens use the BIRW logo-derived green, blue, and gold palette
 - [x] Login and setup-admin screens use balanced branded auth layouts with compact operational context and clearer form cards
 - [x] Login and setup-admin screens render a local generated inventory/warehouse background through Next image optimization
+- [x] Invoice, proforma, product catalog, outstanding statement, and management report PDFs use the shared BIRW website-aligned print palette
 
 ---
 
@@ -45,6 +46,7 @@ Update this file after meaningful feature work. It should let the next agent see
 - Loan settlement does not alter stock because stock moved when the sale was created.
 - Invoice and proforma numbers use `NumberSequence`.
 - PDFKit requires Node/server-only execution.
+- PDF document styling should use `lib/pdf/pdf-theme.ts` so generated documents stay aligned with the website palette.
 - Git status may require adding this repo as a safe.directory before git commands work in this environment.
 
 ---

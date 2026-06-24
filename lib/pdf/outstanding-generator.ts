@@ -2,6 +2,7 @@
 import { createRequire } from "module"
 import path from "node:path"
 import type * as Fs from "node:fs"
+import { PDF_COLORS } from "@/lib/pdf/pdf-theme"
 import { formatCurrency } from "@/lib/utils/format"
 
 const require = createRequire(import.meta.url)
@@ -112,17 +113,14 @@ const stampBox = {
   fit: [78, 78] as [number, number],
 }
 
-const PRINT_TEXT = "#111827"
-const PRINT_MUTED_TEXT = "#1f2937"
-const PRINT_HEADER_TEXT = "#00183d"
 const TABLE_ROW_HEIGHT = 24
 
 function mutedText(doc: OutstandingPdfDocument) {
-  return doc.font("Helvetica").fillColor(PRINT_MUTED_TEXT)
+  return doc.font("Helvetica").fillColor(PDF_COLORS.mutedText)
 }
 
 function boldText(doc: OutstandingPdfDocument) {
-  return doc.font("Helvetica-Bold").fillColor(PRINT_TEXT)
+  return doc.font("Helvetica-Bold").fillColor(PDF_COLORS.text)
 }
 
 function getLogoBuffer() {
@@ -138,7 +136,7 @@ function getStampBuffer() {
 function drawLogo(doc: OutstandingPdfDocument, storeInfo: StoreInfo) {
   doc
     .rect(logoBox.x, logoBox.y, logoBox.width, logoBox.height)
-    .fillColor("#ffffff")
+    .fillColor(PDF_COLORS.surface)
     .fill()
 
   const logoBuffer = getLogoBuffer()
@@ -169,7 +167,7 @@ function drawLogo(doc: OutstandingPdfDocument, storeInfo: StoreInfo) {
       doc
         .font("Helvetica-Bold")
         .fontSize(16)
-        .fillColor(PRINT_HEADER_TEXT)
+        .fillColor(PDF_COLORS.headerText)
         .text(storeInfo.name ?? "Inventory", 48, 72, { width: 150 })
     }
   }
@@ -304,7 +302,7 @@ export function generateOutstandingCustomerPDF(
       align: "right",
     })
 
-  doc.moveTo(48, separatorY).lineTo(547, separatorY).lineWidth(1.5).strokeColor("#f08010").stroke()
+  doc.moveTo(48, separatorY).lineTo(547, separatorY).lineWidth(1.5).strokeColor(PDF_COLORS.accent).stroke()
 
   const contentStart = separatorY + 20
 
@@ -335,10 +333,10 @@ export function generateOutstandingCustomerPDF(
 
   doc
     .rect(48, tableTop, 499, 24)
-    .fillColor("#eef3f8")
+    .fillColor(PDF_COLORS.tableHeader)
     .fill()
     .font("Helvetica-Bold")
-    .fillColor(PRINT_HEADER_TEXT)
+    .fillColor(PDF_COLORS.sectionText)
     .fontSize(9)
     .text("Sale Date", columns.saleDate, tableTop + 8)
     .text("Payment", columns.paymentDate, tableTop + 8)
@@ -366,11 +364,11 @@ export function generateOutstandingCustomerPDF(
     const amount = truncateToWidth(doc, formatCurrency(row.amount), 60)
 
     doc
-      .fillColor(index % 2 === 0 ? "#ffffff" : "#fbfcfe")
+      .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
       .rect(48, y - 6, 499, TABLE_ROW_HEIGHT)
       .fill()
       .font("Helvetica")
-      .fillColor(PRINT_TEXT)
+      .fillColor(PDF_COLORS.text)
       .fontSize(9)
       .text(saleDate, columns.saleDate, y, { width: 70 })
       .text(paymentDate, columns.paymentDate, y, { width: 70 })
@@ -394,10 +392,10 @@ export function generateOutstandingCustomerPDF(
 
     doc
       .rect(48, y, 499, 24)
-      .fillColor("#eef3f8")
+      .fillColor(PDF_COLORS.tableHeader)
       .fill()
       .font("Helvetica-Bold")
-      .fillColor(PRINT_HEADER_TEXT)
+      .fillColor(PDF_COLORS.sectionText)
       .fontSize(9)
       .text("Date", 54, y + 8)
       .text("Method", 150, y + 8)
@@ -413,11 +411,11 @@ export function generateOutstandingCustomerPDF(
       }
 
       doc
-        .fillColor(index % 2 === 0 ? "#ffffff" : "#fbfcfe")
+        .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
         .rect(48, y - 6, 499, TABLE_ROW_HEIGHT)
         .fill()
         .font("Helvetica")
-        .fillColor(PRINT_TEXT)
+        .fillColor(PDF_COLORS.text)
         .fontSize(9)
         .text(truncateToWidth(doc, formatDate(payment.paidAt), 86), 54, y, {
           width: 86,
@@ -450,11 +448,11 @@ export function generateOutstandingCustomerPDF(
   doc
     .moveTo(48, y)
     .lineTo(547, y)
-    .strokeColor("#d8dee8")
+    .strokeColor(PDF_COLORS.border)
     .stroke()
     .font("Helvetica-Bold")
     .fontSize(12)
-    .fillColor(PRINT_TEXT)
+    .fillColor(PDF_COLORS.text)
     .text("Total Loans", 330, y + 16)
     .text(formatCurrency(payload.totalLoanAmount), 448, y + 16, {
       width: 90,
@@ -474,7 +472,7 @@ export function generateOutstandingCustomerPDF(
   doc
     .font("Helvetica-Bold")
     .fontSize(9)
-    .fillColor(PRINT_TEXT)
+    .fillColor(PDF_COLORS.text)
     .text(getPaymentDetailsLines(storeInfo).join("\n"), 48, paymentBlockY, {
       width: 220,
     })

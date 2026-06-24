@@ -2,6 +2,7 @@
 import { createRequire } from "module"
 import path from "node:path"
 import type * as Fs from "node:fs"
+import { PDF_COLORS } from "@/lib/pdf/pdf-theme"
 import { formatCurrency } from "@/lib/utils/format"
 
 const require = createRequire(import.meta.url)
@@ -93,17 +94,14 @@ const stampBox = {
   fit: [78, 78] as [number, number],
 }
 
-const PRINT_TEXT = "#111827"
-const PRINT_MUTED_TEXT = "#1f2937"
-const PRINT_HEADER_TEXT = "#00183d"
 const TABLE_ROW_HEIGHT = 24
 
 function mutedText(doc: InvoicePdfDocument) {
-  return doc.font("Helvetica").fillColor(PRINT_MUTED_TEXT)
+  return doc.font("Helvetica").fillColor(PDF_COLORS.mutedText)
 }
 
 function boldText(doc: InvoicePdfDocument) {
-  return doc.font("Helvetica-Bold").fillColor(PRINT_TEXT)
+  return doc.font("Helvetica-Bold").fillColor(PDF_COLORS.text)
 }
 
 function getLogoBuffer() {
@@ -119,7 +117,7 @@ function getStampBuffer() {
 function drawLogo(doc: InvoicePdfDocument, storeInfo: StoreInfo) {
   doc
     .rect(logoBox.x, logoBox.y, logoBox.width, logoBox.height)
-    .fillColor("#ffffff")
+    .fillColor(PDF_COLORS.surface)
     .fill()
 
   const logoBuffer = getLogoBuffer()
@@ -150,7 +148,7 @@ function drawLogo(doc: InvoicePdfDocument, storeInfo: StoreInfo) {
       doc
         .font("Helvetica-Bold")
         .fontSize(16)
-        .fillColor(PRINT_HEADER_TEXT)
+        .fillColor(PDF_COLORS.headerText)
         .text(storeInfo.name ?? "Inventory", 48, 72, { width: 150 })
     }
   }
@@ -260,7 +258,7 @@ function writeInvoicePdf(
     .moveTo(48, 210)
     .lineTo(547, 210)
     .lineWidth(1.5)
-    .strokeColor("#f08010")
+    .strokeColor(PDF_COLORS.accent)
     .stroke()
 
   boldText(doc)
@@ -291,10 +289,10 @@ function writeInvoicePdf(
 
   doc
     .rect(48, tableTop, 499, 24)
-    .fillColor("#eef3f8")
+    .fillColor(PDF_COLORS.tableHeader)
     .fill()
     .font("Helvetica-Bold")
-    .fillColor(PRINT_HEADER_TEXT)
+    .fillColor(PDF_COLORS.sectionText)
     .fontSize(9)
     .text("Item", columns.item, tableTop + 8)
     .text("Qty", columns.quantity, tableTop + 8)
@@ -314,18 +312,18 @@ function writeInvoicePdf(
     const sku = item.sku ? truncateToWidth(doc, item.sku, 210) : ""
 
     doc
-      .fillColor(index % 2 === 0 ? "#ffffff" : "#fbfcfe")
+      .fillColor(index % 2 === 0 ? PDF_COLORS.surface : PDF_COLORS.rowAlt)
       .rect(48, y - 7, 499, TABLE_ROW_HEIGHT)
       .fill()
       .font("Helvetica")
-      .fillColor(PRINT_TEXT)
+      .fillColor(PDF_COLORS.text)
       .fontSize(9)
       .text(description, columns.item, y, { width: 210 })
-      .fillColor(PRINT_MUTED_TEXT)
+      .fillColor(PDF_COLORS.mutedText)
       .fontSize(8)
       .text(sku, columns.item, y + 10, { width: 210 })
       .font("Helvetica")
-      .fillColor(PRINT_TEXT)
+      .fillColor(PDF_COLORS.text)
       .fontSize(9)
       .text(`${item.quantity} ${item.unit ?? "pcs"}`, columns.quantity, y)
       .text(formatCurrency(item.unitPrice), columns.price, y, { width: 82 })
@@ -342,11 +340,11 @@ function writeInvoicePdf(
   doc
     .moveTo(48, y)
     .lineTo(547, y)
-    .strokeColor("#d8dee8")
+    .strokeColor(PDF_COLORS.border)
     .stroke()
     .font("Helvetica-Bold")
     .fontSize(14)
-    .fillColor(PRINT_TEXT)
+    .fillColor(PDF_COLORS.text)
     .text("Total", 355, y + 20)
     .text(formatCurrency(data.totalAmount), 448, y + 20, { width: 92 })
 
@@ -362,7 +360,7 @@ function writeInvoicePdf(
     doc
       .font("Helvetica-Bold")
       .fontSize(9)
-      .fillColor(PRINT_TEXT)
+      .fillColor(PDF_COLORS.text)
       .text(footerLines.join("\n"), 48, footerY, { width: 220 })
 
     if (centeredFooterLine) {
@@ -371,7 +369,7 @@ function writeInvoicePdf(
       doc
         .font("Helvetica-Bold")
         .fontSize(9)
-        .fillColor(PRINT_TEXT)
+        .fillColor(PDF_COLORS.text)
         .text(centeredFooterLine, 48, centeredFooterY, {
           align: "center",
           width: 499,
