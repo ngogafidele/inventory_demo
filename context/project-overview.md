@@ -81,8 +81,8 @@ Company details used on customer-facing documents:
 | Role | Access Pattern |
 | --- | --- |
 | Admin | Full access, including dashboard, reports, users, stock adjustments, product management, and corrective edits/deletes. |
-| Manager | Operational workflows and invoice management where allowed. |
-| Staff | Daily operational workflows without admin-only management functions. |
+| Manager | Operational workflows, own-sale edits, and invoice management where allowed. |
+| Staff | Daily operational workflows and own-sale edits without admin-only management functions. |
 
 JWT sessions carry `userId`, `email`, `role`, `isAdmin`, store context, login log id, and `lastActivityAt`.
 

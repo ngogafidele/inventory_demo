@@ -20,7 +20,7 @@ Update this file after meaningful feature work. It should let the next agent see
 - [x] Single-store resolution for BIRW INVESTMENT GROUP Ltd
 - [x] Product catalog, SKU generation, receiving, supplier receipt tracking
 - [x] Low-stock alert synchronization
-- [x] Sales entry, paid/unpaid state, customer capture, sale edit/delete
+- [x] Sales entry, paid/unpaid state, customer capture, admin sale edit/delete, and non-admin edits for sales they created
 - [x] Loan/receivable view, partial payments, due and overdue notifications
 - [x] Returns with stock restoration and report impact
 - [x] Sales invoices and proforma invoices
@@ -40,6 +40,7 @@ Update this file after meaningful feature work. It should let the next agent see
 
 - `store1` is the only active store. Store helpers intentionally return BIRW INVESTMENT GROUP Ltd.
 - Product stock is affected by sales, sale edits, sale deletion, returns, stock receiving, and stock adjustments.
+- Staff and managers may edit sales they created; administrators may edit any sale and remain the only role allowed to delete sales.
 - Low-stock alerts must stay synchronized after inventory mutations.
 - Reports subtract returns from sales revenue and gross profit.
 - Unpaid sales are loans; they are not a separate ledger.

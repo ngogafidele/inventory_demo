@@ -61,8 +61,9 @@ administration, and corrective sale deletion.
 
 Non-admin users operate against BIRW INVESTMENT GROUP Ltd. They have access to
 daily business workflows exposed by the interface, such as products, sales,
-returns, billing, expenses, loans, and alerts. Specific management actions are
-limited by authorization checks in the route handlers and UI.
+returns, billing, expenses, loans, and alerts. They may edit sales they created,
+while administrators can edit any sale. Specific management actions are limited
+by authorization checks in the route handlers and UI.
 
 ### Sessions
 
@@ -107,8 +108,9 @@ Unpaid sales carry receivable details:
 - Expected payment date
 
 Sales edit and deletion operations reconcile inventory and prevent negative
-stock. Editing a sale that has an invoice also updates the related invoice
-items and total.
+stock. Staff and managers can edit their own sales; administrators can edit any
+sale and remain responsible for corrective deletion. Editing a sale that has an
+invoice also updates the related invoice items and total.
 
 ### Loans And Collections
 

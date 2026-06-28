@@ -263,11 +263,11 @@ export async function PUT(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { authorized, session } = await requireAdmin(request)
+    const { authorized, session } = await requireAuth(request)
     if (!authorized || !session) {
       return NextResponse.json(
-        { success: false, error: "Admin only" },
-        { status: 403 }
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
       )
     }
 
@@ -289,6 +289,13 @@ export async function PUT(
       return NextResponse.json(
         { success: false, error: "Sale not found" },
         { status: 404 }
+      )
+    }
+
+    if (!session.isAdmin && sale.createdBy?.toString() !== session.userId) {
+      return NextResponse.json(
+        { success: false, error: "Access denied" },
+        { status: 403 }
       )
     }
 
@@ -345,7 +352,7 @@ export async function PUT(
       const lineTotal = item.sellingPrice * item.quantity
       totalAmount += lineTotal
 
-      const requestedCostPrice = Number.isFinite(item.costPrice)
+      const requestedCostPrice = session.isAdmin && Number.isFinite(item.costPrice)
         ? item.costPrice
         : undefined
 

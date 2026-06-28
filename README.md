@@ -82,8 +82,10 @@ For a detailed functional and technical reference, see [DOCUMENT.md](./DOCUMENT.
 ### Sales And Stock
 
 A sale snapshots item name, SKU, unit, cost/base price, selling price, and line
-total. Creating a sale decreases store stock. Editing or deleting a sale
-reconciles stock so inventory continues to reflect the recorded transactions.
+total. Creating a sale decreases store stock. Administrators can edit any sale,
+and non-admin users can edit sales they created. Deleting a sale remains an
+administrator correction. Editing or deleting a sale reconciles stock so
+inventory continues to reflect the recorded transactions.
 
 ### Customer Loans
 

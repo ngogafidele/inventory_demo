@@ -54,6 +54,7 @@ type SaleItemClient = {
 
 type SaleClient = {
   _id: string
+  createdBy?: string
   items: SaleItemClient[]
   totalAmount: number
   notes: string
@@ -121,6 +122,7 @@ export function SalesManager({
   initialSales,
   products,
   currentUserLabel,
+  currentUserId,
   isAdmin,
   initialInvoicedSaleIds,
   initialCustomer,
@@ -128,6 +130,7 @@ export function SalesManager({
   initialSales: SaleClient[]
   products: ProductOption[]
   currentUserLabel: string
+  currentUserId: string
   isAdmin: boolean
   initialInvoicedSaleIds: string[]
   initialCustomer?: CustomerDraft
@@ -278,6 +281,10 @@ export function SalesManager({
 
   const isSoldBelowCost = (item: SaleItemClient) => {
     return item.basePrice !== undefined && item.sellingPrice < item.basePrice
+  }
+
+  function canEditSale(sale: SaleClient) {
+    return isAdmin || sale.createdBy === currentUserId
   }
 
   function getSaleCustomerName(sale: SaleClient) {
@@ -1137,18 +1144,19 @@ export function SalesManager({
                                   ? "Invoiced"
                                   : "Invoice"}
                               </Button>
+                              {canEditSale(sale) ? (
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => openEdit(sale)}
+                                  disabled={deletingSaleId === sale._id}
+                                >
+                                  <Pencil className="size-4" />
+                                  Edit
+                                </Button>
+                              ) : null}
                               {isAdmin ? (
-                                <>
-                                  <Button
-                                    type="button"
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => openEdit(sale)}
-                                    disabled={deletingSaleId === sale._id}
-                                  >
-                                    <Pencil className="size-4" />
-                                    Edit
-                                  </Button>
                                   <Button
                                     type="button"
                                     variant="destructive"
@@ -1161,7 +1169,6 @@ export function SalesManager({
                                       ? "Deleting..."
                                       : "Delete"}
                                   </Button>
-                                </>
                               ) : null}
                             </div>
                           </TableCell>

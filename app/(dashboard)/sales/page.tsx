@@ -150,6 +150,7 @@ export default async function SalesPage({
       initialSales={serializedSales}
       products={serializedProducts}
       currentUserLabel={session.email}
+      currentUserId={session.userId}
       isAdmin={session.isAdmin}
       initialInvoicedSaleIds={invoices
         .map((invoice) => invoice.saleId?.toString())
