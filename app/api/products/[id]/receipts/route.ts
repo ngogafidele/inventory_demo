@@ -36,7 +36,7 @@ export async function POST(
     const receivedAt = parseBusinessDateInput(payload.receivedAt)
     if (!receivedAt) {
       return NextResponse.json(
-        { success: false, error: "Invalid received date." },
+        { success: false, error: "Invalid received date" },
         { status: 400 }
       )
     }

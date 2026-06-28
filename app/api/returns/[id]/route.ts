@@ -147,7 +147,7 @@ export async function PUT(
       }
       if (product.quantity + delta < 0) {
         return NextResponse.json(
-          { success: false, error: "Stock would go negative." },
+          { success: false, error: "Stock would go negative" },
           { status: 400 }
         )
       }
@@ -288,7 +288,7 @@ export async function DELETE(
       const delta = -change
       if (available + delta < 0) {
         return NextResponse.json(
-          { success: false, error: "Stock would go negative." },
+          { success: false, error: "Stock would go negative" },
           { status: 400 }
         )
       }

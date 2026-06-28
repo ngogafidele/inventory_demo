@@ -98,7 +98,10 @@ export async function GET(request: NextRequest) {
 
     const store = resolveStoreFromRequest(request, session)
     if (!store) {
-      return NextResponse.json({ error: "Access denied" }, { status: 403 })
+      return NextResponse.json(
+        { success: false, error: "Access denied" },
+        { status: 403 }
+      )
     }
 
     await connectToDatabase()

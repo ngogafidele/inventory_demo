@@ -15,6 +15,7 @@ import {
   getAuthCookieOptions,
   type AuthSession,
 } from "@/lib/auth/session"
+import { isNetworkError, NETWORK_ERROR_MESSAGE } from "@/lib/utils/api-errors"
 import { ZodError } from "zod"
 
 export async function POST(request: NextRequest) {
@@ -83,9 +84,10 @@ export async function POST(request: NextRequest) {
 
     return response
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Failed to login"
-    console.error("[Login Error]", errorMessage)
+    console.error(
+      "[Login Error]",
+      error instanceof Error ? error.message : error
+    )
 
     if (error instanceof ZodError) {
       return NextResponse.json(
@@ -94,29 +96,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const normalizedMessage = errorMessage.toLowerCase()
-    const isNetworkError =
-      normalizedMessage.includes("querysrv etimeout") ||
-      normalizedMessage.includes("enotfound") ||
-      normalizedMessage.includes("econnrefused") ||
-      normalizedMessage.includes("network")
-
-    if (isNetworkError) {
+    if (isNetworkError(error)) {
       return NextResponse.json(
-        {
-          success: false,
-          error:
-            "Network problem. We cannot reach the database right now. Please try again.",
-        },
+        { success: false, error: NETWORK_ERROR_MESSAGE },
         { status: 503 }
       )
     }
 
     return NextResponse.json(
-      {
-        success: false,
-        error: "Login failed. Please try again.",
-      },
+      { success: false, error: "Login failed. Please try again." },
       { status: 400 }
     )
   }

@@ -183,7 +183,7 @@ export async function PATCH(
 
     if (!payload?.paymentStatus || payload.paymentStatus !== "paid") {
       return NextResponse.json(
-        { success: false, error: "Only paymentStatus 'paid' is supported." },
+        { success: false, error: "Only paymentStatus 'paid' is supported" },
         { status: 400 }
       )
     }
@@ -192,7 +192,7 @@ export async function PATCH(
       !["cash", "bank", "mobile"].includes(payload.paymentMethod)
     ) {
       return NextResponse.json(
-        { success: false, error: "Payment method is required." },
+        { success: false, error: "Payment method is required" },
         { status: 400 }
       )
     }
@@ -379,7 +379,7 @@ export async function PUT(
 
     if (paymentStatus === "unpaid" && !paymentDate) {
       return NextResponse.json(
-        { success: false, error: "Invalid payment date." },
+        { success: false, error: "Invalid payment date" },
         { status: 400 }
       )
     }
@@ -547,7 +547,7 @@ export async function DELETE(
 
     if (loanOnly && sale.paymentStatus !== "unpaid") {
       return NextResponse.json(
-        { success: false, error: "Only unpaid loan sales can be deleted here." },
+        { success: false, error: "Only unpaid loan sales can be deleted here" },
         { status: 400 }
       )
     }
@@ -565,7 +565,7 @@ export async function DELETE(
         {
           success: false,
           error:
-            "Cannot delete this sale because one or more products are missing.",
+            "Cannot delete this sale because one or more products are missing",
         },
         { status: 409 }
       )

@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
       const paymentDate = parseBusinessDateInput(payload.outstanding?.paymentDate)
       if (!paymentDate) {
         return NextResponse.json(
-          { success: false, error: "Invalid payment date." },
+          { success: false, error: "Invalid payment date" },
           { status: 400 }
         )
       }

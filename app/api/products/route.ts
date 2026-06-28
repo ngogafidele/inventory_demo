@@ -162,7 +162,7 @@ export async function POST(request: NextRequest) {
 
     if (duplicateProduct) {
       return NextResponse.json(
-        { success: false, error: "A product with this name already exists." },
+        { success: false, error: "A product with this name already exists" },
         { status: 409 }
       )
     }
@@ -210,7 +210,7 @@ export async function POST(request: NextRequest) {
     }
     if (isDuplicateProductNameError(error)) {
       return NextResponse.json(
-        { success: false, error: "A product with this name already exists." },
+        { success: false, error: "A product with this name already exists" },
         { status: 409 }
       )
     }

@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
       ?.trim()
     if (!customerName) {
       return NextResponse.json(
-        { success: false, error: "Customer name is required." },
+        { success: false, error: "Customer name is required" },
         { status: 400 }
       )
     }
@@ -143,7 +143,7 @@ export async function GET(request: NextRequest) {
 
     if (sales.length === 0) {
       return NextResponse.json(
-        { success: false, error: "No loans found." },
+        { success: false, error: "No loans found" },
         { status: 404 }
       )
     }

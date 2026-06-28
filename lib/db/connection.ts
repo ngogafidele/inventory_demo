@@ -27,6 +27,14 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
     cached.promise = mongoose.connect(MONGODB_URI)
   }
 
-  cached.conn = await cached.promise
+  try {
+    cached.conn = await cached.promise
+  } catch (error) {
+    // Reset the cached promise so a failed connection does not get reused on
+    // every later request. Without this, one network failure makes the app
+    // report "cannot reach the database" until the server restarts.
+    cached.promise = null
+    throw error
+  }
   return cached.conn
 }

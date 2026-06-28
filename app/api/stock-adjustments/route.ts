@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
 
     if (!updatedProduct) {
       return NextResponse.json(
-        { success: false, error: "Adjustment would make stock negative" },
+        { success: false, error: "Stock would go negative" },
         { status: 400 }
       )
     }

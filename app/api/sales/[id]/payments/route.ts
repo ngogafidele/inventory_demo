@@ -91,7 +91,7 @@ export async function POST(
 
     if (!sale) {
       return NextResponse.json(
-        { success: false, error: "Unpaid loan sale not found." },
+        { success: false, error: "Unpaid loan sale not found" },
         { status: 404 }
       )
     }
@@ -103,7 +103,7 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
-          error: "Payment amount cannot exceed the remaining loan balance.",
+          error: "Payment amount cannot exceed the remaining loan balance",
         },
         { status: 400 }
       )
@@ -161,7 +161,7 @@ export async function POST(
 
     if (!updatedSale) {
       return NextResponse.json(
-        { success: false, error: "Failed to record payment." },
+        { success: false, error: "Failed to record payment" },
         { status: 409 }
       )
     }

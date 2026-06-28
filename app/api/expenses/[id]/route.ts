@@ -52,7 +52,7 @@ export async function PUT(
       const date = parseBusinessDateInput(payload.date)
       if (!date) {
         return NextResponse.json(
-          { success: false, error: "Invalid expense date." },
+          { success: false, error: "Invalid expense date" },
           { status: 400 }
         )
       }

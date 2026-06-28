@@ -6,27 +6,12 @@ import { requireAdmin } from "@/lib/auth/middleware"
 import { CreateUserSchema } from "@/lib/db/validators/user"
 import { hashPassword } from "@/lib/auth/hash"
 import { DEFAULT_STORE } from "@/lib/auth/session"
+import {
+  isDuplicateKeyError,
+  isNetworkError,
+  NETWORK_ERROR_MESSAGE,
+} from "@/lib/utils/api-errors"
 import { ZodError } from "zod"
-
-function isDuplicateKeyError(error: unknown) {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error &&
-    error.code === 11000
-  )
-}
-
-function isNetworkError(error: unknown) {
-  if (!(error instanceof Error)) return false
-  const message = error.message.toLowerCase()
-  return (
-    message.includes("querysrv etimeout") ||
-    message.includes("enotfound") ||
-    message.includes("econnrefused") ||
-    message.includes("network")
-  )
-}
 
 export async function GET(_request: NextRequest) {
   void _request
@@ -101,31 +86,27 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json(
-        { success: false, error: "Please fill all required fields." },
+        { success: false, error: "Please fill all required fields" },
         { status: 400 }
       )
     }
 
     if (isDuplicateKeyError(error)) {
       return NextResponse.json(
-        { success: false, error: "A user with that username or email already exists." },
+        { success: false, error: "A user with that email already exists" },
         { status: 409 }
       )
     }
 
     if (isNetworkError(error)) {
       return NextResponse.json(
-        {
-          success: false,
-          error:
-            "Network problem. We cannot reach the database right now. Please try again.",
-        },
+        { success: false, error: NETWORK_ERROR_MESSAGE },
         { status: 503 }
       )
     }
 
     return NextResponse.json(
-      { success: false, error: "Failed to create user." },
+      { success: false, error: "Failed to create user" },
       { status: 400 }
     )
   }
