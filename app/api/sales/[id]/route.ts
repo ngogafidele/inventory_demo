@@ -343,6 +343,9 @@ export async function PUT(
     }
 
     let totalAmount = 0
+    const previousBasePrices = new Map(
+      oldItems.map((item) => [item.productId.toString(), item.basePrice])
+    )
     const saleItems = payload.items.map((item) => {
       const product = productMap.get(item.productId)
       if (!product) {
@@ -355,6 +358,9 @@ export async function PUT(
       const requestedCostPrice = session.isAdmin && Number.isFinite(item.costPrice)
         ? item.costPrice
         : undefined
+      const preservedCostPrice = session.isAdmin
+        ? undefined
+        : previousBasePrices.get(item.productId)
 
       return {
         productId: product._id,
@@ -362,7 +368,11 @@ export async function PUT(
         sku: product.sku,
         unit: product.unit ?? "pcs",
         quantity: item.quantity,
-        basePrice: requestedCostPrice ?? product.costPrice ?? product.price,
+        basePrice:
+          requestedCostPrice ??
+          preservedCostPrice ??
+          product.costPrice ??
+          product.price,
         sellingPrice: item.sellingPrice,
         lineTotal,
       }
