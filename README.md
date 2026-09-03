@@ -27,8 +27,8 @@ Application data is isolated by store:
 
 | Internal Key | Branch | Document Address |
 | --- | --- | --- |
-| `store1` | Gisozi | Kigali, Gisozi |
-| `store2` | Kinyinya | Kigali, Kinyinya |
+| `store1` | Gisozi | xxxxxxx |
+| `store2` | Kinyinya | xxxxxxx |
 
 Products, sales, returns, invoices, expenses, receivables, alerts, and report
 calculations are scoped to the selected branch. Administrators can switch

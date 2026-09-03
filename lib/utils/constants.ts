@@ -11,6 +11,6 @@ export const STORE_LABELS: Record<StoreKey, string> = {
 
 // Customer-facing PDFs must identify the branch that owns the transaction.
 export const STORE_ADDRESSES: Record<StoreKey, string> = {
-  store1: "Kigali, Gisozi",
-  store2: "Kigali, Kinyinya",
+  store1: "xxxxxxx",
+  store2: "xxxxxxx",
 }

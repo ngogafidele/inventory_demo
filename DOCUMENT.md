@@ -28,8 +28,8 @@ Receivables = unpaid loan sales awaiting collection
 
 | Key | Branch | PDF Address |
 | --- | --- | --- |
-| `store1` | Gisozi | Kigali, Gisozi |
-| `store2` | Kinyinya | Kigali, Kinyinya |
+| `store1` | Gisozi | xxxxxxx |
+| `store2` | Kinyinya | xxxxxxx |
 
 Branch separation is a core control:
 

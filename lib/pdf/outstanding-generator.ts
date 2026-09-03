@@ -110,9 +110,9 @@ const stampBox = {
 }
 
 const paymentMethodsLines = [
-  "Equity Bank Account: 4005201187639",
-  "Tin: 111049695",
-  "Tel No: 0788399098",
+  "Bank Account: xxxxxxx",
+  "TIN: xxxxxxx",
+  "Tel No: xxxxxxx",
   "",
   "Demo Inventory System",
 ]
