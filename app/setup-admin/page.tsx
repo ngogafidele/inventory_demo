@@ -232,7 +232,7 @@ export default function SetupAdminPage() {
             <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/80 bg-white shadow-sm">
               <Image
                 src="/images/logo.png"
-                alt="B Ikaze Hardware logo"
+                alt="Demo Inventory System logo"
                 width={96}
                 height={96}
                 priority
@@ -251,7 +251,7 @@ export default function SetupAdminPage() {
 
           <div className="space-y-3">
             {[
-              "Secure access for B Ikaze daily operations.",
+              "Secure access for Demo Inventory System daily operations.",
               "Store teams start from one trusted admin account.",
               "Inventory, sales, invoices, and alerts stay connected.",
             ].map((item) => (

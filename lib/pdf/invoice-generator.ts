@@ -95,7 +95,7 @@ const businessFooterLines = [
   "Tin: 111049695",
   "Tel No: 0788399098",
   "",
-  "B Ikaze Hardware",
+  "Demo Inventory System",
 ]
 
 const PRINT_TEXT = "#111827"
@@ -412,6 +412,6 @@ export function generateProformaPDF(
     storeInfo,
     "Proforma To",
     businessFooterLines,
-    "Thank You For Doing Business With B Ikaze Hardware"
+    "Thank You For Doing Business With Demo Inventory System"
   )
 }

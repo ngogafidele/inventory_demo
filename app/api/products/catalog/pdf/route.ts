@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
           price: product.price,
         })),
       },
-      { name: "B Ikaze Hardware", address: STORE_ADDRESSES[store] }
+      { name: "Demo Inventory System", address: STORE_ADDRESSES[store] }
     )
 
     return new NextResponse(new Uint8Array(pdf), {

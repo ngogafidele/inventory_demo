@@ -1,4 +1,4 @@
-// Defines root metadata and document structure for the B Ikaze application.
+// Defines root metadata and document structure for the demo inventory application.
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "B Ikaze Inventory",
+  title: "Demo Inventory System",
   description: "Inventory management across two stores",
 };
 

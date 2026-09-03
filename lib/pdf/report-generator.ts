@@ -209,7 +209,7 @@ function drawLogo(doc: ReportPdfDocument) {
       .font("Helvetica-Bold")
       .fontSize(16)
       .fillColor(PRINT_HEADER_TEXT)
-      .text("B Ikaze Hardware", 48, 72, { width: 150 })
+      .text("Demo Inventory System", 48, 72, { width: 150 })
   }
 }
 

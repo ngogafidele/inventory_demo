@@ -114,7 +114,7 @@ const paymentMethodsLines = [
   "Tin: 111049695",
   "Tel No: 0788399098",
   "",
-  "B Ikaze Hardware",
+  "Demo Inventory System",
 ]
 
 const PRINT_TEXT = "#111827"

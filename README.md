@@ -1,6 +1,6 @@
-# B Ikaze Inventory
+# Demo Inventory System
 
-B Ikaze Inventory is a two-branch inventory, sales, and receivables
+Demo Inventory System is a two-branch inventory, sales, and receivables
 management application for **Gisozi** and **Kinyinya**. It supports the daily
 operation of a physical-goods business: stock control, direct and credit
 sales, returns, invoicing, expenses, alerts, and branch-level performance

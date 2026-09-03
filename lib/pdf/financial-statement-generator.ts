@@ -106,7 +106,7 @@ function drawLogo(doc: StatementPdfDocument) {
       .font("Helvetica-Bold")
       .fontSize(15)
       .fillColor(PRINT_HEADER_TEXT)
-      .text("B Ikaze Hardware", PAGE_LEFT, 60, { width: 160 })
+      .text("Demo Inventory System", PAGE_LEFT, 60, { width: 160 })
   }
 }
 

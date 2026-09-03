@@ -1,8 +1,8 @@
-# B Ikaze Inventory - System Reference
+# Demo Inventory System - System Reference
 
 ## 1. Purpose
 
-B Ikaze Inventory supports the operation of two physical retail branches:
+Demo Inventory System supports the operation of two physical retail branches:
 **Gisozi** and **Kinyinya**. The system records stock movement, sales revenue,
 credit exposure, expenses, and printable customer or management documents.
 
