@@ -4,67 +4,13 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { AuthSession } from "@/lib/auth/session"
-import {
-  Bell,
-  ChartColumn,
-  ClipboardList,
-  Clock,
-  RotateCcw,
-  Wallet,
-  LayoutDashboard,
-  PackageSearch,
-  ReceiptText,
-  Scale,
-  Users,
-  Wrench,
-} from "lucide-react"
 import { cn } from "@/lib/utils"
 import { requiresReauth } from "@/lib/auth/reauth"
-
-const dashboardNavItem = {
-  href: "/dashboard",
-  label: "Dashboard",
-  icon: LayoutDashboard,
-}
-
-const adminOnlyNavItems = [
-  { href: "/users", label: "Users", icon: Users },
-]
-
-const commonNavItems = [
-  { href: "/products", label: "Products", icon: PackageSearch },
-  { href: "/sales", label: "Sales", icon: ReceiptText },
-  { href: "/customers-suppliers", label: "Customers/Suppliers", icon: Users },
-  { href: "/returns", label: "Returns", icon: RotateCcw },
-  { href: "/invoices", label: "Invoices", icon: ClipboardList },
-  { href: "/expenses", label: "Expenses", icon: Wallet },
-  { href: "/outstanding", label: "Loans", icon: Clock },
-  { href: "/alerts", label: "Low Stock Alerts", icon: Bell },
-]
-
-const stockAdjustmentsNavItem = {
-  href: "/stock-adjustments",
-  label: "Stock Adjustments",
-  icon: Wrench,
-}
-
-const bottomNavItems = [
-  { href: "/reports", label: "Visual Reports", icon: ChartColumn },
-  { href: "/financial-statements", label: "Financial Reports", icon: Scale },
-]
+import { getNavigationItems } from "@/components/navigation/navigation-config"
 
 export function Sidebar({ session }: { session: AuthSession }) {
   const pathname = usePathname()
-  const navItems = session.isAdmin
-    ? [
-        dashboardNavItem,
-        ...adminOnlyNavItems,
-        ...commonNavItems.flatMap((item) =>
-          item.href === "/outstanding" ? [item, stockAdjustmentsNavItem] : item
-        ),
-        ...bottomNavItems,
-      ]
-    : [dashboardNavItem, ...commonNavItems]
+  const navItems = getNavigationItems(session)
 
   return (
     <aside className="w-full shrink-0 rounded-2xl border border-sidebar-border bg-sidebar/90 p-2 backdrop-blur-sm md:sticky md:top-4 md:h-fit md:w-60">
