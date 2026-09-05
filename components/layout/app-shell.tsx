@@ -1,6 +1,9 @@
+"use client"
+
 // Defines the authenticated header, navigation, and content shell.
 import type { ReactNode } from "react"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import type { AuthSession } from "@/lib/auth/session"
 import { Sidebar } from "@/components/layout/sidebar"
 import { LoanNotifications } from "@/components/layout/loan-notifications"
@@ -17,8 +20,10 @@ export function AppShell({
   userName?: string
   children: ReactNode
 }) {
+  const pathname = usePathname()
   const currentStore = session.currentStore ?? session.stores[0]
   const displayName = userName ?? session.name ?? session.email
+  const isHomePage = pathname === "/home"
 
   return (
     <div className="min-h-screen bg-background">
@@ -71,7 +76,7 @@ export function AppShell({
         </div>
       </header>
       <div className="mx-auto flex max-w-[92rem] flex-col gap-3 px-2 py-2 sm:px-3 sm:py-3 lg:px-4 md:flex-row">
-        <Sidebar session={session} />
+        {isHomePage ? null : <Sidebar session={session} />}
         <main className="flex-1 rounded-2xl border border-border/80 bg-card/95 p-2 shadow-sm backdrop-blur-sm sm:p-3 lg:p-4">
           {children}
         </main>

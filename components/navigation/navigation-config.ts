@@ -4,6 +4,7 @@ import {
   ChartColumn,
   ClipboardList,
   Clock,
+  House,
   LayoutDashboard,
   PackageSearch,
   ReceiptText,
@@ -27,6 +28,13 @@ export type NavigationItem = {
 }
 
 const navigationItems: NavigationItem[] = [
+  {
+    href: "/home",
+    label: "Home",
+    description: "Return to the system home page and choose a workspace.",
+    icon: House,
+    group: "Operations",
+  },
   {
     href: "/dashboard",
     label: "Dashboard",
