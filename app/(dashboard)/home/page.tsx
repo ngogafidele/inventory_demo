@@ -15,7 +15,9 @@ const groupOrder: NavigationGroup[] = [
 
 export default async function HomePage() {
   const session = await requireServerSession()
-  const navigationItems = getNavigationItems(session)
+  const navigationItems = getNavigationItems(session).filter(
+    (item) => item.href !== "/home"
+  )
 
   return (
     <div className="space-y-7">
