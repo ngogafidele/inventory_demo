@@ -52,7 +52,7 @@ export default function SetupAdminPage() {
           return
         }
 
-        router.push("/dashboard")
+        router.push("/home")
         router.refresh()
       } catch (error) {
         setMessage("Network error. Check your connection and try again.")
