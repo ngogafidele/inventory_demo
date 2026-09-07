@@ -19,7 +19,7 @@
 
 ```text
 app/
-  (dashboard)/              Authenticated operational pages and loading states
+  (dashboard)/              Authenticated workspace, operational pages, and loading states
   api/                      JSON mutations, queries, and PDF route handlers
   page.tsx                  Login page
   setup-admin/              Initial administrator setup
@@ -27,6 +27,7 @@ app/
   verify/                   Step-up password verification UI
 components/
   layout/                   Authenticated shell, sidebar, loan notifications
+  navigation/               Central role-aware navigation configuration
   auth/                     Reauth, idle guard, password confirmation, logout
   ui/                       Local button, input, select, dialog, table primitives
   products/                 Product catalog, search select, receiving, stock monitor
@@ -154,7 +155,7 @@ Business dates are parsed and formatted through `lib/utils/time` using Kigali ti
 
 The source of truth for active users is the database. A JWT is accepted only if it verifies, has not idled out, and maps to an active current user.
 
-Financially sensitive admin paths (`/dashboard`, `/reports`, `/financial-statements`, and matching API paths) require a recent password verification through `/verify`.
+Financially sensitive admin paths (`/dashboard`, `/reports`, `/financial-statements`, and matching API paths) require a recent password verification through `/verify`. The strict idle policy also covers `/verify` while the user is completing the step-up flow.
 
 ---
 

@@ -7,7 +7,7 @@ Update this file after meaningful feature work. It should let the next agent see
 ## Current Status
 
 **Phase:** Production maintenance and feature iteration  
-**Last documented:** Context refresh against the current two-branch Demo Inventory System structure  
+**Last documented:** 2026-09-07 context refresh against the current two-store Demo Inventory System structure  
 **Next:** Keep context files updated after future feature changes
 
 ---
@@ -18,7 +18,8 @@ Update this file after meaningful feature work. It should let the next agent see
 - [x] JWT session cookie, idle timeout refresh, current-user validation, and lapsed logout recording
 - [x] Strict admin gate for `/dashboard`, `/reports`, `/financial-statements`, and matching API paths
 - [x] Authenticated app shell with role-aware sidebar, loan notifications, user badge, logout, and admin store switcher
-- [x] Two-branch store model: `store1` Gisozi and `store2` Kinyinya
+- [x] Two-store model: `store1` Store 1 and `store2` Store 2, with anonymized document addresses
+- [x] Authenticated `/home` workspace hub with grouped navigation cards
 - [x] Product catalog, SKU generation, receiving, supplier receipt tracking, categories, and product catalog PDF
 - [x] Admin product stock movement monitor using receipts, sales/loans, returns/replacements, and stock adjustments
 - [x] Low-stock alert synchronization
@@ -53,7 +54,7 @@ Update this file after meaningful feature work. It should let the next agent see
 - Invoice and proforma numbers use `NumberSequence`.
 - PDFKit requires Node/server-only execution.
 - PDFKit supports JPEG/PNG image embedding in this setup. PDF generators should use PNG/JPEG-compatible assets from `public/images`.
-- Git status may require adding this repo as a safe.directory before git commands work in this environment.
+- Git commands may require this repo to be configured as a safe.directory in some environments.
 
 ---
 

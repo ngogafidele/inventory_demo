@@ -23,9 +23,9 @@ Pattern notes: The shell is dense and operational. Keep the header sticky and th
 
 ---
 
-## Sidebar
+## Sidebar And Workspace Hub
 
-File: `components/layout/sidebar.tsx`
+Files: `components/layout/sidebar.tsx`, `components/navigation/navigation-config.ts`, `app/(dashboard)/home/page.tsx`
 
 | Property | Pattern |
 | --- | --- |
@@ -35,8 +35,9 @@ File: `components/layout/sidebar.tsx`
 | Item | `flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition` |
 | Active | `bg-primary text-primary-foreground shadow-sm` |
 | Inactive | `text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground` |
+| Home hub | Grouped navigation cards with `rounded-2xl border p-4 shadow-sm`, role filtering, and accent-border variants |
 
-Pattern notes: Navigation is role-aware and icon-led. Admins get users, stock adjustments, reports, and financial statements. Sensitive admin links disable prefetch when reauth is required.
+Pattern notes: Navigation is role-aware and icon-led. Admins get users, stock adjustments, reports, and financial statements. The home hub is the landing workspace after authentication; sensitive links disable prefetch when reauth is required.
 
 ---
 

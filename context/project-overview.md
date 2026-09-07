@@ -2,7 +2,7 @@
 
 ## About The Project
 
-Demo Inventory System is a two-branch inventory, sales, invoicing, receivables, expense, alert, and reporting application for a physical-goods business. The active branches are `Gisozi` and `Kinyinya`.
+Demo Inventory System is a two-store inventory, sales, invoicing, receivables, expense, alert, and reporting application for a physical-goods business. The visible store identity is intentionally anonymized as `Store 1` and `Store 2`.
 
 The app is implemented as a Next.js 16 App Router project with React 19, MongoDB/Mongoose persistence, JWT cookie sessions, Zod validation, Tailwind CSS 4 plus local UI primitives, Recharts visualizations, and PDFKit-generated documents.
 
@@ -12,10 +12,10 @@ The app is implemented as a Next.js 16 App Router project with React 19, MongoDB
 
 Application data is isolated by store.
 
-| Internal Key | Branch | Document Address |
+| Internal Key | Store | Document Address |
 | --- | --- | --- |
-| `store1` | Gisozi | `xxxxxxx` |
-| `store2` | Kinyinya | `xxxxxxx` |
+| `store1` | Store 1 | `xxxxxxx` |
+| `store2` | Store 2 | `xxxxxxx` |
 
 Users carry an allowed `stores` list in their session. Administrators can switch the active store from the authenticated header; non-admin users operate in their assigned store. Route handlers resolve the store from the request/session and reject stores that are not allowed for the current user.
 
@@ -28,6 +28,7 @@ Users carry an allowed `stores` list in their session. Administrators can switch
 /setup-admin              First administrator setup
 /reset-password           Password reset form
 /verify                   Step-up password verification
+/home                     Authenticated workspace hub
 /dashboard                Admin overview
 /products                 Product catalog, receiving, stock movement monitor
 /sales                    Sales entry, sale edit, sale invoicing
@@ -49,9 +50,9 @@ Users carry an allowed `stores` list in their session. Administrators can switch
 
 1. An admin creates the first account from `/setup-admin`.
 2. Users sign in from `/` with email and password.
-3. The authenticated shell wraps operational pages with a sticky header, role-aware sidebar, loan notifications, user badge, optional admin store switcher, and logout action.
+3. The authenticated shell wraps the workspace hub and operational pages with a sticky header, loan notifications, user badge, optional admin store switcher, logout action, and a role-aware sidebar on non-home pages.
 4. Staff and managers use daily workflows for products, sales, returns, invoices, proformas, expenses, loans, and alerts within their assigned store.
-5. Admins additionally access dashboard, reports, financial statements, users, stock adjustments, product administration, correction edits, destructive actions, and branch switching.
+5. Admins additionally access dashboard, reports, financial statements, users, stock adjustments, product administration, correction edits, destructive actions, and store switching.
 
 ---
 
@@ -73,13 +74,13 @@ Users carry an allowed `stores` list in their session. Administrators can switch
 
 | Role | Access Pattern |
 | --- | --- |
-| Admin | Full access, including dashboard, reports, financial statements, users, stock adjustments, product management, branch switching, and corrective edits/deletes. |
+| Admin | Full access, including dashboard, reports, financial statements, users, stock adjustments, product management, store switching, and corrective edits/deletes. |
 | Manager | Assigned-store operational workflows where permitted by routes and UI. |
 | Staff | Assigned-store operational workflows without admin-only management functions. |
 
 JWT sessions carry `userId`, `name`, `email`, `role`, `isAdmin`, allowed `stores`, `currentStore`, login log id, idle timestamp, strict-mode flag, and optional step-up verification timestamp.
 
-Admin idle timeout is 1 hour, staff/manager idle timeout is 6 hours, and strict financial routes use a 10-minute admin idle window plus password re-verification.
+Admin idle timeout is 1 hour, staff/manager idle timeout is 6 hours, and strict admin routes use a 10-minute idle window plus password re-verification. Strict coverage includes `/dashboard`, `/reports`, `/financial-statements`, and `/verify`; matching dashboard/report/financial API paths require current re-authentication.
 
 ---
 

@@ -8,9 +8,10 @@ Demo Inventory System is an operational business tool. Screens should feel dense
 
 ## Navigation
 
-- Authenticated pages use the existing sticky header plus left/sidebar navigation.
-- The sidebar is role-aware. Admins see Dashboard, Users, operational screens, Stock Adjustments, Visual Reports, and Financial Reports. Non-admin users see Dashboard plus common operational screens.
-- Admins can switch between Gisozi and Kinyinya from the header store switcher.
+- Authenticated non-home pages use the existing sticky header plus left/sidebar navigation.
+- `/home` is the authenticated workspace hub and intentionally hides the sidebar while presenting the same role-aware navigation as grouped cards.
+- The sidebar and home hub are role-aware. Admins see Dashboard, Users, operational screens, Stock Adjustments, Visual Reports, and Financial Reports. Non-admin users see Dashboard plus common operational screens.
+- Admins can switch between anonymized Store 1 and Store 2 from the header store switcher.
 - Active sidebar item uses `bg-primary text-primary-foreground shadow-sm`.
 - Inactive sidebar items use `text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`.
 - Do not add a second top navigation model.

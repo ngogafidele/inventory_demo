@@ -36,7 +36,8 @@ Build UI and data changes together only when the workflow can be verified end to
 
 - Sticky header with logo, user badge, loan notifications, logout
 - Role-aware sidebar
-- Admin store switcher for Gisozi and Kinyinya
+- Admin store switcher for anonymized Store 1 and Store 2
+- Authenticated `/home` workspace hub with grouped role-aware navigation cards
 - Main content shell
 - Admin and non-admin navigation differences
 

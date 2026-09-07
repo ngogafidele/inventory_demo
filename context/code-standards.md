@@ -18,6 +18,7 @@
 - Server Components are the default for pages.
 - Client components are used for interactive managers and local form/dialog/chart state.
 - API route handlers live in `app/api/**/route.ts`.
+- The authenticated `/home` page is a server-rendered navigation hub; it uses the shared navigation configuration and does not render the sidebar.
 - PDF route handlers should use Node runtime when required by PDFKit or Node APIs.
 
 ---
@@ -113,7 +114,7 @@ Rules:
 - Route handlers use `requireAuth()` or `requireAdmin()` from `lib/auth/middleware.ts`.
 - Current database user state is checked through `getCurrentUserSession`.
 - Inactive users must not retain valid access.
-- Admin and staff idle timeouts differ; strict admin financial pages use a 10-minute idle window.
+- Admin and staff idle timeouts differ; strict admin routes use a 10-minute idle window and recent password verification.
 - `/dashboard`, `/reports`, `/financial-statements`, and matching API paths require recent password verification through the proxy-level step-up gate.
 
 ---
