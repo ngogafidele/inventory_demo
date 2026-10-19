@@ -154,9 +154,16 @@ export default async function SalesPage({
     return returnedQuantity >= soldQuantity ? "returned" : "partial"
   }
 
-  const serializeSale = (sale: SalesPageSale) => ({
+  // Loan payments and deletedBy hold raw ObjectIds that cannot cross into a
+  // Client Component; the manager only needs the derived name/label fields.
+  const serializeSale = ({
+    payments: _payments,
+    deletedBy: _deletedBy,
+    ...sale
+  }: SalesPageSale & { payments?: unknown }) => ({
     ...sale,
     _id: sale._id.toString(),
+    deletedAt: sale.deletedAt?.toISOString(),
     createdAt: sale.createdAt?.toISOString(),
     createdAtLabel: sale.createdAt
       ? formatInKigali(sale.createdAt, {

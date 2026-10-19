@@ -16,7 +16,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { ProductSearchSelect } from "@/components/products/product-search-select"
 import { PasswordConfirmDialog } from "@/components/auth/password-confirm-dialog"
-import { AlertTriangle, FilePlus2, Pencil, RotateCcw, Trash2 } from "lucide-react"
+import {
+  AlertTriangle,
+  FilePlus2,
+  FileSpreadsheet,
+  Pencil,
+  RotateCcw,
+  Trash2,
+} from "lucide-react"
+import { downloadFile } from "@/lib/utils/file-download"
 import {
   Select,
   SelectContent,
@@ -202,6 +210,8 @@ export function SalesManager({
   const [search, setSearch] = useState("")
   const [dateFrom, setDateFrom] = useState("")
   const [dateTo, setDateTo] = useState("")
+  const [exporting, setExporting] = useState(false)
+  const [exportError, setExportError] = useState<string | null>(null)
 
   const productMap = useMemo(
     () => new Map(productOptions.map((product) => [product._id, product])),
@@ -236,6 +246,23 @@ export function SalesManager({
     })
     return quantities
   }, [activeSale])
+
+  // Exports the selected date range; the server defaults a missing bound to
+  // month start / today, matching the Reports page range.
+  const exportSalesExcel = async () => {
+    setExporting(true)
+    setExportError(null)
+    const params = new URLSearchParams()
+    if (dateFrom) params.set("start", dateFrom)
+    if (dateTo) params.set("end", dateTo)
+    const message = await downloadFile(
+      `/api/sales/export?${params.toString()}`,
+      "sales.xlsx",
+      "Failed to export sales."
+    )
+    if (message) setExportError(message)
+    setExporting(false)
+  }
 
   const filteredSales = useMemo(() => {
     const query = search.trim().toLowerCase()
@@ -1161,8 +1188,27 @@ export function SalesManager({
               Clear dates
             </Button>
           ) : null}
+          {isAdmin ? (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={exportSalesExcel}
+              disabled={exporting}
+              title={
+                dateFrom || dateTo
+                  ? "Export sales in the selected date range"
+                  : "Export this month's sales, or pick dates to choose a range"
+              }
+            >
+              <FileSpreadsheet className="size-4" />
+              {exporting ? "Preparing..." : "Export Excel"}
+            </Button>
+          ) : null}
         </div>
       </div>
+      {exportError ? (
+        <p className="text-sm text-destructive">{exportError}</p>
+      ) : null}
 
       <Table>
         <TableHeader>

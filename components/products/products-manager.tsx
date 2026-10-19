@@ -4,7 +4,14 @@
 import { useMemo, useState } from "react"
 import { formatCurrency } from "@/lib/utils/format"
 import { formatKigaliDateInput } from "@/lib/utils/time"
-import { Activity, FileText, PackagePlus } from "lucide-react"
+import {
+  Activity,
+  FileSpreadsheet,
+  FileText,
+  PackagePlus,
+  Upload,
+} from "lucide-react"
+import { downloadFile } from "@/lib/utils/file-download"
 import { Button } from "@/components/ui/button"
 import {
   ProductMonitorDialog,
@@ -92,6 +99,14 @@ function getEmptyReceiveForm(): ReceiveFormState {
   }
 }
 
+type ImportRowIssue = { row: number; name: string; reason: string }
+
+type ImportResult = {
+  created: ProductClient[]
+  skipped: ImportRowIssue[]
+  invalid: ImportRowIssue[]
+}
+
 const PRODUCTS_PER_PAGE = 20
 
 export function ProductsManager({
@@ -119,6 +134,12 @@ export function ProductsManager({
   const [search, setSearch] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const [catalogDownloading, setCatalogDownloading] = useState(false)
+  const [excelDownloading, setExcelDownloading] = useState(false)
+  const [importOpen, setImportOpen] = useState(false)
+  const [importFile, setImportFile] = useState<File | null>(null)
+  const [importing, setImporting] = useState(false)
+  const [importError, setImportError] = useState<string | null>(null)
+  const [importResult, setImportResult] = useState<ImportResult | null>(null)
 
   const costValue = Number(formState.costPrice)
   const priceValue = Number(formState.price)
@@ -431,6 +452,55 @@ export function ProductsManager({
     }
   }
 
+  const downloadProductsExcel = async () => {
+    setExcelDownloading(true)
+    setError(null)
+    const message = await downloadFile(
+      "/api/products/export",
+      "products.xlsx",
+      "Failed to export products."
+    )
+    if (message) setError(message)
+    setExcelDownloading(false)
+  }
+
+  const importProductsExcel = async () => {
+    if (!importFile) {
+      setImportError("Choose an Excel file to import.")
+      return
+    }
+
+    setImporting(true)
+    setImportError(null)
+    setImportResult(null)
+
+    try {
+      const formData = new FormData()
+      formData.append("file", importFile)
+      const response = await fetch("/api/products/import", {
+        method: "POST",
+        body: formData,
+      })
+      const body = await response.json().catch(() => null)
+      if (!response.ok || !body?.success) {
+        setImportError(body?.error ?? "Failed to import products.")
+        return
+      }
+
+      const result = body.data as ImportResult
+      setImportResult(result)
+      setImportFile(null)
+      if (result.created.length) {
+        setProducts((current) => [...result.created, ...current])
+        setCurrentPage(1)
+      }
+    } catch {
+      setImportError("Failed to import products.")
+    } finally {
+      setImporting(false)
+    }
+  }
+
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -458,6 +528,30 @@ export function ProductsManager({
             <FileText className="size-4" />
             {catalogDownloading ? "Preparing..." : "Catalog PDF"}
           </Button>
+          {isAdmin ? (
+            <Button
+              variant="outline"
+              onClick={downloadProductsExcel}
+              disabled={excelDownloading}
+            >
+              <FileSpreadsheet className="size-4" />
+              {excelDownloading ? "Preparing..." : "Export Excel"}
+            </Button>
+          ) : null}
+          {isAdmin ? (
+            <Button
+              variant="outline"
+              onClick={() => {
+                setImportFile(null)
+                setImportError(null)
+                setImportResult(null)
+                setImportOpen(true)
+              }}
+            >
+              <Upload className="size-4" />
+              Import Excel
+            </Button>
+          ) : null}
           {isAdmin ? (
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
@@ -621,6 +715,87 @@ export function ProductsManager({
         </div>
       </div>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
+      <Dialog
+        open={importOpen}
+        onOpenChange={(open) => {
+          if (!importing) setImportOpen(open)
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Import products from Excel</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-3 text-sm">
+            <p className="text-muted-foreground">
+              The first sheet&apos;s first row must contain the column names{" "}
+              <strong>Product</strong>, <strong>Cost Price</strong> and{" "}
+              <strong>Selling Price</strong>. Optional columns: Unit (defaults
+              to pcs), Quantity, Low Stock Threshold, Supplier Name and
+              Supplier Phone. A file from Export Excel works as a template.
+            </p>
+            <p className="text-muted-foreground">
+              Products whose name is already in the list are skipped, not
+              changed. SKUs are generated automatically.
+            </p>
+            <label className="grid gap-1">
+              Excel file (.xlsx)
+              <Input
+                type="file"
+                accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                disabled={importing}
+                onChange={(event) => {
+                  setImportFile(event.target.files?.[0] ?? null)
+                  setImportError(null)
+                }}
+              />
+            </label>
+            {importError ? (
+              <p className="text-destructive">{importError}</p>
+            ) : null}
+            {importResult ? (
+              <div className="grid gap-2 rounded-lg border p-3">
+                <p>
+                  <strong>{importResult.created.length}</strong> added,{" "}
+                  <strong>{importResult.skipped.length}</strong> skipped as
+                  already existing,{" "}
+                  <strong>{importResult.invalid.length}</strong> with errors.
+                </p>
+                {[...importResult.invalid, ...importResult.skipped].length ? (
+                  <ul className="max-h-48 space-y-1 overflow-y-auto text-xs">
+                    {importResult.invalid.map((issue) => (
+                      <li key={`invalid-${issue.row}`} className="text-destructive">
+                        Row {issue.row}
+                        {issue.name ? ` (${issue.name})` : ""}: {issue.reason}
+                      </li>
+                    ))}
+                    {importResult.skipped.map((issue) => (
+                      <li key={`skipped-${issue.row}`} className="text-muted-foreground">
+                        Row {issue.row}
+                        {issue.name ? ` (${issue.name})` : ""}: {issue.reason}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setImportOpen(false)}
+              disabled={importing}
+            >
+              {importResult ? "Done" : "Cancel"}
+            </Button>
+            <Button
+              onClick={importProductsExcel}
+              disabled={importing || !importFile}
+            >
+              {importing ? "Importing..." : "Import"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <Dialog
         open={receiveDialogOpen}
         onOpenChange={(open) => {

@@ -42,7 +42,9 @@ export default async function ProductsPage() {
     }
   }
 
-  const serializedProducts = products.map((product) => {
+  // categoryId is a raw ObjectId that cannot cross into a Client Component.
+  const serializedProducts = products.map(
+    ({ categoryId: _categoryId, ...product }: ProductsPageProduct & { categoryId?: unknown }) => {
     const latestReceipt = latestReceiptByProduct.get(product._id.toString())
     return {
       ...product,
@@ -61,7 +63,8 @@ export default async function ProductsPage() {
       createdAt: product.createdAt?.toISOString(),
       updatedAt: product.updatedAt?.toISOString(),
     }
-  })
+  }
+  )
 
   return (
     <ProductsManager

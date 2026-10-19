@@ -27,6 +27,8 @@ Update this file after meaningful feature work. It should let the next agent see
 - [x] Loan/receivable view, partial payments, due and overdue notifications, and outstanding statement PDF
 - [x] Returns with replacement support, stock restoration, report impact, and transactional update/delete reconciliation
 - [x] Sales invoices and proforma invoices with PDF downloads
+- [x] Admin-only Excel exports (ExcelJS) for the products list (`/api/products/export`) and date-ranged sales (`/api/sales/export?start=&end=`)
+- [x] Admin-only product import from Excel (`/api/products/import`): new names only; rows whose name/SKU already exists in the store, or repeat within the file, are skipped and reported
 - [x] Expenses and categories
 - [x] Dashboard and visual reports with cards, charts, store summary, top products, recent sales, and report PDF
 - [x] Financial Reports section: Income Statement and Balance Sheet with PDF export
